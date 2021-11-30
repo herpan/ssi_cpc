@@ -37,6 +37,7 @@ class Authorization extends CI_Model {
         $afield=array(
 		 'sys_user.id',
 		 'sys_user.nmuser',
+		 'sys_user.nama_lengkap',
 		// 'sys_user.passuser',
 		 'sys_user.opt_level',
 		 'sys_user.idkaryawan',
@@ -75,6 +76,7 @@ class Authorization extends CI_Model {
 		$afield=array(
 		 'sys_user.id',
 		 'sys_user.nmuser',
+		 'sys_user.nama_lengkap',
 		 'sys_user.opt_level',
 		 'sys_user.opt_status',
 		 'sys_level.nmlevel',

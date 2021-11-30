@@ -72,6 +72,7 @@ class CI_Controller {
 	public $_separator_a;
 	public $_router;
 	public $_methode_register_name;
+	public $_user_full_name;
 	
 	
 	
@@ -131,6 +132,7 @@ class CI_Controller {
 					$this->_user_level_name		=	$data_user[0]['nmlevel'];
 					$this->_user_picture		= 	$data_user[0]['picture'];
 					$this->_separator_a			=   "53d25_52e22";
+					$this->_user_full_name 		= 	$data_user[0]['nama_lengkap'];
 				}else{
 					$this->session->set_flashdata('auth_login','Opps..max 1 login per user, anda telah login pada perangkat yang lain');
 					$this->session->unset_userdata('token');

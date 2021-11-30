@@ -89,7 +89,7 @@
 									<span class="avatar ybs-image-slider" data-image="<?php echo $this->_user_name ?>" src="<?php echo base_url() . 'YbsService/get_picture_profile/' . $this->_token ?>" style="background-image: url(<?php echo base_url() . 'YbsService/get_picture_profile/' . $this->_token ?>);"></span>
 
 									<span class="ml-2 d-none d-lg-block">
-										<span class="text-default"><?php echo $this->_user_name ?></span>
+										<span class="text-default"><?php echo $this->_user_full_name ?></span>
 										<small class="text-muted d-block mt-1"><?php echo $this->_user_level_name ?></small>
 									</span>
 
