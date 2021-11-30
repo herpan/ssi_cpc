@@ -1,16 +1,16 @@
 <?php
-require APPPATH. '/controllers/Bank/Bank_config.php';
+require APPPATH. '/controllers/Jenis_uang/Jenis_uang_config.php';
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Bank extends CI_Controller {
+class Jenis_uang extends CI_Controller {
    private $log_key,$log_temp,$title;
    function __construct(){
         parent::__construct();
-		$this->load->model('Bank/Bank_model','tmodel');
-		$this->log_key ='log_Bank';
-		$this->title = new Bank_config();
+		$this->load->model('Jenis_uang/Jenis_uang_model','tmodel');
+		$this->log_key ='log_Jenis_uang';
+		$this->title = new Jenis_uang_config();
    }
 
 
@@ -18,14 +18,14 @@ class Bank extends CI_Controller {
 		$data = array(
 			'title_page_big'		=> 'DAFTAR',
 			'title'					=> $this->title,
-			'link_refresh_table'	=> site_url().'Bank/Bank/refresh_table/'.$this->_token,
-			'link_create'			=> site_url().'Bank/Bank/create',
-			'link_update'			=> site_url().'Bank/Bank/update',
-			'link_delete'			=> site_url().'Bank/Bank/delete_multiple',
-			'link_create_multiple'			=> site_url().'Bank/Bank/create_multiple',
+			'link_refresh_table'	=> site_url().'Jenis_uang/Jenis_uang/refresh_table/'.$this->_token,
+			'link_create'			=> site_url().'Jenis_uang/Jenis_uang/create',
+			'link_update'			=> site_url().'Jenis_uang/Jenis_uang/update',
+			'link_delete'			=> site_url().'Jenis_uang/Jenis_uang/delete_multiple',
+			'link_create_multiple'			=> site_url().'Jenis_uang/Jenis_uang/create_multiple',
 		);
 		
-		$this->template->load('Bank/Bank_list',$data);
+		$this->template->load('Jenis_uang/Jenis_uang_list',$data);
 	}
 
 	public function refresh_table($token){
@@ -59,11 +59,11 @@ class Bank extends CI_Controller {
 		$data = array(
 			'title_page_big'		=> 'Buat Baru',
 			'title'					=> $this->title,
-			'link_save'				=> site_url().'Bank/Bank/create_action',
+			'link_save'				=> site_url().'Jenis_uang/Jenis_uang/create_action',
 			'link_back'				=> $this->agent->referrer(),			
 		);
 		
-		$this->template->load('Bank/Bank_form',$data);
+		$this->template->load('Jenis_uang/Jenis_uang_form',$data);
 
 	}
 
@@ -86,50 +86,22 @@ class Bank extends CI_Controller {
 		*/	
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['kode_bank'],'#kode_bank')){
+		if(!$o->not_empty($val['jenis_uang'],'#jenis_uang')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data double
-		$field=array('kode_bank'=>$val['kode_bank']);
+		$field=array('jenis_uang'=>$val['jenis_uang']);
 		$exist = $this->tmodel->if_exist('',$field);
-		if(!$o->not_exist($exist,'#kode_bank')){
+		if(!$o->not_exist($exist,'#jenis_uang')){
 			echo $o->result();	
 			return;
 		}
 
-		//mencegah data kosong
-		if(!$o->not_empty($val['bank'],'#bank')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data double
-		$field=array('bank'=>$val['bank']);
-		$exist = $this->tmodel->if_exist('',$field);
-		if(!$o->not_exist($exist,'#bank')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data kosong
-		if(!$o->not_empty($val['deskripsi'],'#deskripsi')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data double
-		$field=array('deskripsi'=>$val['deskripsi']);
-		$exist = $this->tmodel->if_exist('',$field);
-		if(!$o->not_exist($exist,'#deskripsi')){
-			echo $o->result();	
-			return;
-		}		
+		$val['user_input']= $this->_user_id;		
 
 		unset($val['id']);
-		$val['user_input']=$this->_user_id;
-
 		$success = $this->tmodel->insert($val);
 		echo $o->auto_result($success);
 
@@ -155,13 +127,13 @@ class Bank extends CI_Controller {
 			$data = array(
 				'title_page_big'		=> 'Buat Baru',
 				'title'					=> $this->title,
-				'link_save'				=> site_url().'Bank/Bank/update_action',
+				'link_save'				=> site_url().'Jenis_uang/Jenis_uang/update_action',
 				'link_back'				=> $this->agent->referrer(),
 				'data'					=> $row,
 				'id'					=> $id_generate,
 			);
 			
-			$this->template->load('Bank/Bank_form',$data);
+			$this->template->load('Jenis_uang/Jenis_uang_form',$data);
 		}else{
 			redirect($this->agent->referrer());
 		}
@@ -189,41 +161,22 @@ class Bank extends CI_Controller {
 		*/			
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['kode_bank'],'#kode_bank')){
+		if(!$o->not_empty($val['jenis_uang'],'#jenis_uang')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data double
-		$field=array('kode_bank'=>$val['kode_bank']);
+		$field=array('jenis_uang'=>$val['jenis_uang']);
 		$exist = $this->tmodel->if_exist($val['id'],$field);
-		if(!$o->not_exist($exist,'#kode_bank')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data kosong
-		if(!$o->not_empty($val['bank'],'#bank')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data double
-		$field=array('bank'=>$val['bank']);
-		$exist = $this->tmodel->if_exist($val['id'],$field);
-		if(!$o->not_exist($exist,'#bank')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data kosong
-		if(!$o->not_empty($val['deskripsi'],'#deskripsi')){
+		if(!$o->not_exist($exist,'#jenis_uang')){
 			echo $o->result();	
 			return;
 		}
 
 		$val['user_update']= $this->_user_id;
 		$val['update_time']= now_db();
+
 
 		$success = $this->tmodel->update($val['id'],$val);
 		echo $o->auto_result($success);
@@ -266,8 +219,8 @@ class Bank extends CI_Controller {
 	public function  create_multiple(){
 		$data = array(
 			'title_page_big'			=> 'Import data pengguna dari excel',
-			'link_download_template'	=> site_url().'Bank/Bank/download_template/'.$this->_token,
-			'link_upload_template'		=> site_url().'Bank/Bank/upload_template/'.$this->_token,
+			'link_download_template'	=> site_url().'Jenis_uang/Jenis_uang/download_template/'.$this->_token,
+			'link_upload_template'		=> site_url().'Jenis_uang/Jenis_uang/upload_template/'.$this->_token,
 			'link_back'					=> $this->agent->referrer(),			
 		);
 		

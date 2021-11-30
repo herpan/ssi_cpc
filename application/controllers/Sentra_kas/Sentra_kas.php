@@ -1,16 +1,16 @@
 <?php
-require APPPATH. '/controllers/Bank/Bank_config.php';
+require APPPATH. '/controllers/Sentra_kas/Sentra_kas_config.php';
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Bank extends CI_Controller {
+class Sentra_kas extends CI_Controller {
    private $log_key,$log_temp,$title;
    function __construct(){
         parent::__construct();
-		$this->load->model('Bank/Bank_model','tmodel');
-		$this->log_key ='log_Bank';
-		$this->title = new Bank_config();
+		$this->load->model('Sentra_kas/Sentra_kas_model','tmodel');
+		$this->log_key ='log_Sentra_kas';
+		$this->title = new Sentra_kas_config();
    }
 
 
@@ -18,14 +18,14 @@ class Bank extends CI_Controller {
 		$data = array(
 			'title_page_big'		=> 'DAFTAR',
 			'title'					=> $this->title,
-			'link_refresh_table'	=> site_url().'Bank/Bank/refresh_table/'.$this->_token,
-			'link_create'			=> site_url().'Bank/Bank/create',
-			'link_update'			=> site_url().'Bank/Bank/update',
-			'link_delete'			=> site_url().'Bank/Bank/delete_multiple',
-			'link_create_multiple'			=> site_url().'Bank/Bank/create_multiple',
+			'link_refresh_table'	=> site_url().'Sentra_kas/Sentra_kas/refresh_table/'.$this->_token,
+			'link_create'			=> site_url().'Sentra_kas/Sentra_kas/create',
+			'link_update'			=> site_url().'Sentra_kas/Sentra_kas/update',
+			'link_delete'			=> site_url().'Sentra_kas/Sentra_kas/delete_multiple',
+			'link_create_multiple'			=> site_url().'Sentra_kas/Sentra_kas/create_multiple',
 		);
 		
-		$this->template->load('Bank/Bank_list',$data);
+		$this->template->load('Sentra_kas/Sentra_kas_list',$data);
 	}
 
 	public function refresh_table($token){
@@ -59,11 +59,11 @@ class Bank extends CI_Controller {
 		$data = array(
 			'title_page_big'		=> 'Buat Baru',
 			'title'					=> $this->title,
-			'link_save'				=> site_url().'Bank/Bank/create_action',
+			'link_save'				=> site_url().'Sentra_kas/Sentra_kas/create_action',
 			'link_back'				=> $this->agent->referrer(),			
 		);
 		
-		$this->template->load('Bank/Bank_form',$data);
+		$this->template->load('Sentra_kas/Sentra_kas_form',$data);
 
 	}
 
@@ -86,50 +86,35 @@ class Bank extends CI_Controller {
 		*/	
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['kode_bank'],'#kode_bank')){
+		if(!$o->not_empty($val['kode_sentra'],'#kode_sentra')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data double
-		$field=array('kode_bank'=>$val['kode_bank']);
+		$field=array('kode_sentra'=>$val['kode_sentra']);
 		$exist = $this->tmodel->if_exist('',$field);
-		if(!$o->not_exist($exist,'#kode_bank')){
+		if(!$o->not_exist($exist,'#kode_sentra')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['bank'],'#bank')){
+		if(!$o->not_empty($val['sentra'],'#sentra')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data double
-		$field=array('bank'=>$val['bank']);
+		$field=array('sentra'=>$val['sentra']);
 		$exist = $this->tmodel->if_exist('',$field);
-		if(!$o->not_exist($exist,'#bank')){
+		if(!$o->not_exist($exist,'#sentra')){
 			echo $o->result();	
 			return;
 		}
-
-		//mencegah data kosong
-		if(!$o->not_empty($val['deskripsi'],'#deskripsi')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data double
-		$field=array('deskripsi'=>$val['deskripsi']);
-		$exist = $this->tmodel->if_exist('',$field);
-		if(!$o->not_exist($exist,'#deskripsi')){
-			echo $o->result();	
-			return;
-		}		
-
+		$val['user_input']= $this->_user_id;
+		
 		unset($val['id']);
-		$val['user_input']=$this->_user_id;
-
 		$success = $this->tmodel->insert($val);
 		echo $o->auto_result($success);
 
@@ -155,13 +140,13 @@ class Bank extends CI_Controller {
 			$data = array(
 				'title_page_big'		=> 'Buat Baru',
 				'title'					=> $this->title,
-				'link_save'				=> site_url().'Bank/Bank/update_action',
+				'link_save'				=> site_url().'Sentra_kas/Sentra_kas/update_action',
 				'link_back'				=> $this->agent->referrer(),
 				'data'					=> $row,
 				'id'					=> $id_generate,
 			);
 			
-			$this->template->load('Bank/Bank_form',$data);
+			$this->template->load('Sentra_kas/Sentra_kas_form',$data);
 		}else{
 			redirect($this->agent->referrer());
 		}
@@ -189,35 +174,29 @@ class Bank extends CI_Controller {
 		*/			
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['kode_bank'],'#kode_bank')){
+		if(!$o->not_empty($val['kode_sentra'],'#kode_sentra')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data double
-		$field=array('kode_bank'=>$val['kode_bank']);
+		$field=array('kode_sentra'=>$val['kode_sentra']);
 		$exist = $this->tmodel->if_exist($val['id'],$field);
-		if(!$o->not_exist($exist,'#kode_bank')){
+		if(!$o->not_exist($exist,'#kode_sentra')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['bank'],'#bank')){
+		if(!$o->not_empty($val['sentra'],'#sentra')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data double
-		$field=array('bank'=>$val['bank']);
+		$field=array('sentra'=>$val['sentra']);
 		$exist = $this->tmodel->if_exist($val['id'],$field);
-		if(!$o->not_exist($exist,'#bank')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data kosong
-		if(!$o->not_empty($val['deskripsi'],'#deskripsi')){
+		if(!$o->not_exist($exist,'#sentra')){
 			echo $o->result();	
 			return;
 		}
@@ -266,8 +245,8 @@ class Bank extends CI_Controller {
 	public function  create_multiple(){
 		$data = array(
 			'title_page_big'			=> 'Import data pengguna dari excel',
-			'link_download_template'	=> site_url().'Bank/Bank/download_template/'.$this->_token,
-			'link_upload_template'		=> site_url().'Bank/Bank/upload_template/'.$this->_token,
+			'link_download_template'	=> site_url().'Sentra_kas/Sentra_kas/download_template/'.$this->_token,
+			'link_upload_template'		=> site_url().'Sentra_kas/Sentra_kas/upload_template/'.$this->_token,
 			'link_back'					=> $this->agent->referrer(),			
 		);
 		

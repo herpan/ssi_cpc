@@ -1,16 +1,16 @@
 <?php
-require APPPATH. '/controllers/Bank/Bank_config.php';
+require APPPATH. '/controllers/Bank_wilayah/Bank_wilayah_config.php';
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Bank extends CI_Controller {
+class Bank_wilayah extends CI_Controller {
    private $log_key,$log_temp,$title;
    function __construct(){
         parent::__construct();
-		$this->load->model('Bank/Bank_model','tmodel');
-		$this->log_key ='log_Bank';
-		$this->title = new Bank_config();
+		$this->load->model('Bank_wilayah/Bank_wilayah_model','tmodel');
+		$this->log_key ='log_Bank_wilayah';
+		$this->title = new Bank_wilayah_config();
    }
 
 
@@ -18,14 +18,14 @@ class Bank extends CI_Controller {
 		$data = array(
 			'title_page_big'		=> 'DAFTAR',
 			'title'					=> $this->title,
-			'link_refresh_table'	=> site_url().'Bank/Bank/refresh_table/'.$this->_token,
-			'link_create'			=> site_url().'Bank/Bank/create',
-			'link_update'			=> site_url().'Bank/Bank/update',
-			'link_delete'			=> site_url().'Bank/Bank/delete_multiple',
-			'link_create_multiple'			=> site_url().'Bank/Bank/create_multiple',
+			'link_refresh_table'	=> site_url().'Bank_wilayah/Bank_wilayah/refresh_table/'.$this->_token,
+			'link_create'			=> site_url().'Bank_wilayah/Bank_wilayah/create',
+			'link_update'			=> site_url().'Bank_wilayah/Bank_wilayah/update',
+			'link_delete'			=> site_url().'Bank_wilayah/Bank_wilayah/delete_multiple',
+			'link_create_multiple'			=> site_url().'Bank_wilayah/Bank_wilayah/create_multiple',
 		);
 		
-		$this->template->load('Bank/Bank_list',$data);
+		$this->template->load('Bank_wilayah/Bank_wilayah_list',$data);
 	}
 
 	public function refresh_table($token){
@@ -59,11 +59,11 @@ class Bank extends CI_Controller {
 		$data = array(
 			'title_page_big'		=> 'Buat Baru',
 			'title'					=> $this->title,
-			'link_save'				=> site_url().'Bank/Bank/create_action',
+			'link_save'				=> site_url().'Bank_wilayah/Bank_wilayah/create_action',
 			'link_back'				=> $this->agent->referrer(),			
 		);
 		
-		$this->template->load('Bank/Bank_form',$data);
+		$this->template->load('Bank_wilayah/Bank_wilayah_form',$data);
 
 	}
 
@@ -86,46 +86,39 @@ class Bank extends CI_Controller {
 		*/	
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['kode_bank'],'#kode_bank')){
+		if(!$o->not_empty($val['bank_id'],'#bank_id')){
+			echo $o->result();	
+			return;
+		}
+
+		
+		//mencegah data kosong
+		if(!$o->not_empty($val['kode_wilayah'],'#kode_wilayah')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data double
-		$field=array('kode_bank'=>$val['kode_bank']);
+		$field=array('kode_wilayah'=>$val['kode_wilayah']);
 		$exist = $this->tmodel->if_exist('',$field);
-		if(!$o->not_exist($exist,'#kode_bank')){
+		if(!$o->not_exist($exist,'#kode_wilayah')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['bank'],'#bank')){
+		if(!$o->not_empty($val['nama_wilayah'],'#nama_wilayah')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data double
-		$field=array('bank'=>$val['bank']);
+		$field=array('nama_wilayah'=>$val['nama_wilayah']);
 		$exist = $this->tmodel->if_exist('',$field);
-		if(!$o->not_exist($exist,'#bank')){
+		if(!$o->not_exist($exist,'#nama_wilayah')){
 			echo $o->result();	
 			return;
 		}
-
-		//mencegah data kosong
-		if(!$o->not_empty($val['deskripsi'],'#deskripsi')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data double
-		$field=array('deskripsi'=>$val['deskripsi']);
-		$exist = $this->tmodel->if_exist('',$field);
-		if(!$o->not_exist($exist,'#deskripsi')){
-			echo $o->result();	
-			return;
-		}		
 
 		unset($val['id']);
 		$val['user_input']=$this->_user_id;
@@ -155,13 +148,13 @@ class Bank extends CI_Controller {
 			$data = array(
 				'title_page_big'		=> 'Buat Baru',
 				'title'					=> $this->title,
-				'link_save'				=> site_url().'Bank/Bank/update_action',
+				'link_save'				=> site_url().'Bank_wilayah/Bank_wilayah/update_action',
 				'link_back'				=> $this->agent->referrer(),
 				'data'					=> $row,
 				'id'					=> $id_generate,
 			);
 			
-			$this->template->load('Bank/Bank_form',$data);
+			$this->template->load('Bank_wilayah/Bank_wilayah_form',$data);
 		}else{
 			redirect($this->agent->referrer());
 		}
@@ -189,41 +182,42 @@ class Bank extends CI_Controller {
 		*/			
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['kode_bank'],'#kode_bank')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data double
-		$field=array('kode_bank'=>$val['kode_bank']);
-		$exist = $this->tmodel->if_exist($val['id'],$field);
-		if(!$o->not_exist($exist,'#kode_bank')){
+		if(!$o->not_empty($val['bank_id'],'#bank_id')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['bank'],'#bank')){
+		if(!$o->not_empty($val['kode_wilayah'],'#kode_wilayah')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data double
-		$field=array('bank'=>$val['bank']);
+		$field=array('kode_wilayah'=>$val['kode_wilayah']);
 		$exist = $this->tmodel->if_exist($val['id'],$field);
-		if(!$o->not_exist($exist,'#bank')){
+		if(!$o->not_exist($exist,'#kode_wilayah')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['deskripsi'],'#deskripsi')){
+		if(!$o->not_empty($val['nama_wilayah'],'#nama_wilayah')){
+			echo $o->result();	
+			return;
+		}
+
+		//mencegah data double
+		$field=array('nama_wilayah'=>$val['nama_wilayah']);
+		$exist = $this->tmodel->if_exist($val['id'],$field);
+		if(!$o->not_exist($exist,'#nama_wilayah')){
 			echo $o->result();	
 			return;
 		}
 
 		$val['user_update']= $this->_user_id;
 		$val['update_time']= now_db();
+
 
 		$success = $this->tmodel->update($val['id'],$val);
 		echo $o->auto_result($success);
@@ -266,8 +260,8 @@ class Bank extends CI_Controller {
 	public function  create_multiple(){
 		$data = array(
 			'title_page_big'			=> 'Import data pengguna dari excel',
-			'link_download_template'	=> site_url().'Bank/Bank/download_template/'.$this->_token,
-			'link_upload_template'		=> site_url().'Bank/Bank/upload_template/'.$this->_token,
+			'link_download_template'	=> site_url().'Bank_wilayah/Bank_wilayah/download_template/'.$this->_token,
+			'link_upload_template'		=> site_url().'Bank_wilayah/Bank_wilayah/upload_template/'.$this->_token,
 			'link_back'					=> $this->agent->referrer(),			
 		);
 		

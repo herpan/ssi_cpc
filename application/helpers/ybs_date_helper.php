@@ -115,5 +115,9 @@ if ( ! function_exists('ybs_tanggal_indo')){
 	{		
 		return str_replace("/", "-",$date);
 	}
+
+	function now_db(){
+		return date('Y-m-d H:i:s', now());
+	}
 	
 }	

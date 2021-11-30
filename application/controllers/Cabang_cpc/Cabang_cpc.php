@@ -1,16 +1,16 @@
 <?php
-require APPPATH. '/controllers/Bank/Bank_config.php';
+require APPPATH. '/controllers/Cabang_cpc/Cabang_cpc_config.php';
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Bank extends CI_Controller {
+class Cabang_cpc extends CI_Controller {
    private $log_key,$log_temp,$title;
    function __construct(){
         parent::__construct();
-		$this->load->model('Bank/Bank_model','tmodel');
-		$this->log_key ='log_Bank';
-		$this->title = new Bank_config();
+		$this->load->model('Cabang_cpc/Cabang_cpc_model','tmodel');
+		$this->log_key ='log_Cabang_cpc';
+		$this->title = new Cabang_cpc_config();
    }
 
 
@@ -18,33 +18,33 @@ class Bank extends CI_Controller {
 		$data = array(
 			'title_page_big'		=> 'DAFTAR',
 			'title'					=> $this->title,
-			'link_refresh_table'	=> site_url().'Bank/Bank/refresh_table/'.$this->_token,
-			'link_create'			=> site_url().'Bank/Bank/create',
-			'link_update'			=> site_url().'Bank/Bank/update',
-			'link_delete'			=> site_url().'Bank/Bank/delete_multiple',
-			'link_create_multiple'			=> site_url().'Bank/Bank/create_multiple',
+			'link_refresh_table'	=> site_url().'Cabang_cpc/Cabang_cpc/refresh_table/'.$this->_token,
+			'link_create'			=> site_url().'Cabang_cpc/Cabang_cpc/create',
+			'link_update'			=> site_url().'Cabang_cpc/Cabang_cpc/update',
+			'link_delete'			=> site_url().'Cabang_cpc/Cabang_cpc/delete_multiple',
+			'link_create_multiple'			=> site_url().'Cabang_cpc/Cabang_cpc/create_multiple',
 		);
 		
-		$this->template->load('Bank/Bank_list',$data);
+		$this->template->load('Cabang_cpc/Cabang_cpc_list',$data);
 	}
 
 	public function refresh_table($token){
 		if($token==$this->_token){
-			$row = $this->tmodel->get_all();
+			$row = $this->tmodel->json();
 			
 			//encode id 
 			$tm = time();
 			$this->session->set_userdata($this->log_key,$tm);
 			$x = 0;
-			foreach($row as $val){
+			foreach($row['data'] as $val){
 				$idgenerate = _encode_id($val['id'],$tm);
-				$row[$x]['id'] = $idgenerate;
+				$row['data'][$x]['id'] = $idgenerate;
 				$x++;
 			}
 			
-			
 			$o = new Outputview();
 			$o->success	= 'true';
+			$o->serverside	= 'true';
 			$o->message	= $row;
 			
 			echo $o->result();
@@ -59,11 +59,11 @@ class Bank extends CI_Controller {
 		$data = array(
 			'title_page_big'		=> 'Buat Baru',
 			'title'					=> $this->title,
-			'link_save'				=> site_url().'Bank/Bank/create_action',
+			'link_save'				=> site_url().'Cabang_cpc/Cabang_cpc/create_action',
 			'link_back'				=> $this->agent->referrer(),			
 		);
 		
-		$this->template->load('Bank/Bank_form',$data);
+		$this->template->load('Cabang_cpc/Cabang_cpc_form',$data);
 
 	}
 
@@ -86,50 +86,49 @@ class Bank extends CI_Controller {
 		*/	
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['kode_bank'],'#kode_bank')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data double
-		$field=array('kode_bank'=>$val['kode_bank']);
-		$exist = $this->tmodel->if_exist('',$field);
-		if(!$o->not_exist($exist,'#kode_bank')){
+		if(!$o->not_empty($val['bank_wilayah_id'],'#bank_wilayah_id')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['bank'],'#bank')){
+		if(!$o->not_empty($val['nama_cabang'],'#nama_cabang')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data double
-		$field=array('bank'=>$val['bank']);
+		$field=array('nama_cabang'=>$val['nama_cabang']);
 		$exist = $this->tmodel->if_exist('',$field);
-		if(!$o->not_exist($exist,'#bank')){
+		if(!$o->not_exist($exist,'#nama_cabang')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['deskripsi'],'#deskripsi')){
+		if(!$o->not_empty($val['alamat'],'#alamat')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data double
-		$field=array('deskripsi'=>$val['deskripsi']);
+		$field=array('alamat'=>$val['alamat']);
 		$exist = $this->tmodel->if_exist('',$field);
-		if(!$o->not_exist($exist,'#deskripsi')){
+		if(!$o->not_exist($exist,'#alamat')){
 			echo $o->result();	
 			return;
-		}		
+		}
+
+		//mencegah data kosong
+		if(!$o->not_empty($val['sentra_kas_id'],'#sentra_kas_id')){
+			echo $o->result();	
+			return;
+		}
 
 		unset($val['id']);
-		$val['user_input']=$this->_user_id;
 
+		$val['user_input']= $this->_user_id;
+	
 		$success = $this->tmodel->insert($val);
 		echo $o->auto_result($success);
 
@@ -155,13 +154,13 @@ class Bank extends CI_Controller {
 			$data = array(
 				'title_page_big'		=> 'Buat Baru',
 				'title'					=> $this->title,
-				'link_save'				=> site_url().'Bank/Bank/update_action',
+				'link_save'				=> site_url().'Cabang_cpc/Cabang_cpc/update_action',
 				'link_back'				=> $this->agent->referrer(),
 				'data'					=> $row,
 				'id'					=> $id_generate,
 			);
 			
-			$this->template->load('Bank/Bank_form',$data);
+			$this->template->load('Cabang_cpc/Cabang_cpc_form',$data);
 		}else{
 			redirect($this->agent->referrer());
 		}
@@ -189,41 +188,36 @@ class Bank extends CI_Controller {
 		*/			
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['kode_bank'],'#kode_bank')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data double
-		$field=array('kode_bank'=>$val['kode_bank']);
-		$exist = $this->tmodel->if_exist($val['id'],$field);
-		if(!$o->not_exist($exist,'#kode_bank')){
+		if(!$o->not_empty($val['bank_wilayah_id'],'#bank_wilayah_id')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['bank'],'#bank')){
+		if(!$o->not_empty($val['nama_cabang'],'#nama_cabang')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data double
-		$field=array('bank'=>$val['bank']);
+		$field=array('nama_cabang'=>$val['nama_cabang']);
 		$exist = $this->tmodel->if_exist($val['id'],$field);
-		if(!$o->not_exist($exist,'#bank')){
+		if(!$o->not_exist($exist,'#nama_cabang')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['deskripsi'],'#deskripsi')){
+		if(!$o->not_empty($val['alamat'],'#alamat')){
 			echo $o->result();	
 			return;
 		}
 
+						
+				
 		$val['user_update']= $this->_user_id;
 		$val['update_time']= now_db();
+
 
 		$success = $this->tmodel->update($val['id'],$val);
 		echo $o->auto_result($success);
@@ -266,8 +260,8 @@ class Bank extends CI_Controller {
 	public function  create_multiple(){
 		$data = array(
 			'title_page_big'			=> 'Import data pengguna dari excel',
-			'link_download_template'	=> site_url().'Bank/Bank/download_template/'.$this->_token,
-			'link_upload_template'		=> site_url().'Bank/Bank/upload_template/'.$this->_token,
+			'link_download_template'	=> site_url().'Cabang_cpc/Cabang_cpc/download_template/'.$this->_token,
+			'link_upload_template'		=> site_url().'Cabang_cpc/Cabang_cpc/upload_template/'.$this->_token,
 			'link_back'					=> $this->agent->referrer(),			
 		);
 		

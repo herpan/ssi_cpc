@@ -6,29 +6,61 @@
 	<form id='form-a'>
 	<input hidden class='data-sending' id='id' value='<?php if(isset($id))echo $id?>'>
 	
-					<div class='col-md-12 col-xl-12'>
-					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_bank_kode_bank ?></label>
-							<input type='text' class='form-control data-sending focus-color ybs-input-number' id='kode_bank' name='kode_bank' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->kode_bank ?>' autocomplete='off'>
+					<div class='col-md-12 col-xl-12'>				
+					<div class='form-group'> 
+							<label class='form-label'><?php echo $title->app_cabang_cpc_bank_wilayah_id ?></label> 
+							<?php $v='';  if(isset($data)) $v = $data->bank_wilayah_id; 
+								  echo create_cmb_database(array(	'id'			=>'bank_wilayah_id',
+																	'name'			=>'bank_wilayah_id',
+																	'table'			=>'app_bank_wilayah',
+																	'field_show'	=>'nama_wilayah',
+																	'primary_key'	=>'id', 
+																	'selected'		=>$v,
+																	'field_link'	=>'',
+																	'class'			=>'custom-select data-sending')); 
+						    ?> 
 					</div>
-					</div>
+					</div>			
 			
 					<div class='col-md-12 col-xl-12'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_bank_bank ?></label>
-							<input type='text' class='form-control data-sending focus-color'  id='bank' name='bank' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->bank ?>' >
+							<label class='form-label'><?php echo $title->app_cabang_cpc_nama_cabang ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='nama_cabang' name='nama_cabang' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->nama_cabang ?>' >
 					</div>
 					</div>
 			
 			
 					<div class='col-md-12 col-xl-12'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_bank_deskripsi ?></label>
+							<label class='form-label'><?php echo $title->app_cabang_cpc_alamat ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='alamat' name='alamat' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->alamat ?>' >
+					</div>
+					</div>
+			
+			
+					<div class='col-md-12 col-xl-12'>
+					<div class='form-group'>
+							<label class='form-label'><?php echo $title->app_cabang_cpc_deskripsi ?></label>
 							<input type='text' class='form-control data-sending focus-color'  id='deskripsi' name='deskripsi' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->deskripsi ?>' >
 					</div>
 					</div>
 			
-							 
+			
+					<div class='col-md-12 col-xl-12'>				
+					<div class='form-group'> 
+							<label class='form-label'><?php echo $title->app_cabang_cpc_sentra_kas_id ?></label> 
+							<?php $v='';  if(isset($data)) $v = $data->sentra_kas_id; 
+								  echo create_cmb_database(array(	'id'			=>'sentra_kas_id',
+																	'name'			=>'sentra_kas_id',
+																	'table'			=>'app_sentra_kas',
+																	'field_show'	=>'nama_sentra',
+																	'primary_key'	=>'id', 
+																	'selected'		=>$v,
+																	'field_link'	=>'',
+																	'class'			=>'custom-select data-sending')); 
+						    ?> 
+					</div>
+					</div>		
 	
 	<div class='col-md-12 col-xl-12'>
 

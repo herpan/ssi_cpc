@@ -142,10 +142,7 @@ table_detail = $('#table-detail').dataTable({
 											},
 											
 											<?php foreach($title->table_column as $alias_field=>$val){?>
-												{data:"<?php echo $alias_field ?>" ,										<?php if($alias_field==''){?>
-														 render: $.fn.dataTable.render.number( ',', '.', 2, '' ),<?php }?>
-
-		},
+												{data:"<?php echo $alias_field ?>" ,		},
 											<?php }?>					
 											
 											

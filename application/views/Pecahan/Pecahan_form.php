@@ -8,27 +8,21 @@
 	
 					<div class='col-md-12 col-xl-12'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_bank_kode_bank ?></label>
-							<input type='text' class='form-control data-sending focus-color ybs-input-number' id='kode_bank' name='kode_bank' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->kode_bank ?>' autocomplete='off'>
-					</div>
-					</div>
-			
-					<div class='col-md-12 col-xl-12'>
-					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_bank_bank ?></label>
-							<input type='text' class='form-control data-sending focus-color'  id='bank' name='bank' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->bank ?>' >
+							<label class='form-label'><?php echo $title->app_pecahan_pecahan ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='pecahan' name='pecahan' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->pecahan ?>' >
 					</div>
 					</div>
 			
 			
 					<div class='col-md-12 col-xl-12'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_bank_deskripsi ?></label>
-							<input type='text' class='form-control data-sending focus-color'  id='deskripsi' name='deskripsi' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->deskripsi ?>' >
+							<label class='form-label'><?php echo $title->app_pecahan_keterangan ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='keterangan' name='keterangan' value='<?php if(isset($data)) echo $data->keterangan ?>' >
 					</div>
 					</div>
 			
-							 
+			
+							
 	
 	<div class='col-md-12 col-xl-12'>
 

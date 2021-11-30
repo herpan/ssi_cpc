@@ -6,30 +6,45 @@
 	<form id='form-a'>
 	<input hidden class='data-sending' id='id' value='<?php if(isset($id))echo $id?>'>
 	
-					<div class='col-md-12 col-xl-12'>
-					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_bank_kode_bank ?></label>
-							<input type='text' class='form-control data-sending focus-color ybs-input-number' id='kode_bank' name='kode_bank' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->kode_bank ?>' autocomplete='off'>
+					<div class='col-md-12 col-xl-12'>				
+					<div class='form-group'> 
+							<label class='form-label'><?php echo $title->app_bank_wilayah_bank_id ?></label> 
+							<?php $v='';  if(isset($data)) $v = $data->bank_id; 
+								  echo create_cmb_database(array(	'id'			=>'bank_id',
+																	'name'			=>'bank_id',
+																	'table'			=>'app_bank',
+																	'field_show'	=>'bank',
+																	'primary_key'	=>'id', 
+																	'selected'		=>$v,
+																	'field_link'	=>'',
+																	'class'			=>'custom-select data-sending')); 
+						    ?> 
 					</div>
-					</div>
+					</div>			
 			
 					<div class='col-md-12 col-xl-12'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_bank_bank ?></label>
-							<input type='text' class='form-control data-sending focus-color'  id='bank' name='bank' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->bank ?>' >
+							<label class='form-label'><?php echo $title->app_bank_wilayah_kode_wilayah ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='kode_wilayah' name='kode_wilayah' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->kode_wilayah ?>' >
 					</div>
 					</div>
 			
 			
 					<div class='col-md-12 col-xl-12'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_bank_deskripsi ?></label>
+							<label class='form-label'><?php echo $title->app_bank_wilayah_nama_wilayah ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='nama_wilayah' name='nama_wilayah' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->nama_wilayah ?>' >
+					</div>
+					</div>
+			
+			
+					<div class='col-md-12 col-xl-12'>
+					<div class='form-group'>
+							<label class='form-label'><?php echo $title->app_bank_wilayah_deskripsi ?></label>
 							<input type='text' class='form-control data-sending focus-color'  id='deskripsi' name='deskripsi' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->deskripsi ?>' >
 					</div>
 					</div>
-			
-							 
-	
+					
 	<div class='col-md-12 col-xl-12'>
 
 	   <div class='form-group'>
