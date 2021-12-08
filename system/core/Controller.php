@@ -173,7 +173,7 @@ class CI_Controller {
 				  //OR user id nya tidak valid
 					$msg =  $this->session->flashdata('auth_login');
 					if($msg !=='Opps..max 1 login per user, anda telah login pada perangkat yang lain'){
-						$this->session->set_flashdata('auth_login','Opps..browser cleaning');
+						$this->session->set_flashdata('auth_login','Anda telah logout');
 					 }
 					 return;
 				  

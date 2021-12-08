@@ -3,29 +3,27 @@ require APPPATH . 'controllers/sistem/General_title.php';
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Journal_cpc_config {
+class Journal_campur_cpc_config {
 	
 
 
    function __construct(){
 	   /* title */
 	    $this->general		= new General_title();
-		$this->app_journal_cpc_id	= 'ID';
-		$this->app_journal_cpc_bank_id	= 'BANK';
-		$this->app_journal_cpc_sentra_kas_id	= 'SENTRA_KAS';
-		$this->app_journal_cpc_jenis_uang_id	= 'JENIS_UANG';
-		$this->app_journal_cpc_pecahan_id	= 'PECAHAN';
-		$this->app_journal_cpc_emisi_id	= 'EMISI';
-		$this->app_journal_cpc_kondisi_id	= 'KONDISI';
-		$this->app_journal_cpc_jumlah	= 'JUMLAH';
-		$this->app_journal_cpc_status	= 'STATUS';
-		$this->app_journal_cpc_tanggal_penerimaan	= 'TANGGAL_PENERIMAAN';
-		$this->app_journal_cpc_tanggal_pencatatan	= 'TANGGAL_PENCATATAN';
-		$this->app_journal_cpc_keterangan	= 'KETERANGAN';
-		$this->app_journal_cpc_user_input	= 'USERID_INPUT';
-		$this->app_journal_cpc_input_time	= 'INPUT_TIME';
-		$this->app_journal_cpc_user_update	= 'USERID_UPDATE';
-		$this->app_journal_cpc_update_time	= 'UPDATE_TIME';
+		$this->app_journal_campur_cpc_id	= 'ID';
+		$this->app_journal_campur_cpc_bank_id	= 'BANKxxx';
+		$this->app_journal_campur_cpc_sentra_kas_id	= 'SENTRA_KASxxx';
+		$this->app_journal_campur_cpc_jenis_uang_id	= 'JENIS_UANGxxx';
+		$this->app_journal_campur_cpc_pecahan_id	= 'PECAHANxxx';
+		$this->app_journal_campur_cpc_jumlah	= 'JUMLAH';
+		$this->app_journal_campur_cpc_status	= 'STATUS';
+		$this->app_journal_campur_cpc_tanggal_penerimaan	= 'TANGGAL_PENERIMAAN';
+		$this->app_journal_campur_cpc_tanggal_pencatatan	= 'TANGGAL_PENCATATAN';
+		$this->app_journal_campur_cpc_keterangan	= 'KETERANGAN';
+		$this->app_journal_campur_cpc_user_input	= 'USERID_INPUT';
+		$this->app_journal_campur_cpc_input_time	= 'INPUT_TIME';
+		$this->app_journal_campur_cpc_user_update	= 'USERID_UPDATE';
+		$this->app_journal_campur_cpc_update_time	= 'UPDATE_TIME';
 		$this->b_id	= 'B_ID';
 		$this->b_kode_bank	= 'KODE_BANK';
 		$this->b_bank	= 'BANK';
@@ -57,20 +55,6 @@ class Journal_cpc_config {
 		$this->p_input_time	= 'P_INPUT_TIME';
 		$this->p_user_update	= 'P_USER_UPDATE';
 		$this->p_update_time	= 'P_UPDATE_TIME';
-		$this->e_id	= 'E_ID';
-		$this->e_emisi	= 'EMISI';
-		$this->e_keterangan	= 'E_KETERANGAN';
-		$this->e_user_input	= 'E_USER_INPUT';
-		$this->e_input_time	= 'E_INPUT_TIME';
-		$this->e_user_update	= 'E_USER_UPDATE';
-		$this->e_update_time	= 'E_UPDATE_TIME';
-		$this->k_id	= 'K_ID';
-		$this->k_kategori_id	= 'KATEGORI_ID';
-		$this->k_kondisi	= 'KONDISI';
-		$this->k_user_input	= 'K_USER_INPUT';
-		$this->k_input_time	= 'K_INPUT_TIME';
-		$this->k_user_update	= 'K_USER_UPDATE';
-		$this->k_update_time	= 'K_UPDATE_TIME';
 		$this->userinput_id	= 'USERINPUT_ID';
 		$this->userinput_nmuser	= 'NMUSER';
 		$this->userinput_passuser	= 'PASSUSER';
@@ -87,12 +71,6 @@ class Journal_cpc_config {
 		$this->userupdate_opt_level	= 'USERUPDATE_OPT_LEVEL';
 		$this->userupdate_opt_status	= 'USERUPDATE_OPT_STATUS';
 		$this->userupdate_picture	= 'USERUPDATE_PICTURE';
-		$this->kk_id	= 'KK_ID';
-		$this->kk_nama_kategori	= 'KATEGORI';
-		$this->kk_user_input	= 'KK_USER_INPUT';
-		$this->kk_input_time	= 'KK_INPUT_TIME';
-		$this->kk_user_update	= 'KK_USER_UPDATE';
-		$this->kk_update_time	= 'KK_UPDATE_TIME';
 
 		
 		
@@ -103,8 +81,6 @@ class Journal_cpc_config {
 		$this->f_sentra_kas_id	= 'sentra_kas_id';
 		$this->f_jenis_uang_id	= 'jenis_uang_id';
 		$this->f_pecahan_id	= 'pecahan_id';
-		$this->f_emisi_id	= 'emisi_id';
-		$this->f_kondisi_id	= 'kondisi_id';
 		$this->f_jumlah	= 'jumlah';
 		$this->f_status	= 'status';
 		$this->f_tanggal_penerimaan	= 'tanggal_penerimaan';
@@ -145,20 +121,6 @@ class Journal_cpc_config {
 		$this->f_p_input_time	= 'p_input_time';
 		$this->f_p_user_update	= 'p_user_update';
 		$this->f_p_update_time	= 'p_update_time';
-		$this->f_e_id	= 'e_id';
-		$this->f_emisi	= 'emisi';
-		$this->f_e_keterangan	= 'e_keterangan';
-		$this->f_e_user_input	= 'e_user_input';
-		$this->f_e_input_time	= 'e_input_time';
-		$this->f_e_user_update	= 'e_user_update';
-		$this->f_e_update_time	= 'e_update_time';
-		$this->f_k_id	= 'k_id';
-		$this->f_kategori_id	= 'kategori_id';
-		$this->f_kondisi	= 'kondisi';
-		$this->f_k_user_input	= 'k_user_input';
-		$this->f_k_input_time	= 'k_input_time';
-		$this->f_k_user_update	= 'k_user_update';
-		$this->f_k_update_time	= 'k_update_time';
 		$this->f_userinput_id	= 'userinput_id';
 		$this->f_nmuser	= 'nmuser';
 		$this->f_passuser	= 'passuser';
@@ -175,12 +137,6 @@ class Journal_cpc_config {
 		$this->f_userupdate_opt_level	= 'userupdate_opt_level';
 		$this->f_userupdate_opt_status	= 'userupdate_opt_status';
 		$this->f_userupdate_picture	= 'userupdate_picture';
-		$this->f_kk_id	= 'kk_id';
-		$this->f_nama_kategori	= 'nama_kategori';
-		$this->f_kk_user_input	= 'kk_user_input';
-		$this->f_kk_input_time	= 'kk_input_time';
-		$this->f_kk_user_update	= 'kk_user_update';
-		$this->f_kk_update_time	= 'kk_update_time';
 
 		
 		
@@ -188,31 +144,22 @@ class Journal_cpc_config {
 		/* CONFIG FORM LIST */
 		/* field_alias_database => $title */	
 		$this->table_column =array(
-			$this->f_id	=> $this->app_journal_cpc_id,
-			// $this->f_bank_id	=> $this->app_journal_cpc_bank_id,
-			$this->f_bank	=> $this->b_bank,
-			$this->f_jenis_uang	=> $this->j_jenis_uang,
-			// $this->f_pecahan_id	=> $this->app_journal_cpc_pecahan_id,
-			$this->f_pecahan	=> $this->p_pecahan,
-			// $this->f_emisi_id	=> $this->app_journal_cpc_emisi_id,
-			$this->f_emisi	=> $this->e_emisi,
-			$this->f_nama_kategori	=> $this->kk_nama_kategori,
-			// $this->f_kondisi_id	=> $this->app_journal_cpc_kondisi_id,
-			$this->f_kondisi	=> $this->k_kondisi,
-			$this->f_jumlah	=> $this->app_journal_cpc_jumlah,
-			//$this->f_status	=> $this->app_journal_cpc_status,
-			$this->f_tanggal_penerimaan	=> $this->app_journal_cpc_tanggal_penerimaan,
-			$this->f_tanggal_pencatatan	=> $this->app_journal_cpc_tanggal_pencatatan,
-			$this->f_keterangan	=> $this->app_journal_cpc_keterangan,			
-			// $this->f_sentra_kas_id	=> $this->app_journal_cpc_sentra_kas_id,
-			$this->f_sentra	=> $this->s_sentra,
-			// $this->f_jenis_uang_id	=> $this->app_journal_cpc_jenis_uang_id,
-			//$this->f_user_input	=> $this->app_journal_cpc_user_input,
+			$this->f_id	=> $this->app_journal_campur_cpc_id,
+			$this->f_bank_id	=> $this->app_journal_campur_cpc_bank_id,
+			$this->f_sentra_kas_id	=> $this->app_journal_campur_cpc_sentra_kas_id,
+			$this->f_jenis_uang_id	=> $this->app_journal_campur_cpc_jenis_uang_id,
+			$this->f_pecahan_id	=> $this->app_journal_campur_cpc_pecahan_id,
+			$this->f_jumlah	=> $this->app_journal_campur_cpc_jumlah,
+			$this->f_status	=> $this->app_journal_campur_cpc_status,
+			$this->f_tanggal_penerimaan	=> $this->app_journal_campur_cpc_tanggal_penerimaan,
+			$this->f_tanggal_pencatatan	=> $this->app_journal_campur_cpc_tanggal_pencatatan,
+			$this->f_keterangan	=> $this->app_journal_campur_cpc_keterangan,
+			//$this->f_user_input	=> $this->app_journal_campur_cpc_user_input,
 			$this->f_nama_lengkap	=> $this->userinput_nama_lengkap,
-			$this->f_input_time	=> $this->app_journal_cpc_input_time,
-			//$this->f_user_update	=> $this->app_journal_cpc_user_update,
+			$this->f_input_time	=> $this->app_journal_campur_cpc_input_time,
+			//$this->f_user_update	=> $this->app_journal_campur_cpc_user_update,
 			$this->f_userupdate_nama_lengkap	=> $this->userupdate_nama_lengkap,
-			$this->f_update_time	=> $this->app_journal_cpc_update_time,
+			$this->f_update_time	=> $this->app_journal_campur_cpc_update_time,
 			// $this->f_b_id	=> $this->b_id,
 			// $this->f_kode_bank	=> $this->b_kode_bank,
 			// $this->f_bank	=> $this->b_bank,
@@ -244,20 +191,6 @@ class Journal_cpc_config {
 			// $this->f_p_input_time	=> $this->p_input_time,
 			// $this->f_p_user_update	=> $this->p_user_update,
 			// $this->f_p_update_time	=> $this->p_update_time,
-			// $this->f_e_id	=> $this->e_id,
-			// $this->f_emisi	=> $this->e_emisi,
-			// $this->f_e_keterangan	=> $this->e_keterangan,
-			// $this->f_e_user_input	=> $this->e_user_input,
-			// $this->f_e_input_time	=> $this->e_input_time,
-			// $this->f_e_user_update	=> $this->e_user_update,
-			// $this->f_e_update_time	=> $this->e_update_time,
-			// $this->f_k_id	=> $this->k_id,
-			// $this->f_kategori_id	=> $this->k_kategori_id,
-			// $this->f_kondisi	=> $this->k_kondisi,
-			// $this->f_k_user_input	=> $this->k_user_input,
-			// $this->f_k_input_time	=> $this->k_input_time,
-			// $this->f_k_user_update	=> $this->k_user_update,
-			// $this->f_k_update_time	=> $this->k_update_time,
 			// $this->f_userinput_id	=> $this->userinput_id,
 			// $this->f_nmuser	=> $this->userinput_nmuser,
 			// $this->f_passuser	=> $this->userinput_passuser,
@@ -274,12 +207,6 @@ class Journal_cpc_config {
 			// $this->f_userupdate_opt_level	=> $this->userupdate_opt_level,
 			// $this->f_userupdate_opt_status	=> $this->userupdate_opt_status,
 			// $this->f_userupdate_picture	=> $this->userupdate_picture,
-			// $this->f_kk_id	=> $this->kk_id,
-			// $this->f_nama_kategori	=> $this->kk_nama_kategori,
-			// $this->f_kk_user_input	=> $this->kk_user_input,
-			// $this->f_kk_input_time	=> $this->kk_input_time,
-			// $this->f_kk_user_update	=> $this->kk_user_update,
-			// $this->f_kk_update_time	=> $this->kk_update_time,
 		);
 
 	}
@@ -296,7 +223,7 @@ class Journal_cpc_config {
 
 /* END */
 /* Mohon untuk tidak mengubah informasi ini : */
-/* Generated by YBS CRUD Generator 2021-12-03 15:41:53 */
+/* Generated by YBS CRUD Generator 2021-12-05 00:41:04 */
 /* contact : YAP BRIDGING SYSTEM 		*/
 /*			 bridging.system@gmail.com  */
 /* 			 MAKASSAR CITY, INDONESIAN 	*/

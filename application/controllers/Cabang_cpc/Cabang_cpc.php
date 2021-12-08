@@ -86,7 +86,13 @@ class Cabang_cpc extends CI_Controller {
 		*/	
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['bank_wilayah_id'],'#bank_wilayah_id')){
+		if(!$o->not_empty($val['bank_id'],'#bank_id')){
+			echo $o->result();	
+			return;
+		}
+
+		//mencegah data kosong
+		if(!$o->not_empty($val['kategori_cabang_id'],'#kategori_cabang_id')){
 			echo $o->result();	
 			return;
 		}
@@ -97,24 +103,8 @@ class Cabang_cpc extends CI_Controller {
 			return;
 		}
 
-		//mencegah data double
-		$field=array('nama_cabang'=>$val['nama_cabang']);
-		$exist = $this->tmodel->if_exist('',$field);
-		if(!$o->not_exist($exist,'#nama_cabang')){
-			echo $o->result();	
-			return;
-		}
-
 		//mencegah data kosong
 		if(!$o->not_empty($val['alamat'],'#alamat')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data double
-		$field=array('alamat'=>$val['alamat']);
-		$exist = $this->tmodel->if_exist('',$field);
-		if(!$o->not_exist($exist,'#alamat')){
 			echo $o->result();	
 			return;
 		}
@@ -125,10 +115,9 @@ class Cabang_cpc extends CI_Controller {
 			return;
 		}
 
-		unset($val['id']);
-
 		$val['user_input']= $this->_user_id;
 	
+		unset($val['id']);
 		$success = $this->tmodel->insert($val);
 		echo $o->auto_result($success);
 
@@ -188,7 +177,13 @@ class Cabang_cpc extends CI_Controller {
 		*/			
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['bank_wilayah_id'],'#bank_wilayah_id')){
+		if(!$o->not_empty($val['bank_id'],'#bank_id')){
+			echo $o->result();	
+			return;
+		}
+
+		//mencegah data kosong
+		if(!$o->not_empty($val['kategori_cabang_id'],'#kategori_cabang_id')){
 			echo $o->result();	
 			return;
 		}
@@ -199,22 +194,18 @@ class Cabang_cpc extends CI_Controller {
 			return;
 		}
 
-		//mencegah data double
-		$field=array('nama_cabang'=>$val['nama_cabang']);
-		$exist = $this->tmodel->if_exist($val['id'],$field);
-		if(!$o->not_exist($exist,'#nama_cabang')){
-			echo $o->result();	
-			return;
-		}
-
 		//mencegah data kosong
 		if(!$o->not_empty($val['alamat'],'#alamat')){
 			echo $o->result();	
 			return;
 		}
 
-						
-				
+		//mencegah data kosong
+		if(!$o->not_empty($val['sentra_kas_id'],'#sentra_kas_id')){
+			echo $o->result();	
+			return;
+		}
+
 		$val['user_update']= $this->_user_id;
 		$val['update_time']= now_db();
 

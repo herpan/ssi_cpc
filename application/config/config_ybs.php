@@ -11,7 +11,7 @@ $config['domain']='';
 $config['powored_by']='YBS SYSTEM | 2019';
 
 $config['login_title_bar']='SSI Cash Processing Management';
-$config['login_title_box']='Silahkan login untuk melanjutkan';
+$config['login_title_box']='Cash Processing Center';
 /*file in images/logo*/
 $config['login_logo']='login.png';
 $config['login_logo_size']='8';//range 1-9
@@ -42,6 +42,6 @@ $config['develop_email']='';
 
 
 /*LOGIN STYLE*/
-$config['login_style']='Style1';
+$config['login_style']='Style2';
 
 ?>

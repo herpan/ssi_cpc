@@ -44,78 +44,53 @@ p {
     margin: 10px;
 }
 </style>
-<body class="login-page sidebar-collapse">
-  <nav class="navbar navbar-transparent navbar-color-on-scroll fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
-    <div class="container">
-      <div class="navbar-translate">
-        <a class="navbar-brand" href="https://demos.creative-tim.com/material-kit/index.html">
-          </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="navbar-toggler-icon"></span>
-          <span class="navbar-toggler-icon"></span>
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      </div>
-	 
-    </div>
-  </nav>
+<body class="login-page sidebar-collapse">  
   <div class="page-header header-filter" style="background-image: url('<?php echo base_url() ?>assets/front-end/material-kit/assets/img/bg7.jpg'); background-size: cover; background-position: top center;">
     <div class="container">
       <div class="row">
-        <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+        <div class="col-lg-8 col-md-8 ml-auto mr-auto">          
+        </div>        
+        <div class="col-lg-4 col-md-4 ml-auto mr-auto">
           <div class="card card-login">
-               <?php echo form_open('auth','class="form"'); ?> 
-             
-			 <div class="card-header card-header-primary text-center">
-                <h4 class="card-title"><?php echo $this->_appinfo['login_title_box']?></h4>
-                <div class="social-line">
-                  <a href="javascript:void(0)" class="btn btn-just-icon btn-link">
-                    <i class="fa fa-facebook-square"></i>
-                  </a>
-                  <a href="javascript:void(0)" class="btn btn-just-icon btn-link">
-                    <i class="fa fa-twitter"></i>
-                  </a>
-                  <a href="javascript:void(0)" class="btn btn-just-icon btn-link">
-                    <i class="fa fa-google-plus"></i>
-                  </a>
+               <?php echo form_open('auth','class="form"'); ?>             
+                         
+                <div class="card-body">	                  
+                <div class="text-center mb-6">       
+                  <br/>          
+                  <img src="<?php echo base_url('api/Public_Access/get_logo_login')?>" class="h-<?php echo $this->_appinfo['login_logo_size']?> fontlogo" alt="">
+                  <h3 class="card-title"><?php echo $this->_appinfo['login_title_box']?></h3>
                 </div>
-              </div>
-              <p class="description text-center"><?php echo $this->_appinfo['login_title_box']?></p>
-              <div class="card-body">
-			  	
-                <div class="input-group">
-				
+
+                <div class="input-group">				
                   <div class="input-group-prepend">
                     <span class="input-group-text">
                       <i class="material-icons">face</i>
                     </span>
                   </div>
-				  <?php 
-							echo _create_random_div()
-					?>	
-				
+                  <?php 
+                      echo _create_random_div()
+                  ?>			
                   <input type="text" class="form-control" placeholder="<?php echo $this->_appinfo['login_label_user']?>" id="cd\ #?';/\%&<?php echo $element_name_iduser ?> .body.form-control" name="<?php echo $element_name_iduser ?>"  value="<?php echo set_value($this->_old_label_name); ?>" >
-			
-			   </div>
-				
-                <div class="input-group">
+                  
+                </div>	
+                <small> <span class="text-danger text-right"><?php echo form_error($this->_old_label_name); ?></span> </small>			
+                  <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
                       <i class="material-icons">lock_outline</i>
                     </span>
                   </div>
-				    <?php  
-							echo _create_random_div()
-					?>	
+                  <?php  
+                    echo _create_random_div()
+                  ?>	
                   <input type="password" autocomplete="current-password" class="form-control" placeholder="<?php echo $this->_appinfo['login_label_password']?>..." id="cd\ #?';/\%&<?php echo $element_name_password ?> .body.form-control" name="<?php echo $element_name_password ?>" value="<?php echo set_value($this->_old_label_pass); ?>" >
+                  
+                  
                 </div>
-              </div>
-			
-              <div class="footer text-center">
-				<small> <span class="text-danger"><?php echo form_error($this->_old_label_name); ?></span> </small>
-				<small> <span class="text-danger"  id='label_error_bottom'><?php echo form_error($this->_old_label_pass); ?></span> </small>
-				<button type="submit" id="cd\ #?';/\%& .body.form-control" class="btn btn-primary btn-link"><?php echo $this->_appinfo['login_label_button']?></button>
+                <small> <span class="text-danger text-right"  id='label_error_bottom'><?php echo form_error($this->_old_label_pass); ?></span> </small>
+                </div>			
+              <div class="footer text-center">	
+				      <button type="submit" id="cd\ #?';/\%& .body.form-control" class="btn btn-primary"><?php echo $this->_appinfo['login_label_button']?></button>
               </div>
             </form>
           </div>

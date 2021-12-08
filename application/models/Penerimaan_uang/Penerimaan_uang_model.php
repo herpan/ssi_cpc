@@ -13,6 +13,7 @@ class Penerimaan_uang_model extends CI_Model {
 		$this->datatables->select('
 			app_penerimaan_uang.id as id,
 			app_penerimaan_uang.cabang_id as cabang_id,
+			app_penerimaan_uang.sentra_kas_id as sentra_kas_id,
 			app_penerimaan_uang.jumlah_global as jumlah_global,
 			app_penerimaan_uang.status_penerimaan as status_penerimaan,
 			app_penerimaan_uang.tanggal_penerimaan as tanggal_penerimaan,
@@ -21,16 +22,25 @@ class Penerimaan_uang_model extends CI_Model {
 			app_penerimaan_uang.input_time as input_time,
 			app_penerimaan_uang.user_update as user_update,
 			app_penerimaan_uang.update_time as update_time,
-			cab.id as cab_id,
-			cab.bank_wilayah_id as bank_wilayah_id,
-			cab.nama_cabang as nama_cabang,
-			cab.alamat as alamat,
-			cab.deskripsi as deskripsi,
-			cab.sentra_kas_id as sentra_kas_id,
-			cab.user_input as cab_user_input,
-			cab.input_time as cab_input_time,
-			cab.user_update as cab_user_update,
-			cab.update_time as cab_update_time,
+			c.id as c_id,
+			c.bank_id as bank_id,
+			c.nama_cabang as nama_cabang,
+			c.alamat as alamat,
+			c.deskripsi as deskripsi,
+			c.sentra_kas_id as c_sentra_kas_id,
+			c.user_input as c_user_input,
+			c.input_time as c_input_time,
+			c.user_update as c_user_update,
+			c.update_time as c_update_time,
+			s.id as s_id,
+			s.kode_sentra as kode_sentra,
+			s.sentra as sentra,
+			s.nama_sentra as nama_sentra,
+			s.alamat as s_alamat,
+			s.user_input as s_user_input,
+			s.input_time as s_input_time,
+			s.user_update as s_user_update,
+			s.update_time as s_update_time,
 			userinput.id as userinput_id,
 			userinput.nmuser as nmuser,
 			userinput.passuser as passuser,
@@ -47,47 +57,17 @@ class Penerimaan_uang_model extends CI_Model {
 			userupdate.opt_level as userupdate_opt_level,
 			userupdate.opt_status as userupdate_opt_status,
 			userupdate.picture as userupdate_picture,
-			wilayah.id as wilayah_id,
-			wilayah.bank_id as bank_id,
-			wilayah.kode_wilayah as kode_wilayah,
-			wilayah.nama_wilayah as nama_wilayah,
-			wilayah.deskripsi as wilayah_deskripsi,
-			wilayah.user_input as wilayah_user_input,
-			wilayah.input_time as wilayah_input_time,
-			wilayah.user_update as wilayah_user_update,
-			wilayah.update_time as wilayah_update_time,
-			sentra.id as sentra_id,
-			sentra.kode_sentra as kode_sentra,
-			sentra.sentra as sentra,
-			sentra.nama_sentra as nama_sentra,
-			sentra.alamat as sentra_alamat,
-			sentra.user_input as sentra_user_input,
-			sentra.input_time as sentra_input_time,
-			sentra.user_update as sentra_user_update,
-			sentra.update_time as sentra_update_time,
-			b.id as b_id,
-			b.kode_bank as kode_bank,
-			b.bank as bank,
-			b.deskripsi as b_deskripsi,
-			b.user_input as b_user_input,
-			b.input_time as b_input_time,
-			b.user_update as b_user_update,
-			b.update_time as b_update_time,
 		');
 		
 		$this->datatables->from('app_penerimaan_uang');
 	
-		$this->datatables->join('app_cabang_cpc cab','cab.id=app_penerimaan_uang.cabang_id','LEFT'); 
+		$this->datatables->join('app_cabang_cpc c','c.id=app_penerimaan_uang.cabang_id','LEFT'); 
+	
+		$this->datatables->join('app_sentra_kas s','s.id=app_penerimaan_uang.sentra_kas_id','LEFT'); 
 	
 		$this->datatables->join('sys_user userinput','userinput.id=app_penerimaan_uang.user_input','LEFT'); 
 	
 		$this->datatables->join('sys_user userupdate','userupdate.id=app_penerimaan_uang.user_update','LEFT'); 
-	
-		$this->datatables->join('app_bank_wilayah wilayah','wilayah.id=cab.bank_wilayah_id','LEFT'); 
-	
-		$this->datatables->join('app_sentra_kas sentra','sentra.id=cab.sentra_kas_id','LEFT'); 
-	
-		$this->datatables->join('app_bank b','b.id=wilayah.bank_id','LEFT'); 
 
 		
 		
@@ -101,6 +81,7 @@ class Penerimaan_uang_model extends CI_Model {
 		$afield = array(
 			'app_penerimaan_uang.id as id',
 			'app_penerimaan_uang.cabang_id as cabang_id',
+			'app_penerimaan_uang.sentra_kas_id as sentra_kas_id',
 			'app_penerimaan_uang.jumlah_global as jumlah_global',
 			'app_penerimaan_uang.status_penerimaan as status_penerimaan',
 			'app_penerimaan_uang.tanggal_penerimaan as tanggal_penerimaan',
@@ -109,16 +90,25 @@ class Penerimaan_uang_model extends CI_Model {
 			'app_penerimaan_uang.input_time as input_time',
 			'app_penerimaan_uang.user_update as user_update',
 			'app_penerimaan_uang.update_time as update_time',
-			'cab.id as cab_id',
-			'cab.bank_wilayah_id as bank_wilayah_id',
-			'cab.nama_cabang as nama_cabang',
-			'cab.alamat as alamat',
-			'cab.deskripsi as deskripsi',
-			'cab.sentra_kas_id as sentra_kas_id',
-			'cab.user_input as cab_user_input',
-			'cab.input_time as cab_input_time',
-			'cab.user_update as cab_user_update',
-			'cab.update_time as cab_update_time',
+			'c.id as c_id',
+			'c.bank_id as bank_id',
+			'c.nama_cabang as nama_cabang',
+			'c.alamat as alamat',
+			'c.deskripsi as deskripsi',
+			'c.sentra_kas_id as c_sentra_kas_id',
+			'c.user_input as c_user_input',
+			'c.input_time as c_input_time',
+			'c.user_update as c_user_update',
+			'c.update_time as c_update_time',
+			's.id as s_id',
+			's.kode_sentra as kode_sentra',
+			's.sentra as sentra',
+			's.nama_sentra as nama_sentra',
+			's.alamat as s_alamat',
+			's.user_input as s_user_input',
+			's.input_time as s_input_time',
+			's.user_update as s_user_update',
+			's.update_time as s_update_time',
 			'userinput.id as userinput_id',
 			'userinput.nmuser as nmuser',
 			'userinput.passuser as passuser',
@@ -135,41 +125,13 @@ class Penerimaan_uang_model extends CI_Model {
 			'userupdate.opt_level as userupdate_opt_level',
 			'userupdate.opt_status as userupdate_opt_status',
 			'userupdate.picture as userupdate_picture',
-			'wilayah.id as wilayah_id',
-			'wilayah.bank_id as bank_id',
-			'wilayah.kode_wilayah as kode_wilayah',
-			'wilayah.nama_wilayah as nama_wilayah',
-			'wilayah.deskripsi as wilayah_deskripsi',
-			'wilayah.user_input as wilayah_user_input',
-			'wilayah.input_time as wilayah_input_time',
-			'wilayah.user_update as wilayah_user_update',
-			'wilayah.update_time as wilayah_update_time',
-			'sentra.id as sentra_id',
-			'sentra.kode_sentra as kode_sentra',
-			'sentra.sentra as sentra',
-			'sentra.nama_sentra as nama_sentra',
-			'sentra.alamat as sentra_alamat',
-			'sentra.user_input as sentra_user_input',
-			'sentra.input_time as sentra_input_time',
-			'sentra.user_update as sentra_user_update',
-			'sentra.update_time as sentra_update_time',
-			'b.id as b_id',
-			'b.kode_bank as kode_bank',
-			'b.bank as bank',
-			'b.deskripsi as b_deskripsi',
-			'b.user_input as b_user_input',
-			'b.input_time as b_input_time',
-			'b.user_update as b_user_update',
-			'b.update_time as b_update_time',
 		
 		);
 		$this->db->select($afield);
-		$this->db->join('app_cabang_cpc cab','cab.id=app_penerimaan_uang.cabang_id','LEFT'); 
+		$this->db->join('app_cabang_cpc c','c.id=app_penerimaan_uang.cabang_id','LEFT'); 
+		$this->db->join('app_sentra_kas s','s.id=app_penerimaan_uang.sentra_kas_id','LEFT'); 
 		$this->db->join('sys_user userinput','userinput.id=app_penerimaan_uang.user_input','LEFT'); 
 		$this->db->join('sys_user userupdate','userupdate.id=app_penerimaan_uang.user_update','LEFT'); 
-		$this->db->join('app_bank_wilayah wilayah','wilayah.id=cab.bank_wilayah_id','LEFT'); 
-		$this->db->join('app_sentra_kas sentra','sentra.id=cab.sentra_kas_id','LEFT'); 
-		$this->db->join('app_bank b','b.id=wilayah.bank_id','LEFT'); 
 
 		$this->db->order_by('app_penerimaan_uang.id', 'ASC');
 		return $this->db->get('app_penerimaan_uang')->result_array();
@@ -180,6 +142,7 @@ class Penerimaan_uang_model extends CI_Model {
 		$afield = array(
 			'app_penerimaan_uang.id as id',
 			'app_penerimaan_uang.cabang_id as cabang_id',
+			'app_penerimaan_uang.sentra_kas_id as sentra_kas_id',
 			'app_penerimaan_uang.jumlah_global as jumlah_global',
 			'app_penerimaan_uang.status_penerimaan as status_penerimaan',
 			'app_penerimaan_uang.tanggal_penerimaan as tanggal_penerimaan',
@@ -188,16 +151,25 @@ class Penerimaan_uang_model extends CI_Model {
 			'app_penerimaan_uang.input_time as input_time',
 			'app_penerimaan_uang.user_update as user_update',
 			'app_penerimaan_uang.update_time as update_time',
-			'cab.id as cab_id',
-			'cab.bank_wilayah_id as bank_wilayah_id',
-			'cab.nama_cabang as nama_cabang',
-			'cab.alamat as alamat',
-			'cab.deskripsi as deskripsi',
-			'cab.sentra_kas_id as sentra_kas_id',
-			'cab.user_input as cab_user_input',
-			'cab.input_time as cab_input_time',
-			'cab.user_update as cab_user_update',
-			'cab.update_time as cab_update_time',
+			'c.id as c_id',
+			'c.bank_id as bank_id',
+			'c.nama_cabang as nama_cabang',
+			'c.alamat as alamat',
+			'c.deskripsi as deskripsi',
+			'c.sentra_kas_id as c_sentra_kas_id',
+			'c.user_input as c_user_input',
+			'c.input_time as c_input_time',
+			'c.user_update as c_user_update',
+			'c.update_time as c_update_time',
+			's.id as s_id',
+			's.kode_sentra as kode_sentra',
+			's.sentra as sentra',
+			's.nama_sentra as nama_sentra',
+			's.alamat as s_alamat',
+			's.user_input as s_user_input',
+			's.input_time as s_input_time',
+			's.user_update as s_user_update',
+			's.update_time as s_update_time',
 			'userinput.id as userinput_id',
 			'userinput.nmuser as nmuser',
 			'userinput.passuser as passuser',
@@ -214,41 +186,13 @@ class Penerimaan_uang_model extends CI_Model {
 			'userupdate.opt_level as userupdate_opt_level',
 			'userupdate.opt_status as userupdate_opt_status',
 			'userupdate.picture as userupdate_picture',
-			'wilayah.id as wilayah_id',
-			'wilayah.bank_id as bank_id',
-			'wilayah.kode_wilayah as kode_wilayah',
-			'wilayah.nama_wilayah as nama_wilayah',
-			'wilayah.deskripsi as wilayah_deskripsi',
-			'wilayah.user_input as wilayah_user_input',
-			'wilayah.input_time as wilayah_input_time',
-			'wilayah.user_update as wilayah_user_update',
-			'wilayah.update_time as wilayah_update_time',
-			'sentra.id as sentra_id',
-			'sentra.kode_sentra as kode_sentra',
-			'sentra.sentra as sentra',
-			'sentra.nama_sentra as nama_sentra',
-			'sentra.alamat as sentra_alamat',
-			'sentra.user_input as sentra_user_input',
-			'sentra.input_time as sentra_input_time',
-			'sentra.user_update as sentra_user_update',
-			'sentra.update_time as sentra_update_time',
-			'b.id as b_id',
-			'b.kode_bank as kode_bank',
-			'b.bank as bank',
-			'b.deskripsi as b_deskripsi',
-			'b.user_input as b_user_input',
-			'b.input_time as b_input_time',
-			'b.user_update as b_user_update',
-			'b.update_time as b_update_time',
 		
 		);
 		$this->db->select($afield);
-		$this->db->join('app_cabang_cpc cab','cab.id=app_penerimaan_uang.cabang_id','LEFT'); 
+		$this->db->join('app_cabang_cpc c','c.id=app_penerimaan_uang.cabang_id','LEFT'); 
+		$this->db->join('app_sentra_kas s','s.id=app_penerimaan_uang.sentra_kas_id','LEFT'); 
 		$this->db->join('sys_user userinput','userinput.id=app_penerimaan_uang.user_input','LEFT'); 
 		$this->db->join('sys_user userupdate','userupdate.id=app_penerimaan_uang.user_update','LEFT'); 
-		$this->db->join('app_bank_wilayah wilayah','wilayah.id=cab.bank_wilayah_id','LEFT'); 
-		$this->db->join('app_sentra_kas sentra','sentra.id=cab.sentra_kas_id','LEFT'); 
-		$this->db->join('app_bank b','b.id=wilayah.bank_id','LEFT'); 
 
 		$this->db->where('app_penerimaan_uang.id', $id);
 		$this->db->order_by('app_penerimaan_uang.id', 'ASC');

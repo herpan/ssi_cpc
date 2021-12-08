@@ -23,7 +23,7 @@ class Template {
 			  $msg =  $this->CI->session->flashdata('auth_login');
 			  if($msg !=='Opps..max 1 login per user, anda telah login pada perangkat yang lain'){
 				//Di eksekusi saat browser di clear
-				$this->CI->session->set_flashdata('auth_login','Opps..browser cleaning');
+				$this->CI->session->set_flashdata('auth_login','Anda telah logout');
 			  }
 			 redirect('auth', 'refresh');
 		  }	 else{

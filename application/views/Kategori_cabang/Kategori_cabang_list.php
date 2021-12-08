@@ -76,18 +76,6 @@ function set_scroll_table(){
 	resp_table=!$('#hscroll-table').prop('checked');
 	refresh_table();
 }	
-
-<?php //MEMBUAT INPUT SEARCH  ?>
-$('#table-detail thead tr').clone(true).appendTo( '#table-detail thead' );
-$('#table-detail thead tr:eq(1) th').each( function (i) {
-	if($(this).hasClass('nst')){
-		$(this).html('');
-	}else{
-		var bb =  '<input hidden  type="text" placeholder=" filter by.." class="column-search" data_index="'+i+'"/>' ;
-		$(this).html(bb);
-	}
-} );
-					
 	
 
 function refresh_table(value_search){
@@ -102,18 +90,10 @@ function refresh_table(value_search){
                         "iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
                         "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
                     };
-                };	
-	if(!resp_table){
-		$('.column-search').removeAttr('hidden');
-	}else{
-		$('.column-search').attr('hidden','hidden');
-	}	
-
-				
+                };
 table_detail = $('#table-detail').dataTable({
 				destroy				: true,
-				processing			: true,
-				serverSide			: true,				
+				processing			: true,				
 				language			: {processing : '<div class="dimmer active"><div class="loader"></div><br><br><br>mohon tunggu...</div>'},
 				ajax				:	{	url: "<?php echo $link_refresh_table; ?>" ,
 											type: "POST",
@@ -222,14 +202,7 @@ table_detail = $('#table-detail').dataTable({
 															value_search =this.value;
 															api.search(this.value).draw();
 														}
-											});									
-											
-											$('.column-search').on('keyup', function(e) {
-												if (e.keyCode == 13) {
-														var i = $(this).attr('data_index');
-														api.columns(i).search(this.value).draw();
-												}
-											});									},						
+											});								},						
 				
 				scrollY 			:	"300px",
 				scrollCollapse		:	false,

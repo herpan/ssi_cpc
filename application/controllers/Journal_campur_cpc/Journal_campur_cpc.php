@@ -1,16 +1,16 @@
 <?php
-require APPPATH. '/controllers/Penerimaan_uang/Penerimaan_uang_config.php';
+require APPPATH. '/controllers/Journal_campur_cpc/Journal_campur_cpc_config.php';
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Penerimaan_uang extends CI_Controller {
+class Journal_campur_cpc extends CI_Controller {
    private $log_key,$log_temp,$title;
    function __construct(){
         parent::__construct();
-		$this->load->model('Penerimaan_uang/Penerimaan_uang_model','tmodel');
-		$this->log_key ='log_Penerimaan_uang';
-		$this->title = new Penerimaan_uang_config();
+		$this->load->model('Journal_campur_cpc/Journal_campur_cpc_model','tmodel');
+		$this->log_key ='log_Journal_campur_cpc';
+		$this->title = new Journal_campur_cpc_config();
    }
 
 
@@ -18,14 +18,14 @@ class Penerimaan_uang extends CI_Controller {
 		$data = array(
 			'title_page_big'		=> 'DAFTAR',
 			'title'					=> $this->title,
-			'link_refresh_table'	=> site_url().'Penerimaan_uang/Penerimaan_uang/refresh_table/'.$this->_token,
-			'link_create'			=> site_url().'Penerimaan_uang/Penerimaan_uang/create',
-			'link_update'			=> site_url().'Penerimaan_uang/Penerimaan_uang/update',
-			'link_delete'			=> site_url().'Penerimaan_uang/Penerimaan_uang/delete_multiple',
-			'link_create_multiple'			=> site_url().'Penerimaan_uang/Penerimaan_uang/create_multiple',
+			'link_refresh_table'	=> site_url().'Journal_campur_cpc/Journal_campur_cpc/refresh_table/'.$this->_token,
+			'link_create'			=> site_url().'Journal_campur_cpc/Journal_campur_cpc/create',
+			'link_update'			=> site_url().'Journal_campur_cpc/Journal_campur_cpc/update',
+			'link_delete'			=> site_url().'Journal_campur_cpc/Journal_campur_cpc/delete_multiple',
+			'link_create_multiple'			=> site_url().'Journal_campur_cpc/Journal_campur_cpc/create_multiple',
 		);
 		
-		$this->template->load('Penerimaan_uang/Penerimaan_uang_list',$data);
+		$this->template->load('Journal_campur_cpc/Journal_campur_cpc_list',$data);
 	}
 
 	public function refresh_table($token){
@@ -59,11 +59,11 @@ class Penerimaan_uang extends CI_Controller {
 		$data = array(
 			'title_page_big'		=> 'Buat Baru',
 			'title'					=> $this->title,
-			'link_save'				=> site_url().'Penerimaan_uang/Penerimaan_uang/create_action',
+			'link_save'				=> site_url().'Journal_campur_cpc/Journal_campur_cpc/create_action',
 			'link_back'				=> $this->agent->referrer(),			
 		);
 		
-		$this->template->load('Penerimaan_uang/Penerimaan_uang_form',$data);
+		$this->template->load('Journal_campur_cpc/Journal_campur_cpc_form',$data);
 
 	}
 
@@ -86,7 +86,7 @@ class Penerimaan_uang extends CI_Controller {
 		*/	
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['cabang_id'],'#cabang_id')){
+		if(!$o->not_empty($val['bank_id'],'#bank_id')){
 			echo $o->result();	
 			return;
 		}
@@ -98,7 +98,25 @@ class Penerimaan_uang extends CI_Controller {
 		}
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['jumlah_global'],'#jumlah_global')){
+		if(!$o->not_empty($val['jenis_uang_id'],'#jenis_uang_id')){
+			echo $o->result();	
+			return;
+		}
+
+		//mencegah data kosong
+		if(!$o->not_empty($val['pecahan_id'],'#pecahan_id')){
+			echo $o->result();	
+			return;
+		}
+
+		//mencegah data kosong
+		if(!$o->not_empty($val['jumlah'],'#jumlah')){
+			echo $o->result();	
+			return;
+		}
+
+		//mencegah data kosong
+		if(!$o->not_empty($val['status'],'#status')){
 			echo $o->result();	
 			return;
 		}
@@ -109,7 +127,17 @@ class Penerimaan_uang extends CI_Controller {
 			return;
 		}
 
-		$val['user_input']= $this->_user_id;		
+		//mencegah data kosong
+		if(!$o->not_empty($val['tanggal_pencatatan'],'#tanggal_pencatatan')){
+			echo $o->result();	
+			return;
+		}
+
+		//mencegah data kosong
+		if(!$o->not_empty($val['keterangan'],'#keterangan')){
+			echo $o->result();	
+			return;
+		}
 
 		unset($val['id']);
 		$success = $this->tmodel->insert($val);
@@ -137,13 +165,13 @@ class Penerimaan_uang extends CI_Controller {
 			$data = array(
 				'title_page_big'		=> 'Buat Baru',
 				'title'					=> $this->title,
-				'link_save'				=> site_url().'Penerimaan_uang/Penerimaan_uang/update_action',
+				'link_save'				=> site_url().'Journal_campur_cpc/Journal_campur_cpc/update_action',
 				'link_back'				=> $this->agent->referrer(),
 				'data'					=> $row,
 				'id'					=> $id_generate,
 			);
 			
-			$this->template->load('Penerimaan_uang/Penerimaan_uang_form',$data);
+			$this->template->load('Journal_campur_cpc/Journal_campur_cpc_form',$data);
 		}else{
 			redirect($this->agent->referrer());
 		}
@@ -171,7 +199,7 @@ class Penerimaan_uang extends CI_Controller {
 		*/			
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['cabang_id'],'#cabang_id')){
+		if(!$o->not_empty($val['bank_id'],'#bank_id')){
 			echo $o->result();	
 			return;
 		}
@@ -183,7 +211,25 @@ class Penerimaan_uang extends CI_Controller {
 		}
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['jumlah_global'],'#jumlah_global')){
+		if(!$o->not_empty($val['jenis_uang_id'],'#jenis_uang_id')){
+			echo $o->result();	
+			return;
+		}
+
+		//mencegah data kosong
+		if(!$o->not_empty($val['pecahan_id'],'#pecahan_id')){
+			echo $o->result();	
+			return;
+		}
+
+		//mencegah data kosong
+		if(!$o->not_empty($val['jumlah'],'#jumlah')){
+			echo $o->result();	
+			return;
+		}
+
+		//mencegah data kosong
+		if(!$o->not_empty($val['status'],'#status')){
 			echo $o->result();	
 			return;
 		}
@@ -194,8 +240,17 @@ class Penerimaan_uang extends CI_Controller {
 			return;
 		}
 
-		$val['user_update']= $this->_user_id;
-		$val['update_time']= now_db();
+		//mencegah data kosong
+		if(!$o->not_empty($val['tanggal_pencatatan'],'#tanggal_pencatatan')){
+			echo $o->result();	
+			return;
+		}
+
+		//mencegah data kosong
+		if(!$o->not_empty($val['keterangan'],'#keterangan')){
+			echo $o->result();	
+			return;
+		}
 
 
 		$success = $this->tmodel->update($val['id'],$val);
@@ -239,8 +294,8 @@ class Penerimaan_uang extends CI_Controller {
 	public function  create_multiple(){
 		$data = array(
 			'title_page_big'			=> 'Import data pengguna dari excel',
-			'link_download_template'	=> site_url().'Penerimaan_uang/Penerimaan_uang/download_template/'.$this->_token,
-			'link_upload_template'		=> site_url().'Penerimaan_uang/Penerimaan_uang/upload_template/'.$this->_token,
+			'link_download_template'	=> site_url().'Journal_campur_cpc/Journal_campur_cpc/download_template/'.$this->_token,
+			'link_upload_template'		=> site_url().'Journal_campur_cpc/Journal_campur_cpc/upload_template/'.$this->_token,
 			'link_back'					=> $this->agent->referrer(),			
 		);
 		

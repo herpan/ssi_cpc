@@ -86,7 +86,13 @@ class Journal_cpc extends CI_Controller {
 		*/	
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['bank_wilayah_id'],'#bank_wilayah_id')){
+		if(!$o->not_empty($val['bank_id'],'#bank_id')){
+			echo $o->result();	
+			return;
+		}
+
+		//mencegah data kosong
+		if(!$o->not_empty($val['sentra_kas_id'],'#sentra_kas_id')){
 			echo $o->result();	
 			return;
 		}
@@ -117,6 +123,12 @@ class Journal_cpc extends CI_Controller {
 
 		//mencegah data kosong
 		if(!$o->not_empty($val['jumlah'],'#jumlah')){
+			echo $o->result();	
+			return;
+		}
+
+		//mencegah data kosong
+		if(!$o->not_empty($val['tanggal_penerimaan'],'#tanggal_penerimaan')){
 			echo $o->result();	
 			return;
 		}
@@ -189,7 +201,13 @@ class Journal_cpc extends CI_Controller {
 		*/			
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['bank_wilayah_id'],'#bank_wilayah_id')){
+		if(!$o->not_empty($val['bank_id'],'#bank_id')){
+			echo $o->result();	
+			return;
+		}
+
+		//mencegah data kosong
+		if(!$o->not_empty($val['sentra_kas_id'],'#sentra_kas_id')){
 			echo $o->result();	
 			return;
 		}
@@ -220,6 +238,12 @@ class Journal_cpc extends CI_Controller {
 
 		//mencegah data kosong
 		if(!$o->not_empty($val['jumlah'],'#jumlah')){
+			echo $o->result();	
+			return;
+		}
+
+		//mencegah data kosong
+		if(!$o->not_empty($val['tanggal_penerimaan'],'#tanggal_penerimaan')){
 			echo $o->result();	
 			return;
 		}

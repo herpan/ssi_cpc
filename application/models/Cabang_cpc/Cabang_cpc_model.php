@@ -12,7 +12,9 @@ class Cabang_cpc_model extends CI_Model {
 	public function json(){
 		$this->datatables->select('
 			app_cabang_cpc.id as id,
-			app_cabang_cpc.bank_wilayah_id as bank_wilayah_id,
+			app_cabang_cpc.bank_id as bank_id,
+			app_cabang_cpc.kategori_cabang_id as kategori_cabang_id,
+			k.kategori_cabang as kategori_cabang,
 			app_cabang_cpc.nama_cabang as nama_cabang,
 			app_cabang_cpc.alamat as alamat,
 			app_cabang_cpc.deskripsi as deskripsi,
@@ -21,24 +23,23 @@ class Cabang_cpc_model extends CI_Model {
 			app_cabang_cpc.input_time as input_time,
 			app_cabang_cpc.user_update as user_update,
 			app_cabang_cpc.update_time as update_time,
-			wilayah.id as wilayah_id,
-			wilayah.bank_id as bank_id,
-			wilayah.kode_wilayah as kode_wilayah,
-			wilayah.nama_wilayah as nama_wilayah,
-			wilayah.deskripsi as wilayah_deskripsi,
-			wilayah.user_input as wilayah_user_input,
-			wilayah.input_time as wilayah_input_time,
-			wilayah.user_update as wilayah_user_update,
-			wilayah.update_time as wilayah_update_time,
-			sentrakas.id as sentrakas_id,
-			sentrakas.kode_sentra as kode_sentra,
-			sentrakas.sentra as sentra,
-			sentrakas.nama_sentra as nama_sentra,
-			sentrakas.alamat as sentrakas_alamat,
-			sentrakas.user_input as sentrakas_user_input,
-			sentrakas.input_time as sentrakas_input_time,
-			sentrakas.user_update as sentrakas_user_update,
-			sentrakas.update_time as sentrakas_update_time,
+			b.id as b_id,
+			b.kode_bank as kode_bank,
+			b.bank as bank,
+			b.deskripsi as b_deskripsi,
+			b.user_input as b_user_input,
+			b.input_time as b_input_time,
+			b.user_update as b_user_update,
+			b.update_time as b_update_time,
+			s.id as s_id,
+			s.kode_sentra as kode_sentra,
+			s.sentra as sentra,
+			s.nama_sentra as nama_sentra,
+			s.alamat as s_alamat,
+			s.user_input as s_user_input,
+			s.input_time as s_input_time,
+			s.user_update as s_user_update,
+			s.update_time as s_update_time,
 			userinput.id as userinput_id,
 			userinput.nmuser as nmuser,
 			userinput.passuser as passuser,
@@ -59,9 +60,11 @@ class Cabang_cpc_model extends CI_Model {
 		
 		$this->datatables->from('app_cabang_cpc');
 	
-		$this->datatables->join('app_bank_wilayah wilayah','wilayah.id=app_cabang_cpc.bank_wilayah_id','LEFT'); 
+		$this->datatables->join('app_bank b','b.id=app_cabang_cpc.bank_id','LEFT'); 
+
+		$this->datatables->join('app_kategori_cabang k','k.id=app_cabang_cpc.kategori_cabang_id','LEFT'); 
 	
-		$this->datatables->join('app_sentra_kas sentrakas','sentrakas.id=app_cabang_cpc.sentra_kas_id','LEFT'); 
+		$this->datatables->join('app_sentra_kas s','s.id=app_cabang_cpc.sentra_kas_id','LEFT'); 
 	
 		$this->datatables->join('sys_user userinput','userinput.id=app_cabang_cpc.user_input','LEFT'); 
 	
@@ -78,7 +81,9 @@ class Cabang_cpc_model extends CI_Model {
    public function get_all(){
 		$afield = array(
 			'app_cabang_cpc.id as id',
-			'app_cabang_cpc.bank_wilayah_id as bank_wilayah_id',
+			'app_cabang_cpc.bank_id as bank_id',
+			'app_cabang_cpc.kategori_cabang_id as kategori_cabang_id',
+			'k.kategori_cabang as kategori_cabang',
 			'app_cabang_cpc.nama_cabang as nama_cabang',
 			'app_cabang_cpc.alamat as alamat',
 			'app_cabang_cpc.deskripsi as deskripsi',
@@ -87,24 +92,23 @@ class Cabang_cpc_model extends CI_Model {
 			'app_cabang_cpc.input_time as input_time',
 			'app_cabang_cpc.user_update as user_update',
 			'app_cabang_cpc.update_time as update_time',
-			'wilayah.id as wilayah_id',
-			'wilayah.bank_id as bank_id',
-			'wilayah.kode_wilayah as kode_wilayah',
-			'wilayah.nama_wilayah as nama_wilayah',
-			'wilayah.deskripsi as wilayah_deskripsi',
-			'wilayah.user_input as wilayah_user_input',
-			'wilayah.input_time as wilayah_input_time',
-			'wilayah.user_update as wilayah_user_update',
-			'wilayah.update_time as wilayah_update_time',
-			'sentrakas.id as sentrakas_id',
-			'sentrakas.kode_sentra as kode_sentra',
-			'sentrakas.sentra as sentra',
-			'sentrakas.nama_sentra as nama_sentra',
-			'sentrakas.alamat as sentrakas_alamat',
-			'sentrakas.user_input as sentrakas_user_input',
-			'sentrakas.input_time as sentrakas_input_time',
-			'sentrakas.user_update as sentrakas_user_update',
-			'sentrakas.update_time as sentrakas_update_time',
+			'b.id as b_id',
+			'b.kode_bank as kode_bank',
+			'b.bank as bank',
+			'b.deskripsi as b_deskripsi',
+			'b.user_input as b_user_input',
+			'b.input_time as b_input_time',
+			'b.user_update as b_user_update',
+			'b.update_time as b_update_time',
+			's.id as s_id',
+			's.kode_sentra as kode_sentra',
+			's.sentra as sentra',
+			's.nama_sentra as nama_sentra',
+			's.alamat as s_alamat',
+			's.user_input as s_user_input',
+			's.input_time as s_input_time',
+			's.user_update as s_user_update',
+			's.update_time as s_update_time',
 			'userinput.id as userinput_id',
 			'userinput.nmuser as nmuser',
 			'userinput.passuser as passuser',
@@ -124,8 +128,9 @@ class Cabang_cpc_model extends CI_Model {
 		
 		);
 		$this->db->select($afield);
-		$this->db->join('app_bank_wilayah wilayah','wilayah.id=app_cabang_cpc.bank_wilayah_id','LEFT'); 
-		$this->db->join('app_sentra_kas sentrakas','sentrakas.id=app_cabang_cpc.sentra_kas_id','LEFT'); 
+		$this->db->join('app_bank b','b.id=app_cabang_cpc.bank_id','LEFT'); 
+		$this->datatables->join('app_kategori_cabang k','k.id=app_cabang_cpc.kategori_cabang_id','LEFT'); 
+		$this->db->join('app_sentra_kas s','s.id=app_cabang_cpc.sentra_kas_id','LEFT'); 
 		$this->db->join('sys_user userinput','userinput.id=app_cabang_cpc.user_input','LEFT'); 
 		$this->db->join('sys_user userupdate','userupdate.id=app_cabang_cpc.user_update','LEFT'); 
 
@@ -137,7 +142,9 @@ class Cabang_cpc_model extends CI_Model {
 	public function get_by_id($id){
 		$afield = array(
 			'app_cabang_cpc.id as id',
-			'app_cabang_cpc.bank_wilayah_id as bank_wilayah_id',
+			'app_cabang_cpc.bank_id as bank_id',
+			'app_cabang_cpc.kategori_cabang_id as kategori_cabang_id',
+			'k.kategori_cabang as kategori_cabang',
 			'app_cabang_cpc.nama_cabang as nama_cabang',
 			'app_cabang_cpc.alamat as alamat',
 			'app_cabang_cpc.deskripsi as deskripsi',
@@ -146,24 +153,23 @@ class Cabang_cpc_model extends CI_Model {
 			'app_cabang_cpc.input_time as input_time',
 			'app_cabang_cpc.user_update as user_update',
 			'app_cabang_cpc.update_time as update_time',
-			'wilayah.id as wilayah_id',
-			'wilayah.bank_id as bank_id',
-			'wilayah.kode_wilayah as kode_wilayah',
-			'wilayah.nama_wilayah as nama_wilayah',
-			'wilayah.deskripsi as wilayah_deskripsi',
-			'wilayah.user_input as wilayah_user_input',
-			'wilayah.input_time as wilayah_input_time',
-			'wilayah.user_update as wilayah_user_update',
-			'wilayah.update_time as wilayah_update_time',
-			'sentrakas.id as sentrakas_id',
-			'sentrakas.kode_sentra as kode_sentra',
-			'sentrakas.sentra as sentra',
-			'sentrakas.nama_sentra as nama_sentra',
-			'sentrakas.alamat as sentrakas_alamat',
-			'sentrakas.user_input as sentrakas_user_input',
-			'sentrakas.input_time as sentrakas_input_time',
-			'sentrakas.user_update as sentrakas_user_update',
-			'sentrakas.update_time as sentrakas_update_time',
+			'b.id as b_id',
+			'b.kode_bank as kode_bank',
+			'b.bank as bank',
+			'b.deskripsi as b_deskripsi',
+			'b.user_input as b_user_input',
+			'b.input_time as b_input_time',
+			'b.user_update as b_user_update',
+			'b.update_time as b_update_time',
+			's.id as s_id',
+			's.kode_sentra as kode_sentra',
+			's.sentra as sentra',
+			's.nama_sentra as nama_sentra',
+			's.alamat as s_alamat',
+			's.user_input as s_user_input',
+			's.input_time as s_input_time',
+			's.user_update as s_user_update',
+			's.update_time as s_update_time',
 			'userinput.id as userinput_id',
 			'userinput.nmuser as nmuser',
 			'userinput.passuser as passuser',
@@ -183,8 +189,9 @@ class Cabang_cpc_model extends CI_Model {
 		
 		);
 		$this->db->select($afield);
-		$this->db->join('app_bank_wilayah wilayah','wilayah.id=app_cabang_cpc.bank_wilayah_id','LEFT'); 
-		$this->db->join('app_sentra_kas sentrakas','sentrakas.id=app_cabang_cpc.sentra_kas_id','LEFT'); 
+		$this->db->join('app_bank b','b.id=app_cabang_cpc.bank_id','LEFT'); 
+		$this->db->join('app_sentra_kas s','s.id=app_cabang_cpc.sentra_kas_id','LEFT'); 
+		$this->datatables->join('app_kategori_cabang k','k.id=app_cabang_cpc.kategori_cabang_id','LEFT'); 
 		$this->db->join('sys_user userinput','userinput.id=app_cabang_cpc.user_input','LEFT'); 
 		$this->db->join('sys_user userupdate','userupdate.id=app_cabang_cpc.user_update','LEFT'); 
 

@@ -8,7 +8,7 @@
 	
 					<div class='col-md-12 col-xl-12'>				
 					<div class='form-group'> 
-							<label class='form-label'><?php echo $title->app_journal_cpc_bank_id ?></label> 
+							<label class='form-label'><?php echo $title->app_journal_campur_cpc_bank_id ?></label> 
 							<?php $v='';  if(isset($data)) $v = $data->bank_id; 
 								  echo create_cmb_database(array(	'id'			=>'bank_id',
 																	'name'			=>'bank_id',
@@ -24,7 +24,7 @@
 			
 					<div class='col-md-12 col-xl-12'>				
 					<div class='form-group'> 
-							<label class='form-label'><?php echo $title->app_journal_cpc_sentra_kas_id ?></label> 
+							<label class='form-label'><?php echo $title->app_journal_campur_cpc_sentra_kas_id ?></label> 
 							<?php $v='';  if(isset($data)) $v = $data->sentra_kas_id; 
 								  echo create_cmb_database(array(	'id'			=>'sentra_kas_id',
 																	'name'			=>'sentra_kas_id',
@@ -40,7 +40,7 @@
 			
 					<div class='col-md-12 col-xl-12'>				
 					<div class='form-group'> 
-							<label class='form-label'><?php echo $title->app_journal_cpc_jenis_uang_id ?></label> 
+							<label class='form-label'><?php echo $title->app_journal_campur_cpc_jenis_uang_id ?></label> 
 							<?php $v='';  if(isset($data)) $v = $data->jenis_uang_id; 
 								  echo create_cmb_database(array(	'id'			=>'jenis_uang_id',
 																	'name'			=>'jenis_uang_id',
@@ -56,7 +56,7 @@
 			
 					<div class='col-md-12 col-xl-12'>				
 					<div class='form-group'> 
-							<label class='form-label'><?php echo $title->app_journal_cpc_pecahan_id ?></label> 
+							<label class='form-label'><?php echo $title->app_journal_campur_cpc_pecahan_id ?></label> 
 							<?php $v='';  if(isset($data)) $v = $data->pecahan_id; 
 								  echo create_cmb_database(array(	'id'			=>'pecahan_id',
 																	'name'			=>'pecahan_id',
@@ -70,14 +70,62 @@
 					</div>
 					</div>			
 			
+					<div class='col-md-12 col-xl-12'>
+					<div class='form-group'>
+							<label class='form-label'><?php echo $title->app_journal_campur_cpc_jumlah ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='jumlah' name='jumlah' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->jumlah ?>' >
+					</div>
+					</div>
+			
+			
+					<div class='col-md-12 col-xl-12'>
+					<div class='form-group'>
+							<label class='form-label'><?php echo $title->app_journal_campur_cpc_status ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='status' name='status' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->status ?>' >
+					</div>
+					</div>
+			
+			
+					<div class='col-md-12 col-xl-12'>
+					<div class='form-group'>
+							<label class='form-label'><?php echo $title->app_journal_campur_cpc_tanggal_penerimaan ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='tanggal_penerimaan' name='tanggal_penerimaan' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->tanggal_penerimaan ?>' >
+					</div>
+					</div>
+			
+			
+					<div class='col-md-12 col-xl-12'>
+					<div class='form-group'>
+							<label class='form-label'><?php echo $title->app_journal_campur_cpc_tanggal_pencatatan ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='tanggal_pencatatan' name='tanggal_pencatatan' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->tanggal_pencatatan ?>' >
+					</div>
+					</div>
+			
+			
+					<div class='col-md-12 col-xl-12'>
+					<div class='form-group'>
+							<label class='form-label'><?php echo $title->app_journal_campur_cpc_keterangan ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='keterangan' name='keterangan' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->keterangan ?>' >
+					</div>
+					</div>
+			
+			
+					<div class='col-md-12 col-xl-12'>
+					<div class='form-group'>
+							<label class='form-label'><?php echo $title->app_journal_campur_cpc_input_time ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='input_time' name='input_time' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->input_time ?>' >
+					</div>
+					</div>
+			
+			
 					<div class='col-md-12 col-xl-12'>				
 					<div class='form-group'> 
-							<label class='form-label'><?php echo $title->app_journal_cpc_emisi_id ?></label> 
-							<?php $v='';  if(isset($data)) $v = $data->emisi_id; 
-								  echo create_cmb_database(array(	'id'			=>'emisi_id',
-																	'name'			=>'emisi_id',
-																	'table'			=>'app_emisi',
-																	'field_show'	=>'emisi',
+							<label class='form-label'><?php echo $title->app_journal_campur_cpc_user_update ?></label> 
+							<?php $v='';  if(isset($data)) $v = $data->user_update; 
+								  echo create_cmb_database(array(	'id'			=>'user_update',
+																	'name'			=>'user_update',
+																	'table'			=>'sys_user',
+																	'field_show'	=>'nmuser',
 																	'primary_key'	=>'id', 
 																	'selected'		=>$v,
 																	'field_link'	=>'',
@@ -86,60 +134,10 @@
 					</div>
 					</div>			
 			
-					<div class='col-md-12 col-xl-12'>				
-					<div class='form-group'> 
-							<label class='form-label'><?php echo $title->app_journal_cpc_kondisi_id ?></label> 
-							<?php $v='';  if(isset($data)) $v = $data->kondisi_id; 
-								  echo create_cmb_database(array(	'id'			=>'kondisi_id',
-																	'name'			=>'kondisi_id',
-																	'table'			=>'app_kondisi',
-																	'field_show'	=>'kondisi',
-																	'primary_key'	=>'id', 
-																	'selected'		=>$v,
-																	'field_link'	=>'',
-																	'class'			=>'custom-select data-sending')); 
-						    ?> 
-					</div>
-					</div>			
-			
 					<div class='col-md-12 col-xl-12'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_journal_cpc_jumlah ?></label>
-							<input type='text' class='form-control data-sending focus-color ybs-input-number' id='jumlah' name='jumlah' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo number_format($data->jumlah,2) ?>' autocomplete='off'>
-					</div>
-					</div>
-			
-				
-			
-			
-					<div class='col-md-12 col-xl-12'>
-					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_journal_cpc_tanggal_penerimaan ?></label>
-							<div class='input-group'>
-							<span class='input-group-prepend' id='basic-addon1'>
-							<span class='input-group-text'><i class="fa fa-calendar"></i></span>
-							</span>
-							<input readonly type='text' class='form-control data-sending input-simple-date' placeholder='<?php echo $title->general->desc_required ?>' id='tanggal_penerimaan' value='<?php if(isset($data)) echo $data->tanggal_penerimaan?>'>
-							</div>
-					</div>
-					</div>
-			
-					<div class='col-md-12 col-xl-12'>
-					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_journal_cpc_tanggal_pencatatan ?></label>
-							<div class='input-group'>
-							<span class='input-group-prepend' id='basic-addon1'>
-							<span class='input-group-text'><i class="fa fa-calendar"></i></span>
-							</span>
-							<input readonly type='text' class='form-control data-sending input-simple-date' placeholder='<?php echo $title->general->desc_required ?>' id='tanggal_pencatatan' value='<?php if(isset($data)) echo $data->tanggal_pencatatan?>'>
-							</div>
-					</div>
-					</div>
-			
-					<div class='col-md-12 col-xl-12'>
-					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_journal_cpc_keterangan ?></label>
-							<input type='text' class='form-control data-sending focus-color'  id='keterangan' name='keterangan' placeholder='' value='<?php if(isset($data)) echo $data->keterangan ?>' >
+							<label class='form-label'><?php echo $title->app_journal_campur_cpc_update_time ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='update_time' name='update_time' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->update_time ?>' >
 					</div>
 					</div>
 			
@@ -219,7 +217,7 @@ $('.data-sending').keydown(function(e){
 <script>
 $('.input-simple-date').datepicker({ 
 		autoclose: true ,
-		format:'yyyy-mm-dd',
+		format:'dd.mm.yyyy',
  })
 
 $('#btn-apply').click(function(){

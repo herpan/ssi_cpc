@@ -8,19 +8,36 @@
 	
 					<div class='col-md-12 col-xl-12'>				
 					<div class='form-group'> 
-							<label class='form-label'><?php echo $title->app_cabang_cpc_bank_wilayah_id ?></label> 
-							<?php $v='';  if(isset($data)) $v = $data->bank_wilayah_id; 
-								  echo create_cmb_database(array(	'id'			=>'bank_wilayah_id',
-																	'name'			=>'bank_wilayah_id',
-																	'table'			=>'app_bank_wilayah',
-																	'field_show'	=>'nama_wilayah',
+							<label class='form-label'><?php echo $title->app_cabang_cpc_bank_id ?></label> 
+							<?php $v='';  if(isset($data)) $v = $data->bank_id; 
+								  echo create_cmb_database(array(	'id'			=>'bank_id',
+																	'name'			=>'bank_id',
+																	'table'			=>'app_bank',
+																	'field_show'	=>'bank',
 																	'primary_key'	=>'id', 
 																	'selected'		=>$v,
 																	'field_link'	=>'',
 																	'class'			=>'custom-select data-sending')); 
 						    ?> 
 					</div>
-					</div>			
+					</div>	
+					
+					
+					<div class='col-md-12 col-xl-12'>				
+					<div class='form-group'> 
+							<label class='form-label'><?php echo $title->k_kategori_cabang ?></label> 
+							<?php $v='';  if(isset($data)) $v = $data->kategori_cabang_id; 
+								  echo create_cmb_database(array(	'id'			=>'kategori_cabang_id',
+																	'name'			=>'kategori_cabang_id',
+																	'table'			=>'app_kategori_cabang',
+																	'field_show'	=>'kategori_cabang',
+																	'primary_key'	=>'id', 
+																	'selected'		=>$v,
+																	'field_link'	=>'',
+																	'class'			=>'custom-select data-sending')); 
+						    ?> 
+					</div>
+					</div>
 			
 					<div class='col-md-12 col-xl-12'>
 					<div class='form-group'>
@@ -53,14 +70,14 @@
 								  echo create_cmb_database(array(	'id'			=>'sentra_kas_id',
 																	'name'			=>'sentra_kas_id',
 																	'table'			=>'app_sentra_kas',
-																	'field_show'	=>'nama_sentra',
+																	'field_show'	=>'sentra',
 																	'primary_key'	=>'id', 
 																	'selected'		=>$v,
 																	'field_link'	=>'',
 																	'class'			=>'custom-select data-sending')); 
 						    ?> 
 					</div>
-					</div>		
+					</div>			
 	
 	<div class='col-md-12 col-xl-12'>
 

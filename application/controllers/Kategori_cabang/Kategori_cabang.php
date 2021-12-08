@@ -1,16 +1,16 @@
 <?php
-require APPPATH. '/controllers/Penerimaan_uang/Penerimaan_uang_config.php';
+require APPPATH. '/controllers/Kategori_cabang/Kategori_cabang_config.php';
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Penerimaan_uang extends CI_Controller {
+class Kategori_cabang extends CI_Controller {
    private $log_key,$log_temp,$title;
    function __construct(){
         parent::__construct();
-		$this->load->model('Penerimaan_uang/Penerimaan_uang_model','tmodel');
-		$this->log_key ='log_Penerimaan_uang';
-		$this->title = new Penerimaan_uang_config();
+		$this->load->model('Kategori_cabang/Kategori_cabang_model','tmodel');
+		$this->log_key ='log_Kategori_cabang';
+		$this->title = new Kategori_cabang_config();
    }
 
 
@@ -18,33 +18,33 @@ class Penerimaan_uang extends CI_Controller {
 		$data = array(
 			'title_page_big'		=> 'DAFTAR',
 			'title'					=> $this->title,
-			'link_refresh_table'	=> site_url().'Penerimaan_uang/Penerimaan_uang/refresh_table/'.$this->_token,
-			'link_create'			=> site_url().'Penerimaan_uang/Penerimaan_uang/create',
-			'link_update'			=> site_url().'Penerimaan_uang/Penerimaan_uang/update',
-			'link_delete'			=> site_url().'Penerimaan_uang/Penerimaan_uang/delete_multiple',
-			'link_create_multiple'			=> site_url().'Penerimaan_uang/Penerimaan_uang/create_multiple',
+			'link_refresh_table'	=> site_url().'Kategori_cabang/Kategori_cabang/refresh_table/'.$this->_token,
+			'link_create'			=> site_url().'Kategori_cabang/Kategori_cabang/create',
+			'link_update'			=> site_url().'Kategori_cabang/Kategori_cabang/update',
+			'link_delete'			=> site_url().'Kategori_cabang/Kategori_cabang/delete_multiple',
+			'link_create_multiple'			=> site_url().'Kategori_cabang/Kategori_cabang/create_multiple',
 		);
 		
-		$this->template->load('Penerimaan_uang/Penerimaan_uang_list',$data);
+		$this->template->load('Kategori_cabang/Kategori_cabang_list',$data);
 	}
 
 	public function refresh_table($token){
 		if($token==$this->_token){
-			$row = $this->tmodel->json();
+			$row = $this->tmodel->get_all();
 			
 			//encode id 
 			$tm = time();
 			$this->session->set_userdata($this->log_key,$tm);
 			$x = 0;
-			foreach($row['data'] as $val){
+			foreach($row as $val){
 				$idgenerate = _encode_id($val['id'],$tm);
-				$row['data'][$x]['id'] = $idgenerate;
+				$row[$x]['id'] = $idgenerate;
 				$x++;
 			}
 			
+			
 			$o = new Outputview();
 			$o->success	= 'true';
-			$o->serverside	= 'true';
 			$o->message	= $row;
 			
 			echo $o->result();
@@ -59,11 +59,11 @@ class Penerimaan_uang extends CI_Controller {
 		$data = array(
 			'title_page_big'		=> 'Buat Baru',
 			'title'					=> $this->title,
-			'link_save'				=> site_url().'Penerimaan_uang/Penerimaan_uang/create_action',
+			'link_save'				=> site_url().'Kategori_cabang/Kategori_cabang/create_action',
 			'link_back'				=> $this->agent->referrer(),			
 		);
 		
-		$this->template->load('Penerimaan_uang/Penerimaan_uang_form',$data);
+		$this->template->load('Kategori_cabang/Kategori_cabang_form',$data);
 
 	}
 
@@ -86,30 +86,22 @@ class Penerimaan_uang extends CI_Controller {
 		*/	
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['cabang_id'],'#cabang_id')){
+		if(!$o->not_empty($val['kategori_cabang'],'#kategori_cabang')){
 			echo $o->result();	
 			return;
 		}
 
-		//mencegah data kosong
-		if(!$o->not_empty($val['sentra_kas_id'],'#sentra_kas_id')){
+		//mencegah data double
+		$field=array('kategori_cabang'=>$val['kategori_cabang']);
+		$exist = $this->tmodel->if_exist('',$field);
+		if(!$o->not_exist($exist,'#kategori_cabang')){
 			echo $o->result();	
 			return;
 		}
 
-		//mencegah data kosong
-		if(!$o->not_empty($val['jumlah_global'],'#jumlah_global')){
-			echo $o->result();	
-			return;
-		}
+		$val['user_input']= $this->_user_id;
+		$val['update_time']= now_db();
 
-		//mencegah data kosong
-		if(!$o->not_empty($val['tanggal_penerimaan'],'#tanggal_penerimaan')){
-			echo $o->result();	
-			return;
-		}
-
-		$val['user_input']= $this->_user_id;		
 
 		unset($val['id']);
 		$success = $this->tmodel->insert($val);
@@ -137,13 +129,13 @@ class Penerimaan_uang extends CI_Controller {
 			$data = array(
 				'title_page_big'		=> 'Buat Baru',
 				'title'					=> $this->title,
-				'link_save'				=> site_url().'Penerimaan_uang/Penerimaan_uang/update_action',
+				'link_save'				=> site_url().'Kategori_cabang/Kategori_cabang/update_action',
 				'link_back'				=> $this->agent->referrer(),
 				'data'					=> $row,
 				'id'					=> $id_generate,
 			);
 			
-			$this->template->load('Penerimaan_uang/Penerimaan_uang_form',$data);
+			$this->template->load('Kategori_cabang/Kategori_cabang_form',$data);
 		}else{
 			redirect($this->agent->referrer());
 		}
@@ -171,31 +163,22 @@ class Penerimaan_uang extends CI_Controller {
 		*/			
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['cabang_id'],'#cabang_id')){
+		if(!$o->not_empty($val['kategori_cabang'],'#kategori_cabang')){
 			echo $o->result();	
 			return;
 		}
 
-		//mencegah data kosong
-		if(!$o->not_empty($val['sentra_kas_id'],'#sentra_kas_id')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data kosong
-		if(!$o->not_empty($val['jumlah_global'],'#jumlah_global')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data kosong
-		if(!$o->not_empty($val['tanggal_penerimaan'],'#tanggal_penerimaan')){
+		//mencegah data double
+		$field=array('kategori_cabang'=>$val['kategori_cabang']);
+		$exist = $this->tmodel->if_exist($val['id'],$field);
+		if(!$o->not_exist($exist,'#kategori_cabang')){
 			echo $o->result();	
 			return;
 		}
 
 		$val['user_update']= $this->_user_id;
 		$val['update_time']= now_db();
+
 
 
 		$success = $this->tmodel->update($val['id'],$val);
@@ -239,8 +222,8 @@ class Penerimaan_uang extends CI_Controller {
 	public function  create_multiple(){
 		$data = array(
 			'title_page_big'			=> 'Import data pengguna dari excel',
-			'link_download_template'	=> site_url().'Penerimaan_uang/Penerimaan_uang/download_template/'.$this->_token,
-			'link_upload_template'		=> site_url().'Penerimaan_uang/Penerimaan_uang/upload_template/'.$this->_token,
+			'link_download_template'	=> site_url().'Kategori_cabang/Kategori_cabang/download_template/'.$this->_token,
+			'link_upload_template'		=> site_url().'Kategori_cabang/Kategori_cabang/upload_template/'.$this->_token,
 			'link_back'					=> $this->agent->referrer(),			
 		);
 		

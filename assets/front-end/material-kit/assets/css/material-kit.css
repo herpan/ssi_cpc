@@ -16580,6 +16580,10 @@ footer .pull-center {
   text-align: center;
 }
 
+.card-login {
+  opacity: 0.7;
+}
+
 .card-login .card-body {
   padding: 0px 30px 0px 10px;
 }
@@ -16621,7 +16625,7 @@ footer .pull-center {
   position: absolute;
   width: 100%;
   background: transparent;
-  bottom: 0;
+  bottom: 2;
   color: #fff;
   z-index: 1;
 }
