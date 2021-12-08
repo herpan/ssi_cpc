@@ -8,7 +8,7 @@
 	
 					<div class='col-md-12 col-xl-12'>				
 					<div class='form-group'> 
-							<label class='form-label'><?php echo $title->app_journal_campur_cpc_bank_id ?></label> 
+							<label class='form-label'><?php echo $title->app_journal_belum_proses_cpc_bank_id ?></label> 
 							<?php $v='';  if(isset($data)) $v = $data->bank_id; 
 								  echo create_cmb_database(array(	'id'			=>'bank_id',
 																	'name'			=>'bank_id',
@@ -24,7 +24,7 @@
 			
 					<div class='col-md-12 col-xl-12'>				
 					<div class='form-group'> 
-							<label class='form-label'><?php echo $title->app_journal_campur_cpc_sentra_kas_id ?></label> 
+							<label class='form-label'><?php echo $title->app_journal_belum_proses_cpc_sentra_kas_id ?></label> 
 							<?php $v='';  if(isset($data)) $v = $data->sentra_kas_id; 
 								  echo create_cmb_database(array(	'id'			=>'sentra_kas_id',
 																	'name'			=>'sentra_kas_id',
@@ -40,7 +40,7 @@
 			
 					<div class='col-md-12 col-xl-12'>				
 					<div class='form-group'> 
-							<label class='form-label'><?php echo $title->app_journal_campur_cpc_jenis_uang_id ?></label> 
+							<label class='form-label'><?php echo $title->app_journal_belum_proses_cpc_jenis_uang_id ?></label> 
 							<?php $v='';  if(isset($data)) $v = $data->jenis_uang_id; 
 								  echo create_cmb_database(array(	'id'			=>'jenis_uang_id',
 																	'name'			=>'jenis_uang_id',
@@ -56,7 +56,7 @@
 			
 					<div class='col-md-12 col-xl-12'>				
 					<div class='form-group'> 
-							<label class='form-label'><?php echo $title->app_journal_campur_cpc_pecahan_id ?></label> 
+							<label class='form-label'><?php echo $title->app_journal_belum_proses_cpc_pecahan_id ?></label> 
 							<?php $v='';  if(isset($data)) $v = $data->pecahan_id; 
 								  echo create_cmb_database(array(	'id'			=>'pecahan_id',
 																	'name'			=>'pecahan_id',
@@ -72,14 +72,14 @@
 			
 					<div class='col-md-12 col-xl-12'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_journal_campur_cpc_jumlah ?></label>
+							<label class='form-label'><?php echo $title->app_journal_belum_proses_cpc_jumlah ?></label>
 							<input type='text' class='form-control data-sending focus-color ybs-input-number'  id='jumlah' name='jumlah' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->jumlah ?>' >
 					</div>
 					</div>			
 							
 					<div class='col-md-12 col-xl-12'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_journal_campur_cpc_tanggal_penerimaan ?></label>
+							<label class='form-label'><?php echo $title->app_journal_belum_proses_cpc_tanggal_penerimaan ?></label>
 							<div class='input-group'>
 							<span class='input-group-prepend' id='basic-addon1'>
 							<span class='input-group-text'><i class="fa fa-calendar"></i></span>
@@ -91,7 +91,7 @@
 			
 					<div class='col-md-12 col-xl-12'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_journal_campur_cpc_tanggal_pencatatan ?></label>
+							<label class='form-label'><?php echo $title->app_journal_belum_proses_cpc_tanggal_pencatatan ?></label>
 							<div class='input-group'>
 							<span class='input-group-prepend' id='basic-addon1'>
 							<span class='input-group-text'><i class="fa fa-calendar"></i></span>
@@ -104,7 +104,7 @@
 			
 					<div class='col-md-12 col-xl-12'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_journal_campur_cpc_keterangan ?></label>
+							<label class='form-label'><?php echo $title->app_journal_belum_proses_cpc_keterangan ?></label>
 							<input type='text' class='form-control data-sending focus-color'  id='keterangan' name='keterangan' placeholder='' value='<?php if(isset($data)) echo $data->keterangan ?>' >
 					</div>
 					</div>

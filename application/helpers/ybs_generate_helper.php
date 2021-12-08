@@ -107,3 +107,18 @@ function saveTempImage($name, $contents,$dir){
 	  return false;
   }
 
+//   function rupiah1($angka){
+// 	$hasil_rupiah = "Rp " . number_format($angka, 0, ".", ".");
+// 	return $hasil_rupiah;
+//   }
+ 
+//    function rupiah2($angka){
+// 		$hasil_rupiah = "Rp " . number_format($angka, 1, ",", ".");
+// 		return $hasil_rupiah;
+//    }
+ 
+function rupiah($angka,$belakang_koma=0){
+	$hasil_rupiah = "Rp" . number_format($angka, $belakang_koma, ",", ".");
+	return $hasil_rupiah;
+}
+

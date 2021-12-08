@@ -293,28 +293,3 @@ class Bank extends CI_Controller {
 
 
 };
-
-// $q="SELECT
-// `j`.`jenis_uang` as `jenis_uang`,
-// `p`.`pecahan` as `pecahan`,
-// `e`.`emisi` as `emisi`,
-// SUM(CASE WHEN `k`.`kondisi`='GRESS BI' then `app_journal_cpc`.`jumlah` ELSE 0 END) as `GRESS_BI`,
-// SUM(CASE WHEN `k`.`kondisi`='RECYCLE BI' then `app_journal_cpc`.`jumlah` ELSE 0 END) as `RECYCLE_BI`,
-// SUM(CASE WHEN `k`.`kondisi`='DROPSHOT' then `app_journal_cpc`.`jumlah` ELSE 0 END) as `DROPSHOT`,
-// SUM(CASE WHEN `k`.`kondisi`='ULE' then `app_journal_cpc`.`jumlah` ELSE 0 END) as `ULE`,
-// SUM(CASE WHEN `k`.`kondisi`='UTLE' then `app_journal_cpc`.`jumlah` ELSE 0 END) as `UTLE`,
-// SUM(CASE WHEN `k`.`kondisi`='MINOR' then `app_journal_cpc`.`jumlah` ELSE 0 END) as `MINOR`,
-// SUM(CASE WHEN `k`.`kondisi`='MAYOR' then `app_journal_cpc`.`jumlah` ELSE 0 END) as `MAYOR`
-// FROM `app_journal_cpc` 
-// LEFT JOIN `app_bank_wilayah` `w` ON `w`.`id`=`app_journal_cpc`.`sentra_kas_id` 
-// LEFT JOIN `app_jenis_uang` `j` ON `j`.`id`=`app_journal_cpc`.`jenis_uang_id` 
-// LEFT JOIN `app_pecahan` `p` ON `p`.`id`=`app_journal_cpc`.`pecahan_id` 
-// LEFT JOIN `app_emisi` `e` ON `e`.`id`=`app_journal_cpc`.`emisi_id` 
-// LEFT JOIN `app_kondisi` `k` ON `k`.`id`=`app_journal_cpc`.`kondisi_id` 
-// LEFT JOIN `app_kategori_kondisi` `kat` ON `k`.`kategori_id`=`kat`.`id` 
-// LEFT JOIN `sys_user` `userinput` ON `userinput`.`id`=`app_journal_cpc`.`user_input` 
-// LEFT JOIN `sys_user` `userupdate` ON `userupdate`.`id`=`app_journal_cpc`.`user_update` 
-// LEFT JOIN `app_bank` `b` ON `b`.`id`=`w`.`bank_id` 
-// GROUP BY `p`.`pecahan`,`e`.`emisi`,`k`.`kondisi`
-// ORDER BY `j`.`jenis_uang`,`p`.`pecahan` ASC";
-

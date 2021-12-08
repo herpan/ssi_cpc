@@ -3,27 +3,27 @@ require APPPATH . 'controllers/sistem/General_title.php';
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Journal_campur_cpc_config {
+class Journal_belum_proses_cpc_config {
 	
 
 
    function __construct(){
 	   /* title */
 	    $this->general		= new General_title();
-		$this->app_journal_campur_cpc_id	= 'ID';
-		$this->app_journal_campur_cpc_bank_id	= 'BANK';
-		$this->app_journal_campur_cpc_sentra_kas_id	= 'SENTRA_KAS';
-		$this->app_journal_campur_cpc_jenis_uang_id	= 'JENIS_UANG';
-		$this->app_journal_campur_cpc_pecahan_id	= 'PECAHAN';
-		$this->app_journal_campur_cpc_jumlah	= 'JUMLAH';
-		$this->app_journal_campur_cpc_status	= 'STATUS';
-		$this->app_journal_campur_cpc_tanggal_penerimaan	= 'TANGGAL_PENERIMAAN';
-		$this->app_journal_campur_cpc_tanggal_pencatatan	= 'TANGGAL_PENCATATAN';
-		$this->app_journal_campur_cpc_keterangan	= 'KETERANGAN';
-		$this->app_journal_campur_cpc_user_input	= 'USERID_INPUT';
-		$this->app_journal_campur_cpc_input_time	= 'INPUT_TIME';
-		$this->app_journal_campur_cpc_user_update	= 'USERID_UPDATE';
-		$this->app_journal_campur_cpc_update_time	= 'UPDATE_TIME';
+		$this->app_journal_belum_proses_cpc_id	= 'ID';
+		$this->app_journal_belum_proses_cpc_bank_id	= 'BANK';
+		$this->app_journal_belum_proses_cpc_sentra_kas_id	= 'SENTRA_KAS';
+		$this->app_journal_belum_proses_cpc_jenis_uang_id	= 'JENIS_UANG';
+		$this->app_journal_belum_proses_cpc_pecahan_id	= 'PECAHAN';
+		$this->app_journal_belum_proses_cpc_jumlah	= 'JUMLAH';
+		$this->app_journal_belum_proses_cpc_status	= 'STATUS';
+		$this->app_journal_belum_proses_cpc_tanggal_penerimaan	= 'TANGGAL_PENERIMAAN';
+		$this->app_journal_belum_proses_cpc_tanggal_pencatatan	= 'TANGGAL_PENCATATAN';
+		$this->app_journal_belum_proses_cpc_keterangan	= 'KETERANGAN';
+		$this->app_journal_belum_proses_cpc_user_input	= 'USERID_INPUT';
+		$this->app_journal_belum_proses_cpc_input_time	= 'INPUT_TIME';
+		$this->app_journal_belum_proses_cpc_user_update	= 'USERID_UPDATE';
+		$this->app_journal_belum_proses_cpc_update_time	= 'UPDATE_TIME';
 		$this->b_id	= 'B_ID';
 		$this->b_kode_bank	= 'KODE_BANK';
 		$this->b_bank	= 'BANK';
@@ -144,26 +144,26 @@ class Journal_campur_cpc_config {
 		/* CONFIG FORM LIST */
 		/* field_alias_database => $title */	
 		$this->table_column =array(
-			$this->f_id	=> $this->app_journal_campur_cpc_id,
-			// $this->f_bank_id	=> $this->app_journal_campur_cpc_bank_id,
+			$this->f_id	=> $this->app_journal_belum_proses_cpc_id,
+			// $this->f_bank_id	=> $this->app_journal_belum_proses_cpc_bank_id,
 			$this->f_bank	=> $this->b_bank,
-			// $this->f_sentra_kas_id	=> $this->app_journal_campur_cpc_sentra_kas_id,
+			// $this->f_sentra_kas_id	=> $this->app_journal_belum_proses_cpc_sentra_kas_id,
 			$this->f_sentra	=> $this->s_sentra,
-			// $this->f_jenis_uang_id	=> $this->app_journal_campur_cpc_jenis_uang_id,
+			// $this->f_jenis_uang_id	=> $this->app_journal_belum_proses_cpc_jenis_uang_id,
 			$this->f_jenis_uang	=> $this->j_jenis_uang,
-			// $this->f_pecahan_id	=> $this->app_journal_campur_cpc_pecahan_id,
+			// $this->f_pecahan_id	=> $this->app_journal_belum_proses_cpc_pecahan_id,
 			$this->f_pecahan	=> $this->p_pecahan,
-			$this->f_jumlah	=> $this->app_journal_campur_cpc_jumlah,
-			$this->f_status	=> $this->app_journal_campur_cpc_status,
-			$this->f_tanggal_penerimaan	=> $this->app_journal_campur_cpc_tanggal_penerimaan,
-			$this->f_tanggal_pencatatan	=> $this->app_journal_campur_cpc_tanggal_pencatatan,
-			$this->f_keterangan	=> $this->app_journal_campur_cpc_keterangan,
-			//$this->f_user_input	=> $this->app_journal_campur_cpc_user_input,
+			$this->f_jumlah	=> $this->app_journal_belum_proses_cpc_jumlah,
+			$this->f_status	=> $this->app_journal_belum_proses_cpc_status,
+			$this->f_tanggal_penerimaan	=> $this->app_journal_belum_proses_cpc_tanggal_penerimaan,
+			$this->f_tanggal_pencatatan	=> $this->app_journal_belum_proses_cpc_tanggal_pencatatan,
+			$this->f_keterangan	=> $this->app_journal_belum_proses_cpc_keterangan,
+			//$this->f_user_input	=> $this->app_journal_belum_proses_cpc_user_input,
 			$this->f_nama_lengkap	=> $this->userinput_nama_lengkap,
-			$this->f_input_time	=> $this->app_journal_campur_cpc_input_time,
-			//$this->f_user_update	=> $this->app_journal_campur_cpc_user_update,
+			$this->f_input_time	=> $this->app_journal_belum_proses_cpc_input_time,
+			//$this->f_user_update	=> $this->app_journal_belum_proses_cpc_user_update,
 			$this->f_userupdate_nama_lengkap	=> $this->userupdate_nama_lengkap,
-			$this->f_update_time	=> $this->app_journal_campur_cpc_update_time,
+			$this->f_update_time	=> $this->app_journal_belum_proses_cpc_update_time,
 			// $this->f_b_id	=> $this->b_id,
 			// $this->f_kode_bank	=> $this->b_kode_bank,
 			// $this->f_bank	=> $this->b_bank,

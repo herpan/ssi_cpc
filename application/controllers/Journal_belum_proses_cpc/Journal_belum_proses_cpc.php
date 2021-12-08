@@ -1,16 +1,16 @@
 <?php
-require APPPATH. '/controllers/Journal_campur_cpc/Journal_campur_cpc_config.php';
+require APPPATH. '/controllers/Journal_belum_proses_cpc/Journal_belum_proses_cpc_config.php';
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Journal_campur_cpc extends CI_Controller {
+class Journal_belum_proses_cpc extends CI_Controller {
    private $log_key,$log_temp,$title;
    function __construct(){
         parent::__construct();
-		$this->load->model('Journal_campur_cpc/Journal_campur_cpc_model','tmodel');
-		$this->log_key ='log_Journal_campur_cpc';
-		$this->title = new Journal_campur_cpc_config();
+		$this->load->model('Journal_belum_proses_cpc/Journal_belum_proses_cpc_model','tmodel');
+		$this->log_key ='log_Journal_belum_proses_cpc';
+		$this->title = new Journal_belum_proses_cpc_config();
    }
 
 
@@ -18,14 +18,14 @@ class Journal_campur_cpc extends CI_Controller {
 		$data = array(
 			'title_page_big'		=> 'DAFTAR',
 			'title'					=> $this->title,
-			'link_refresh_table'	=> site_url().'Journal_campur_cpc/Journal_campur_cpc/refresh_table/'.$this->_token,
-			'link_create'			=> site_url().'Journal_campur_cpc/Journal_campur_cpc/create',
-			'link_update'			=> site_url().'Journal_campur_cpc/Journal_campur_cpc/update',
-			'link_delete'			=> site_url().'Journal_campur_cpc/Journal_campur_cpc/delete_multiple',
-			'link_create_multiple'			=> site_url().'Journal_campur_cpc/Journal_campur_cpc/create_multiple',
+			'link_refresh_table'	=> site_url().'Journal_belum_proses_cpc/Journal_belum_proses_cpc/refresh_table/'.$this->_token,
+			'link_create'			=> site_url().'Journal_belum_proses_cpc/Journal_belum_proses_cpc/create',
+			'link_update'			=> site_url().'Journal_belum_proses_cpc/Journal_belum_proses_cpc/update',
+			'link_delete'			=> site_url().'Journal_belum_proses_cpc/Journal_belum_proses_cpc/delete_multiple',
+			'link_create_multiple'			=> site_url().'Journal_belum_proses_cpc/Journal_belum_proses_cpc/create_multiple',
 		);
 		
-		$this->template->load('Journal_campur_cpc/Journal_campur_cpc_list',$data);
+		$this->template->load('Journal_belum_proses_cpc/Journal_belum_proses_cpc_list',$data);
 	}
 
 	public function refresh_table($token){
@@ -59,11 +59,11 @@ class Journal_campur_cpc extends CI_Controller {
 		$data = array(
 			'title_page_big'		=> 'Buat Baru',
 			'title'					=> $this->title,
-			'link_save'				=> site_url().'Journal_campur_cpc/Journal_campur_cpc/create_action',
+			'link_save'				=> site_url().'Journal_belum_proses_cpc/Journal_belum_proses_cpc/create_action',
 			'link_back'				=> $this->agent->referrer(),			
 		);
 		
-		$this->template->load('Journal_campur_cpc/Journal_campur_cpc_form',$data);
+		$this->template->load('Journal_belum_proses_cpc/Journal_belum_proses_cpc_form',$data);
 
 	}
 
@@ -156,13 +156,13 @@ class Journal_campur_cpc extends CI_Controller {
 			$data = array(
 				'title_page_big'		=> 'Buat Baru',
 				'title'					=> $this->title,
-				'link_save'				=> site_url().'Journal_campur_cpc/Journal_campur_cpc/update_action',
+				'link_save'				=> site_url().'Journal_belum_proses_cpc/Journal_belum_proses_cpc/update_action',
 				'link_back'				=> $this->agent->referrer(),
 				'data'					=> $row,
 				'id'					=> $id_generate,
 			);
 			
-			$this->template->load('Journal_campur_cpc/Journal_campur_cpc_form',$data);
+			$this->template->load('Journal_belum_proses_cpc/Journal_belum_proses_cpc_form',$data);
 		}else{
 			redirect($this->agent->referrer());
 		}
@@ -276,8 +276,8 @@ class Journal_campur_cpc extends CI_Controller {
 	public function  create_multiple(){
 		$data = array(
 			'title_page_big'			=> 'Import data pengguna dari excel',
-			'link_download_template'	=> site_url().'Journal_campur_cpc/Journal_campur_cpc/download_template/'.$this->_token,
-			'link_upload_template'		=> site_url().'Journal_campur_cpc/Journal_campur_cpc/upload_template/'.$this->_token,
+			'link_download_template'	=> site_url().'Journal_belum_proses_cpc/Journal_belum_proses_cpc/download_template/'.$this->_token,
+			'link_upload_template'		=> site_url().'Journal_belum_proses_cpc/Journal_belum_proses_cpc/upload_template/'.$this->_token,
 			'link_back'					=> $this->agent->referrer(),			
 		);
 		
