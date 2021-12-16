@@ -81,6 +81,7 @@ class Authorization extends CI_Model {
 		 'sys_user.opt_status',
 		 'sys_level.nmlevel',
 		 'sys_user.picture',
+		 'app_user_sentra.sentra_kas',
 		);
 		
 		$data=array(
@@ -91,6 +92,7 @@ class Authorization extends CI_Model {
 		$this->db->select($afield);
 		$this->db->join('sys_user',	'sys_user.id=sys_userlogin.iduser','left');
 		$this->db->join('sys_level', 'sys_level.id=sys_user.opt_level','left');
+		$this->db->join('app_user_sentra', 'app_user_sentra.user_id=sys_user.id','left');
 		$this->db->where_not_in($this->table_level.'.'.$this->fopt_status,2);
 		$this->db->where_not_in($this->table_user.'.'.$this->fopt_status,2);
         $q = $this->db->get_where('sys_userlogin', $data);
