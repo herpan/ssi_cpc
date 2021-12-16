@@ -30,8 +30,8 @@ $config['template_copyright']='2018 Tabler';
 $config['template_copyright_domain']='https://tabler.io';
 $config['template_design_theme']='codecalm.net';
 $config['template_design_theme_domain']='https://codecalm.net';
-$config['template_footer_left']='Copyright © 2021 Developed by<a href="https://web.facebook.com/eponk9/">SSI IT Development Team</a>. Theme by <a href="https://codecalm.net" target="_blank">codecalm.net</a> All rights reserved.';
-$config['template_footer_right']='<a href="https://github.com/tabler/tabler" class="btn btn-outline-primary btn-sm">Original Source code</a>';
+$config['template_footer_left']='Copyright © 2021 Developed by<a href="https://ssilink.co.id"> SSI IT Development Team</a>. Supported by <a href="https://ssilink.co.id" target="_blank">ssilink.co.id</a> All rights reserved.';
+$config['template_footer_right']='<a href="https://github.com/herpan" class="btn btn-outline-primary btn-sm">Original Source code</a>';
 
 /* DEVELOPER SETTING */
 $config['develop_by']='';

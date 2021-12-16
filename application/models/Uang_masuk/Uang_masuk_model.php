@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Penerimaan_uang_model extends CI_Model {
+class Uang_masuk_model extends CI_Model {
    public $id;	
    function __construct(){
         parent::__construct();
@@ -11,19 +11,24 @@ class Penerimaan_uang_model extends CI_Model {
 	
 	public function json(){
 		$this->datatables->select('
-			app_penerimaan_uang.id as id,
-			app_penerimaan_uang.cabang_id as cabang_id,
-			app_penerimaan_uang.sentra_kas_id as sentra_kas_id,
-			app_penerimaan_uang.jumlah_global as jumlah_global,
-			app_penerimaan_uang.status_penerimaan as status_penerimaan,
-			app_penerimaan_uang.tanggal_penerimaan as tanggal_penerimaan,
-			app_penerimaan_uang.keterangan as keterangan,
-			app_penerimaan_uang.user_input as user_input,
-			app_penerimaan_uang.input_time as input_time,
-			app_penerimaan_uang.user_update as user_update,
-			app_penerimaan_uang.update_time as update_time,
+			app_uang_masuk.id as id,
+			app_uang_masuk.no as no,
+			app_uang_masuk.cabang_id as cabang_id,
+			app_uang_masuk.sentra_kas_id as sentra_kas_id,
+			app_uang_masuk.jumlah_global as jumlah_global,
+			app_uang_masuk.status_penerimaan as status_penerimaan,
+			app_uang_masuk.tanggal_penerimaan as tanggal_penerimaan,
+			app_uang_masuk.waktu_tiba as waktu_tiba,
+			app_uang_masuk.waktu_serah_terima as waktu_serah_terima,
+			app_uang_masuk.detail_tas as detail_tas,
+			app_uang_masuk.keterangan as keterangan,
+			app_uang_masuk.user_input as user_input,
+			app_uang_masuk.input_time as input_time,
+			app_uang_masuk.user_update as user_update,
+			app_uang_masuk.update_time as update_time,
 			c.id as c_id,
 			c.bank_id as bank_id,
+			c.kategori_cabang_id as kategori_cabang_id,
 			c.nama_cabang as nama_cabang,
 			c.alamat as alamat,
 			c.deskripsi as deskripsi,
@@ -57,17 +62,27 @@ class Penerimaan_uang_model extends CI_Model {
 			userupdate.opt_level as userupdate_opt_level,
 			userupdate.opt_status as userupdate_opt_status,
 			userupdate.picture as userupdate_picture,
+			b.id as b_id,
+			b.kode_bank as kode_bank,
+			b.bank as bank,
+			b.deskripsi as b_deskripsi,
+			b.user_input as b_user_input,
+			b.input_time as b_input_time,
+			b.user_update as b_user_update,
+			b.update_time as b_update_time,
 		');
 		
-		$this->datatables->from('app_penerimaan_uang');
+		$this->datatables->from('app_uang_masuk');
 	
-		$this->datatables->join('app_cabang_cpc c','c.id=app_penerimaan_uang.cabang_id','LEFT'); 
+		$this->datatables->join('app_cabang_cpc c','c.id=app_uang_masuk.cabang_id','LEFT'); 
 	
-		$this->datatables->join('app_sentra_kas s','s.id=app_penerimaan_uang.sentra_kas_id','LEFT'); 
+		$this->datatables->join('app_sentra_kas s','s.id=app_uang_masuk.sentra_kas_id','LEFT'); 
 	
-		$this->datatables->join('sys_user userinput','userinput.id=app_penerimaan_uang.user_input','LEFT'); 
+		$this->datatables->join('sys_user userinput','userinput.id=app_uang_masuk.user_input','LEFT'); 
 	
-		$this->datatables->join('sys_user userupdate','userupdate.id=app_penerimaan_uang.user_update','LEFT'); 
+		$this->datatables->join('sys_user userupdate','userupdate.id=app_uang_masuk.user_update','LEFT'); 
+	
+		$this->datatables->join('app_bank b','b.id=c.bank_id','LEFT'); 
 
 		
 		
@@ -79,19 +94,24 @@ class Penerimaan_uang_model extends CI_Model {
 
    public function get_all(){
 		$afield = array(
-			'app_penerimaan_uang.id as id',
-			'app_penerimaan_uang.cabang_id as cabang_id',
-			'app_penerimaan_uang.sentra_kas_id as sentra_kas_id',
-			'app_penerimaan_uang.jumlah_global as jumlah_global',
-			'app_penerimaan_uang.status_penerimaan as status_penerimaan',
-			'app_penerimaan_uang.tanggal_penerimaan as tanggal_penerimaan',
-			'app_penerimaan_uang.keterangan as keterangan',
-			'app_penerimaan_uang.user_input as user_input',
-			'app_penerimaan_uang.input_time as input_time',
-			'app_penerimaan_uang.user_update as user_update',
-			'app_penerimaan_uang.update_time as update_time',
+			'app_uang_masuk.id as id',
+			'app_uang_masuk.no as no',
+			'app_uang_masuk.cabang_id as cabang_id',
+			'app_uang_masuk.sentra_kas_id as sentra_kas_id',
+			'app_uang_masuk.jumlah_global as jumlah_global',
+			'app_uang_masuk.status_penerimaan as status_penerimaan',
+			'app_uang_masuk.tanggal_penerimaan as tanggal_penerimaan',
+			'app_uang_masuk.waktu_tiba as waktu_tiba',
+			'app_uang_masuk.waktu_serah_terima as waktu_serah_terima',
+			'app_uang_masuk.detail_tas as detail_tas',
+			'app_uang_masuk.keterangan as keterangan',
+			'app_uang_masuk.user_input as user_input',
+			'app_uang_masuk.input_time as input_time',
+			'app_uang_masuk.user_update as user_update',
+			'app_uang_masuk.update_time as update_time',
 			'c.id as c_id',
 			'c.bank_id as bank_id',
+			'c.kategori_cabang_id as kategori_cabang_id',
 			'c.nama_cabang as nama_cabang',
 			'c.alamat as alamat',
 			'c.deskripsi as deskripsi',
@@ -125,34 +145,48 @@ class Penerimaan_uang_model extends CI_Model {
 			'userupdate.opt_level as userupdate_opt_level',
 			'userupdate.opt_status as userupdate_opt_status',
 			'userupdate.picture as userupdate_picture',
+			'b.id as b_id',
+			'b.kode_bank as kode_bank',
+			'b.bank as bank',
+			'b.deskripsi as b_deskripsi',
+			'b.user_input as b_user_input',
+			'b.input_time as b_input_time',
+			'b.user_update as b_user_update',
+			'b.update_time as b_update_time',
 		
 		);
 		$this->db->select($afield);
-		$this->db->join('app_cabang_cpc c','c.id=app_penerimaan_uang.cabang_id','LEFT'); 
-		$this->db->join('app_sentra_kas s','s.id=app_penerimaan_uang.sentra_kas_id','LEFT'); 
-		$this->db->join('sys_user userinput','userinput.id=app_penerimaan_uang.user_input','LEFT'); 
-		$this->db->join('sys_user userupdate','userupdate.id=app_penerimaan_uang.user_update','LEFT'); 
+		$this->db->join('app_cabang_cpc c','c.id=app_uang_masuk.cabang_id','LEFT'); 
+		$this->db->join('app_sentra_kas s','s.id=app_uang_masuk.sentra_kas_id','LEFT'); 
+		$this->db->join('sys_user userinput','userinput.id=app_uang_masuk.user_input','LEFT'); 
+		$this->db->join('sys_user userupdate','userupdate.id=app_uang_masuk.user_update','LEFT'); 
+		$this->db->join('app_bank b','b.id=c.bank_id','LEFT'); 
 
-		$this->db->order_by('app_penerimaan_uang.id', 'ASC');
-		return $this->db->get('app_penerimaan_uang')->result_array();
+		$this->db->order_by('app_uang_masuk.id', 'ASC');
+		return $this->db->get('app_uang_masuk')->result_array();
    }
 
 
 	public function get_by_id($id){
 		$afield = array(
-			'app_penerimaan_uang.id as id',
-			'app_penerimaan_uang.cabang_id as cabang_id',
-			'app_penerimaan_uang.sentra_kas_id as sentra_kas_id',
-			'app_penerimaan_uang.jumlah_global as jumlah_global',
-			'app_penerimaan_uang.status_penerimaan as status_penerimaan',
-			'app_penerimaan_uang.tanggal_penerimaan as tanggal_penerimaan',
-			'app_penerimaan_uang.keterangan as keterangan',
-			'app_penerimaan_uang.user_input as user_input',
-			'app_penerimaan_uang.input_time as input_time',
-			'app_penerimaan_uang.user_update as user_update',
-			'app_penerimaan_uang.update_time as update_time',
+			'app_uang_masuk.id as id',
+			'app_uang_masuk.no as no',
+			'app_uang_masuk.cabang_id as cabang_id',
+			'app_uang_masuk.sentra_kas_id as sentra_kas_id',
+			'app_uang_masuk.jumlah_global as jumlah_global',
+			'app_uang_masuk.status_penerimaan as status_penerimaan',
+			'app_uang_masuk.tanggal_penerimaan as tanggal_penerimaan',
+			'app_uang_masuk.waktu_tiba as waktu_tiba',
+			'app_uang_masuk.waktu_serah_terima as waktu_serah_terima',
+			'app_uang_masuk.detail_tas as detail_tas',
+			'app_uang_masuk.keterangan as keterangan',
+			'app_uang_masuk.user_input as user_input',
+			'app_uang_masuk.input_time as input_time',
+			'app_uang_masuk.user_update as user_update',
+			'app_uang_masuk.update_time as update_time',
 			'c.id as c_id',
 			'c.bank_id as bank_id',
+			'c.kategori_cabang_id as kategori_cabang_id',
 			'c.nama_cabang as nama_cabang',
 			'c.alamat as alamat',
 			'c.deskripsi as deskripsi',
@@ -186,17 +220,26 @@ class Penerimaan_uang_model extends CI_Model {
 			'userupdate.opt_level as userupdate_opt_level',
 			'userupdate.opt_status as userupdate_opt_status',
 			'userupdate.picture as userupdate_picture',
+			'b.id as b_id',
+			'b.kode_bank as kode_bank',
+			'b.bank as bank',
+			'b.deskripsi as b_deskripsi',
+			'b.user_input as b_user_input',
+			'b.input_time as b_input_time',
+			'b.user_update as b_user_update',
+			'b.update_time as b_update_time',
 		
 		);
 		$this->db->select($afield);
-		$this->db->join('app_cabang_cpc c','c.id=app_penerimaan_uang.cabang_id','LEFT'); 
-		$this->db->join('app_sentra_kas s','s.id=app_penerimaan_uang.sentra_kas_id','LEFT'); 
-		$this->db->join('sys_user userinput','userinput.id=app_penerimaan_uang.user_input','LEFT'); 
-		$this->db->join('sys_user userupdate','userupdate.id=app_penerimaan_uang.user_update','LEFT'); 
+		$this->db->join('app_cabang_cpc c','c.id=app_uang_masuk.cabang_id','LEFT'); 
+		$this->db->join('app_sentra_kas s','s.id=app_uang_masuk.sentra_kas_id','LEFT'); 
+		$this->db->join('sys_user userinput','userinput.id=app_uang_masuk.user_input','LEFT'); 
+		$this->db->join('sys_user userupdate','userupdate.id=app_uang_masuk.user_update','LEFT'); 
+		$this->db->join('app_bank b','b.id=c.bank_id','LEFT'); 
 
-		$this->db->where('app_penerimaan_uang.id', $id);
-		$this->db->order_by('app_penerimaan_uang.id', 'ASC');
-		return $this->db->get('app_penerimaan_uang')->row();
+		$this->db->where('app_uang_masuk.id', $id);
+		$this->db->order_by('app_uang_masuk.id', 'ASC');
+		return $this->db->get('app_uang_masuk')->row();
    }
 
 
@@ -207,9 +250,9 @@ class Penerimaan_uang_model extends CI_Model {
 	   -update : id di isi dengan id data yg di proses.	
 	*/	
 	function if_exist($id,$data){
-		$this->db->where('app_penerimaan_uang.id <>',$id);
+		$this->db->where('app_uang_masuk.id <>',$id);
 
-		$q = $this->db->get_where('app_penerimaan_uang', $data)->result_array();
+		$q = $this->db->get_where('app_uang_masuk', $data)->result_array();
 		
 		if(count($q)>0){
 			return true;
@@ -227,7 +270,7 @@ class Penerimaan_uang_model extends CI_Model {
 	    /* transaction rollback */
 		$this->db->trans_start();
 		
-		$this->db->insert('app_penerimaan_uang', $data);		
+		$this->db->insert('app_uang_masuk', $data);		
 		/* id primary yg baru saja di input*/
 		$this->id = $this->db->insert_id(); 
 		
@@ -240,8 +283,8 @@ class Penerimaan_uang_model extends CI_Model {
 		/* transaction rollback */
 		$this->db->trans_start();
 
-		$this->db->where('app_penerimaan_uang.id', $id);
-		$this->db->update('app_penerimaan_uang', $data);
+		$this->db->where('app_uang_masuk.id', $id);
+		$this->db->update('app_uang_masuk', $data);
 		
 		$this->db->trans_complete();
 		return $this->db->trans_status(); //return true or false	
@@ -252,9 +295,9 @@ class Penerimaan_uang_model extends CI_Model {
 		$this->db->trans_start();
 		
 		if(!empty($data)){
-			$this->db->where_in('app_penerimaan_uang.id',$data);	
+			$this->db->where_in('app_uang_masuk.id',$data);	
 	
-			$this->db->delete('app_penerimaan_uang');
+			$this->db->delete('app_uang_masuk');
 		}
 		
 		$this->db->trans_complete();
@@ -264,7 +307,7 @@ class Penerimaan_uang_model extends CI_Model {
 
 	function insert_multiple($data){
 		$this->db->trans_start();
-		$this->db->insert_batch('app_penerimaan_uang', $data);
+		$this->db->insert_batch('app_uang_masuk', $data);
 		$this->db->trans_complete();
 		return $this->db->trans_status();
  }

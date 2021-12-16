@@ -122,3 +122,17 @@ function rupiah($angka,$belakang_koma=0){
 	return $hasil_rupiah;
 }
 
+if (!function_exists('ids_to_sentras')) {
+    function ids_to_sentras($sentra_kas_ids)
+    {
+       $data=json_decode($_SESSION['sks']);
+	   $ids=explode(',',$sentra_kas_ids);
+	   $d=array();
+	   foreach($ids as $id){
+		 $d[$id]=$data->{$id};
+	   }
+	   return implode(',',$d);	   
+    }
+}
+
+

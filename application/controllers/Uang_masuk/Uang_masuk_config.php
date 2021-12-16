@@ -3,26 +3,31 @@ require APPPATH . 'controllers/sistem/General_title.php';
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Penerimaan_uang_config {
+class Uang_masuk_config {
 	
 
 
    function __construct(){
 	   /* title */
 	    $this->general		= new General_title();
-		$this->app_penerimaan_uang_id	= 'ID';
-		$this->app_penerimaan_uang_cabang_id	= 'CABANG';
-		$this->app_penerimaan_uang_sentra_kas_id	= 'SENTRA_KAS';
-		$this->app_penerimaan_uang_jumlah_global	= 'JUMLAH_GLOBAL';
-		$this->app_penerimaan_uang_status_penerimaan	= 'STATUS_PENERIMAAN';
-		$this->app_penerimaan_uang_tanggal_penerimaan	= 'TANGGAL_PENERIMAAN';
-		$this->app_penerimaan_uang_keterangan	= 'KETERANGAN';
-		$this->app_penerimaan_uang_user_input	= 'USERID_INPUT';
-		$this->app_penerimaan_uang_input_time	= 'INPUT_TIME';
-		$this->app_penerimaan_uang_user_update	= 'USERID_UPDATE';
-		$this->app_penerimaan_uang_update_time	= 'UPDATE_TIME';
+		$this->app_uang_masuk_id	= 'ID';
+		$this->app_uang_masuk_no	= 'NO';
+		$this->app_uang_masuk_cabang_id	= 'CABANG_ID';
+		$this->app_uang_masuk_sentra_kas_id	= 'SENTRA_KAS_ID';
+		$this->app_uang_masuk_jumlah_global	= 'JUMLAH_GLOBAL';
+		$this->app_uang_masuk_status_penerimaan	= 'STATUS_PENERIMAAN';
+		$this->app_uang_masuk_tanggal_penerimaan	= 'TANGGAL_PENERIMAAN';
+		$this->app_uang_masuk_waktu_tiba	= 'WAKTU_TIBA';
+		$this->app_uang_masuk_waktu_serah_terima	= 'WAKTU_SERAH_TERIMA';
+		$this->app_uang_masuk_detail_tas	= 'DETAIL_TAS';
+		$this->app_uang_masuk_keterangan	= 'KETERANGAN';
+		$this->app_uang_masuk_user_input	= 'USERID_INPUT';
+		$this->app_uang_masuk_input_time	= 'INPUT_TIME';
+		$this->app_uang_masuk_user_update	= 'USERID_UPDATE';
+		$this->app_uang_masuk_update_time	= 'UPDATE_TIME';
 		$this->c_id	= 'C_ID';
 		$this->c_bank_id	= 'BANK_ID';
+		$this->c_kategori_cabang_id	= 'KATEGORI_CABANG_ID';
 		$this->c_nama_cabang	= 'NAMA_CABANG';
 		$this->c_alamat	= 'ALAMAT';
 		$this->c_deskripsi	= 'DESKRIPSI';
@@ -56,17 +61,29 @@ class Penerimaan_uang_config {
 		$this->userupdate_opt_level	= 'USERUPDATE_OPT_LEVEL';
 		$this->userupdate_opt_status	= 'USERUPDATE_OPT_STATUS';
 		$this->userupdate_picture	= 'USERUPDATE_PICTURE';
+		$this->b_id	= 'B_ID';
+		$this->b_kode_bank	= 'KODE_BANK';
+		$this->b_bank	= 'BANK';
+		$this->b_deskripsi	= 'B_DESKRIPSI';
+		$this->b_user_input	= 'B_USER_INPUT';
+		$this->b_input_time	= 'B_INPUT_TIME';
+		$this->b_user_update	= 'B_USER_UPDATE';
+		$this->b_update_time	= 'B_UPDATE_TIME';
 
 		
 		
 		
 		/*field_alias_database db*/
 		$this->f_id	= 'id';
+		$this->f_no	= 'no';
 		$this->f_cabang_id	= 'cabang_id';
 		$this->f_sentra_kas_id	= 'sentra_kas_id';
 		$this->f_jumlah_global	= 'jumlah_global';
 		$this->f_status_penerimaan	= 'status_penerimaan';
 		$this->f_tanggal_penerimaan	= 'tanggal_penerimaan';
+		$this->f_waktu_tiba	= 'waktu_tiba';
+		$this->f_waktu_serah_terima	= 'waktu_serah_terima';
+		$this->f_detail_tas	= 'detail_tas';
 		$this->f_keterangan	= 'keterangan';
 		$this->f_user_input	= 'user_input';
 		$this->f_input_time	= 'input_time';
@@ -74,6 +91,7 @@ class Penerimaan_uang_config {
 		$this->f_update_time	= 'update_time';
 		$this->f_c_id	= 'c_id';
 		$this->f_bank_id	= 'bank_id';
+		$this->f_kategori_cabang_id	= 'kategori_cabang_id';
 		$this->f_nama_cabang	= 'nama_cabang';
 		$this->f_alamat	= 'alamat';
 		$this->f_deskripsi	= 'deskripsi';
@@ -107,6 +125,14 @@ class Penerimaan_uang_config {
 		$this->f_userupdate_opt_level	= 'userupdate_opt_level';
 		$this->f_userupdate_opt_status	= 'userupdate_opt_status';
 		$this->f_userupdate_picture	= 'userupdate_picture';
+		$this->f_b_id	= 'b_id';
+		$this->f_kode_bank	= 'kode_bank';
+		$this->f_bank	= 'bank';
+		$this->f_b_deskripsi	= 'b_deskripsi';
+		$this->f_b_user_input	= 'b_user_input';
+		$this->f_b_input_time	= 'b_input_time';
+		$this->f_b_user_update	= 'b_user_update';
+		$this->f_b_update_time	= 'b_update_time';
 
 		
 		
@@ -114,23 +140,29 @@ class Penerimaan_uang_config {
 		/* CONFIG FORM LIST */
 		/* field_alias_database => $title */	
 		$this->table_column =array(
-			$this->f_id	=> $this->app_penerimaan_uang_id,
-			// $this->f_cabang_id	=> $this->app_penerimaan_uang_cabang_id,
+			$this->f_id	=> $this->app_uang_masuk_id,
+			$this->f_no	=> $this->app_uang_masuk_no,
+			// $this->f_cabang_id	=> $this->app_uang_masuk_cabang_id,
+			// $this->f_sentra_kas_id	=> $this->app_uang_masuk_sentra_kas_id,
+			$this->f_bank	=> $this->b_bank,
 			$this->f_nama_cabang	=> $this->c_nama_cabang,
-			// $this->f_sentra_kas_id	=> $this->app_penerimaan_uang_sentra_kas_id,
+			$this->f_jumlah_global	=> $this->app_uang_masuk_jumlah_global,
+			$this->f_status_penerimaan	=> $this->app_uang_masuk_status_penerimaan,
+			$this->f_tanggal_penerimaan	=> $this->app_uang_masuk_tanggal_penerimaan,
+			$this->f_waktu_tiba	=> $this->app_uang_masuk_waktu_tiba,
+			$this->f_waktu_serah_terima	=> $this->app_uang_masuk_waktu_serah_terima,
+			//$this->f_detail_tas	=> $this->app_uang_masuk_detail_tas,
+			//$this->f_keterangan	=> $this->app_uang_masuk_keterangan,
 			$this->f_sentra	=> $this->s_sentra,
-			$this->f_jumlah_global	=> $this->app_penerimaan_uang_jumlah_global,
-			$this->f_status_penerimaan	=> $this->app_penerimaan_uang_status_penerimaan,
-			$this->f_tanggal_penerimaan	=> $this->app_penerimaan_uang_tanggal_penerimaan,
-			$this->f_keterangan	=> $this->app_penerimaan_uang_keterangan,
-			//$this->f_user_input	=> $this->app_penerimaan_uang_user_input,
+			//$this->f_user_input	=> $this->app_uang_masuk_user_input,
 			$this->f_nama_lengkap	=> $this->userinput_nama_lengkap,
-			$this->f_input_time	=> $this->app_penerimaan_uang_input_time,
-			//$this->f_user_update	=> $this->app_penerimaan_uang_user_update,
+			$this->f_input_time	=> $this->app_uang_masuk_input_time,
+			// $this->f_user_update	=> $this->app_uang_masuk_user_update,
 			$this->f_userupdate_nama_lengkap	=> $this->userupdate_nama_lengkap,
-			$this->f_update_time	=> $this->app_penerimaan_uang_update_time,
+			$this->f_update_time	=> $this->app_uang_masuk_update_time,
 			// $this->f_c_id	=> $this->c_id,
 			// $this->f_bank_id	=> $this->c_bank_id,
+			// $this->f_kategori_cabang_id	=> $this->c_kategori_cabang_id,
 			// $this->f_nama_cabang	=> $this->c_nama_cabang,
 			// $this->f_alamat	=> $this->c_alamat,
 			// $this->f_deskripsi	=> $this->c_deskripsi,
@@ -164,6 +196,14 @@ class Penerimaan_uang_config {
 			// $this->f_userupdate_opt_level	=> $this->userupdate_opt_level,
 			// $this->f_userupdate_opt_status	=> $this->userupdate_opt_status,
 			// $this->f_userupdate_picture	=> $this->userupdate_picture,
+			// $this->f_b_id	=> $this->b_id,
+			// $this->f_kode_bank	=> $this->b_kode_bank,
+			// $this->f_bank	=> $this->b_bank,
+			// $this->f_b_deskripsi	=> $this->b_deskripsi,
+			// $this->f_b_user_input	=> $this->b_user_input,
+			// $this->f_b_input_time	=> $this->b_input_time,
+			// $this->f_b_user_update	=> $this->b_user_update,
+			// $this->f_b_update_time	=> $this->b_update_time,
 		);
 
 	}
@@ -180,7 +220,7 @@ class Penerimaan_uang_config {
 
 /* END */
 /* Mohon untuk tidak mengubah informasi ini : */
-/* Generated by YBS CRUD Generator 2021-12-03 16:07:26 */
+/* Generated by YBS CRUD Generator 2021-12-16 10:18:39 */
 /* contact : YAP BRIDGING SYSTEM 		*/
 /*			 bridging.system@gmail.com  */
 /* 			 MAKASSAR CITY, INDONESIAN 	*/

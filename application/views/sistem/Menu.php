@@ -37,7 +37,7 @@
 				}	
 
 				
-				echo menu_parent_open('Home','fe fe-home',site_url()."home",$active,false);	//membuat menu home dan menjadikan NON AKtif
+				echo menu_parent_open('Dashboard','fa fa-dashboard',site_url()."home",$active,false);	//membuat menu home dan menjadikan NON AKtif
 				echo menu_parent_close();
 				
 				break;
@@ -46,7 +46,7 @@
 				$function_selected = $arr[1];
 				$link_selected = $controller_selected .'/'. $function_selected;
 			
-				echo menu_parent_open('Home','fe fe-home',site_url()."home",false,false);	//membuat menu home dan menjadikan NON Aktif
+				echo menu_parent_open('Dashboard','fa fa-dashboard',site_url()."home",false,false);	//membuat menu home dan menjadikan NON Aktif
 				echo menu_parent_close();
 				
 				break;
@@ -58,7 +58,7 @@
 				
 
 
-				echo menu_parent_open('Home','fe fe-home',site_url()."home",false,false);	//membuat menu home dan menjadikan NON AKtif
+				echo menu_parent_open('Dashboard','fa fa-dashboard',site_url()."home",false,false);	//membuat menu home dan menjadikan NON AKtif
 				echo menu_parent_close();
 			
 				break;

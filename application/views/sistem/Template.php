@@ -241,7 +241,6 @@
 			$(window).on("load", function() {
 				if (!$('#content-body').hasClass("fadeIn")) {
 					$('#content-body').addClass("zoom");
-
 				}
 
 				$('#content-body').css('display', 'flex');

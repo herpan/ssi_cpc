@@ -1,16 +1,16 @@
 <?php
-require APPPATH. '/controllers/Penerimaan_uang/Penerimaan_uang_config.php';
+require APPPATH. '/controllers/User_sentra/User_sentra_config.php';
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Penerimaan_uang extends CI_Controller {
+class User_sentra extends CI_Controller {
    private $log_key,$log_temp,$title;
    function __construct(){
         parent::__construct();
-		$this->load->model('Penerimaan_uang/Penerimaan_uang_model','tmodel');
-		$this->log_key ='log_Penerimaan_uang';
-		$this->title = new Penerimaan_uang_config();
+		$this->load->model('User_sentra/User_sentra_model','tmodel');
+		$this->log_key ='log_User_sentra';
+		$this->title = new User_sentra_config();
    }
 
 
@@ -18,18 +18,18 @@ class Penerimaan_uang extends CI_Controller {
 		$data = array(
 			'title_page_big'		=> 'DAFTAR',
 			'title'					=> $this->title,
-			'link_refresh_table'	=> site_url().'Penerimaan_uang/Penerimaan_uang/refresh_table/'.$this->_token,
-			'link_create'			=> site_url().'Penerimaan_uang/Penerimaan_uang/create',
-			'link_update'			=> site_url().'Penerimaan_uang/Penerimaan_uang/update',
-			'link_delete'			=> site_url().'Penerimaan_uang/Penerimaan_uang/delete_multiple',
-			'link_create_multiple'			=> site_url().'Penerimaan_uang/Penerimaan_uang/create_multiple',
+			'link_refresh_table'	=> site_url().'User_sentra/User_sentra/refresh_table/'.$this->_token,
+			'link_create'			=> site_url().'User_sentra/User_sentra/create',
+			'link_update'			=> site_url().'User_sentra/User_sentra/update',
+			'link_delete'			=> site_url().'User_sentra/User_sentra/delete_multiple',
+			'link_create_multiple'			=> site_url().'User_sentra/User_sentra/create_multiple',
 		);
 		
-		$this->template->load('Penerimaan_uang/Penerimaan_uang_list',$data);
+		$this->template->load('User_sentra/User_sentra_list',$data);
 	}
 
-	public function refresh_table($token){
-		if($token==$this->_token){
+	public function refresh_table($token=null){
+		//if($token==$this->_token){
 			$row = $this->tmodel->json();
 			
 			//encode id 
@@ -50,20 +50,21 @@ class Penerimaan_uang extends CI_Controller {
 			echo $o->result();
 			
 
-		}else{
-			redirect('Auth');
-		}
+		// }else{
+		// 	redirect('Auth');
+		// }
 	}
 
 	public function create(){
 		$data = array(
 			'title_page_big'		=> 'Buat Baru',
 			'title'					=> $this->title,
-			'link_save'				=> site_url().'Penerimaan_uang/Penerimaan_uang/create_action',
-			'link_back'				=> $this->agent->referrer(),			
+			'link_save'				=> site_url().'User_sentra/User_sentra/create_action',
+			'link_back'				=> $this->agent->referrer(),
+			'data_sentra'				=> $this->get_table_sentra(),			
 		);
 		
-		$this->template->load('Penerimaan_uang/Penerimaan_uang_form',$data);
+		$this->template->load('User_sentra/User_sentra_form',$data);
 
 	}
 
@@ -86,32 +87,15 @@ class Penerimaan_uang extends CI_Controller {
 		*/	
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['cabang_id'],'#cabang_id')){
+		if(!$o->not_empty($val['user_id'],'#user_id')){
 			echo $o->result();	
 			return;
 		}
-
-		//mencegah data kosong
-		if(!$o->not_empty($val['sentra_kas_id'],'#sentra_kas_id')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data kosong
-		if(!$o->not_empty($val['jumlah_global'],'#jumlah_global')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data kosong
-		if(!$o->not_empty($val['tanggal_penerimaan'],'#tanggal_penerimaan')){
-			echo $o->result();	
-			return;
-		}
-
-		$val['user_input']= $this->_user_id;		
 
 		unset($val['id']);
+
+		$val['user_input']=$this->_user_id;
+	
 		$success = $this->tmodel->insert($val);
 		echo $o->auto_result($success);
 
@@ -137,13 +121,14 @@ class Penerimaan_uang extends CI_Controller {
 			$data = array(
 				'title_page_big'		=> 'Buat Baru',
 				'title'					=> $this->title,
-				'link_save'				=> site_url().'Penerimaan_uang/Penerimaan_uang/update_action',
+				'link_save'				=> site_url().'User_sentra/User_sentra/update_action',
 				'link_back'				=> $this->agent->referrer(),
 				'data'					=> $row,
 				'id'					=> $id_generate,
+				'data_sentra'			=> $this->get_table_sentra($id),
 			);
 			
-			$this->template->load('Penerimaan_uang/Penerimaan_uang_form',$data);
+			$this->template->load('User_sentra/User_sentra_form',$data);
 		}else{
 			redirect($this->agent->referrer());
 		}
@@ -171,33 +156,15 @@ class Penerimaan_uang extends CI_Controller {
 		*/			
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['cabang_id'],'#cabang_id')){
+		if(!$o->not_empty($val['user_id'],'#user_id')){
 			echo $o->result();	
 			return;
 		}
 
-		//mencegah data kosong
-		if(!$o->not_empty($val['sentra_kas_id'],'#sentra_kas_id')){
-			echo $o->result();	
-			return;
-		}
+		$val['user_update']=$this->_user_id;	
+		$val['update_time']=date('Y-m-d H:i:s', now());
 
-		//mencegah data kosong
-		if(!$o->not_empty($val['jumlah_global'],'#jumlah_global')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data kosong
-		if(!$o->not_empty($val['tanggal_penerimaan'],'#tanggal_penerimaan')){
-			echo $o->result();	
-			return;
-		}
-
-		$val['user_update']= $this->_user_id;
-		$val['update_time']= now_db();
-
-
+	
 		$success = $this->tmodel->update($val['id'],$val);
 		echo $o->auto_result($success);
 
@@ -239,8 +206,8 @@ class Penerimaan_uang extends CI_Controller {
 	public function  create_multiple(){
 		$data = array(
 			'title_page_big'			=> 'Import data pengguna dari excel',
-			'link_download_template'	=> site_url().'Penerimaan_uang/Penerimaan_uang/download_template/'.$this->_token,
-			'link_upload_template'		=> site_url().'Penerimaan_uang/Penerimaan_uang/upload_template/'.$this->_token,
+			'link_download_template'	=> site_url().'User_sentra/User_sentra/download_template/'.$this->_token,
+			'link_upload_template'		=> site_url().'User_sentra/User_sentra/upload_template/'.$this->_token,
 			'link_back'					=> $this->agent->referrer(),			
 		);
 		
@@ -261,6 +228,33 @@ class Penerimaan_uang extends CI_Controller {
 		}else {
 			redirect('Auth');
 		}
+	}
+
+	private function get_table_sentra($id=null){
+		$auth_form=array();
+		$sk=array();
+		if($id !==null){			
+			$auth_form = $this->tmodel->get_by_id($id);	
+			$sk=explode(	",",$auth_form->sentra_kas);	 
+		}
+
+		$this->load->model('Sentra_kas/Sentra_kas_model','sk');
+		$row = $this->sk->get_all();
+
+		
+		$x=0;
+		foreach($row as $val_form){
+			$row[$x]['no']		 = $x+1;
+			$row[$x]['checked'] = " ";
+
+			if(in_array($val_form['id'],$sk)){
+				$row[$x]['checked'] = " checked ";	
+			}
+			
+			$x++;
+		}
+		
+		return json_encode($row);
 	}
 
 

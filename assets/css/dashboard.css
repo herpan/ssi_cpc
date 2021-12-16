@@ -19625,10 +19625,13 @@ svg {
   content: "\ea06";
 }
 
-.styled-table {
+.table-dashboard-container{
+  margin-left:-8%;
+  margin-right:-8%;  
+}
+
+.styled-table {  
   border-collapse: collapse;
-  font-size: 0.9em;
-  font-family: sans-serif;
   min-width: 400px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
@@ -19639,7 +19642,8 @@ svg {
 }
 .styled-table th,
 .styled-table td {
-    padding: 12px 15px;
+    /* padding: 12px 15px; */
+     padding: 6px 5px;
     text-align: center;
 }
 .styled-table tbody tr {

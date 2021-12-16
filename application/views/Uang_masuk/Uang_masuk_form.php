@@ -6,9 +6,17 @@
 	<form id='form-a'>
 	<input hidden class='data-sending' id='id' value='<?php if(isset($id))echo $id?>'>
 	
+					<div class='col-md-12 col-xl-12'>
+					<div class='form-group'>
+							<label class='form-label'><?php echo $title->app_uang_masuk_no ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='no' name='no' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->no ?>' >
+					</div>
+					</div>
+			
+			
 					<div class='col-md-12 col-xl-12'>				
 					<div class='form-group'> 
-							<label class='form-label'><?php echo $title->app_penerimaan_uang_cabang_id ?></label> 
+							<label class='form-label'><?php echo $title->app_uang_masuk_cabang_id ?></label> 
 							<?php $v='';  if(isset($data)) $v = $data->cabang_id; 
 								  echo create_cmb_database(array(	'id'			=>'cabang_id',
 																	'name'			=>'cabang_id',
@@ -24,32 +32,38 @@
 			
 					<div class='col-md-12 col-xl-12'>				
 					<div class='form-group'> 
-							<label class='form-label'><?php echo $title->app_penerimaan_uang_sentra_kas_id ?></label> 
+							<label class='form-label'><?php echo $title->app_uang_masuk_sentra_kas_id ?></label> 
 							<?php $v='';  if(isset($data)) $v = $data->sentra_kas_id; 
 								  echo create_cmb_database(array(	'id'			=>'sentra_kas_id',
 																	'name'			=>'sentra_kas_id',
 																	'table'			=>'app_sentra_kas',
-																	'field_show'	=>'kode_sentra',
+																	'field_show'	=>'sentra',
 																	'primary_key'	=>'id', 
 																	'selected'		=>$v,
 																	'field_link'	=>'',
 																	'class'			=>'custom-select data-sending')); 
 						    ?> 
 					</div>
-					</div>	
-					
-								
+					</div>			
+			
 					<div class='col-md-12 col-xl-12'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_penerimaan_uang_jumlah_global ?></label>
-							<input type='text' class='form-control data-sending focus-color ybs-input-number'  id='jumlah_global' name='jumlah_global' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->jumlah_global ?>' autocomplete='off'>
+							<label class='form-label'><?php echo $title->app_uang_masuk_jumlah_global ?></label>
+							<input type='text' class='form-control data-sending focus-color ybs-input-number' id='jumlah_global' name='jumlah_global' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo number_format($data->jumlah_global,2) ?>' autocomplete='off'>
 					</div>
 					</div>
-
-
+			
 					<div class='col-md-12 col-xl-12'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_penerimaan_uang_tanggal_penerimaan ?></label>
+							<label class='form-label'><?php echo $title->app_uang_masuk_status_penerimaan ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='status_penerimaan' name='status_penerimaan' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->status_penerimaan ?>' >
+					</div>
+					</div>
+			
+			
+					<div class='col-md-12 col-xl-12'>
+					<div class='form-group'>
+							<label class='form-label'><?php echo $title->app_uang_masuk_tanggal_penerimaan ?></label>
 							<div class='input-group'>
 							<span class='input-group-prepend' id='basic-addon1'>
 							<span class='input-group-text'><i class="fa fa-calendar"></i></span>
@@ -57,13 +71,68 @@
 							<input readonly type='text' class='form-control data-sending input-simple-date' placeholder='<?php echo $title->general->desc_required ?>' id='tanggal_penerimaan' value='<?php if(isset($data)) echo $data->tanggal_penerimaan?>'>
 							</div>
 					</div>
-					</div>		
+					</div>
+			
+					<div class='col-md-12 col-xl-12'>
+					<div class='form-group'>
+							<label class='form-label'><?php echo $title->app_uang_masuk_waktu_tiba ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='waktu_tiba' name='waktu_tiba' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->waktu_tiba ?>' >
+					</div>
+					</div>
 			
 			
 					<div class='col-md-12 col-xl-12'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_penerimaan_uang_keterangan ?></label>
-							<input type='text' class='form-control data-sending focus-color'  id='keterangan' name='keterangan' placeholder='' value='<?php if(isset($data)) echo $data->keterangan ?>' >
+							<label class='form-label'><?php echo $title->app_uang_masuk_waktu_serah_terima ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='waktu_serah_terima' name='waktu_serah_terima' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->waktu_serah_terima ?>' >
+					</div>
+					</div>
+			
+			
+					<div class='col-md-12 col-xl-12'>
+					<div class='form-group'>
+							<label class='form-label'><?php echo $title->app_uang_masuk_detail_tas ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='detail_tas' name='detail_tas' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->detail_tas ?>' >
+					</div>
+					</div>
+			
+			
+					<div class='col-md-12 col-xl-12'>
+					<div class='form-group'>
+							<label class='form-label'><?php echo $title->app_uang_masuk_keterangan ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='keterangan' name='keterangan' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->keterangan ?>' >
+					</div>
+					</div>
+			
+			
+					<div class='col-md-12 col-xl-12'>
+					<div class='form-group'>
+							<label class='form-label'><?php echo $title->app_uang_masuk_input_time ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='input_time' name='input_time' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->input_time ?>' >
+					</div>
+					</div>
+			
+			
+					<div class='col-md-12 col-xl-12'>				
+					<div class='form-group'> 
+							<label class='form-label'><?php echo $title->app_uang_masuk_user_update ?></label> 
+							<?php $v='';  if(isset($data)) $v = $data->user_update; 
+								  echo create_cmb_database(array(	'id'			=>'user_update',
+																	'name'			=>'user_update',
+																	'table'			=>'sys_user',
+																	'field_show'	=>'nmuser',
+																	'primary_key'	=>'id', 
+																	'selected'		=>$v,
+																	'field_link'	=>'',
+																	'class'			=>'custom-select data-sending')); 
+						    ?> 
+					</div>
+					</div>			
+			
+					<div class='col-md-12 col-xl-12'>
+					<div class='form-group'>
+							<label class='form-label'><?php echo $title->app_uang_masuk_update_time ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='update_time' name='update_time' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->update_time ?>' >
 					</div>
 					</div>
 			
@@ -143,7 +212,7 @@ $('.data-sending').keydown(function(e){
 <script>
 $('.input-simple-date').datepicker({ 
 		autoclose: true ,
-		format:'yyyy-mm-dd',
+		format:'dd.mm.yyyy',
  })
 
 $('#btn-apply').click(function(){

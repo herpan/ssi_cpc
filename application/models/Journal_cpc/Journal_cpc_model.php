@@ -330,10 +330,10 @@ class Journal_cpc_model extends CI_Model {
 		return $this->db->get('app_journal_cpc')->row();
    }
 
-   public function get_dashboard(){
+   public function get_dashboard($bank_id,$tanggal){
 	$q="SELECT
-	`j`.`jenis_uang` as `jenis_uang`,
-	`p`.`pecahan` as `pecahan`,
+	`jp`.`jenis_uang` as `jenis_uang`,
+	`jp`.`pecahan` as `pecahan`,
 	`e`.`emisi` as `emisi`,
 	SUM(CASE WHEN `k`.`kondisi`='GRESS BI' then `app_journal_cpc`.`jumlah` ELSE 0 END) as `GRESS_BI`,
 	SUM(CASE WHEN `k`.`kondisi`='RECYCLE BI' then `app_journal_cpc`.`jumlah` ELSE 0 END) as `RECYCLE_BI`,
@@ -344,44 +344,39 @@ class Journal_cpc_model extends CI_Model {
 	SUM(CASE WHEN `k`.`kondisi`='MAYOR' then `app_journal_cpc`.`jumlah` ELSE 0 END) as `MAYOR`,
 	`C`.`jumlah_campur` as `jumlah_campur`,
 	`B`.`jumlah_belum` as `jumlah_belum`
-	FROM `app_journal_cpc` 
+	FROM 
+    (SELECT `app_jenis_uang`.`id` as `jenis_uang_id`,`app_pecahan`.`id`  as `pecahan_id`,`app_jenis_uang`.`jenis_uang`, `app_pecahan`.`pecahan` FROM `app_jenis_uang`,`app_pecahan`) `jp`
+    LEFT JOIN `app_journal_cpc` ON `jp`.`pecahan_id`=`app_journal_cpc`.`pecahan_id` and `jp`.`jenis_uang_id`=`app_journal_cpc`.`jenis_uang_id` 	and `app_journal_cpc`.`bank_id`=$bank_id AND  `app_journal_cpc`.`tanggal_pencatatan`='$tanggal'
 	LEFT JOIN `app_sentra_kas` `s` ON `s`.`id`=`app_journal_cpc`.`sentra_kas_id` 
-	LEFT JOIN `app_jenis_uang` `j` ON `j`.`id`=`app_journal_cpc`.`jenis_uang_id` 
-	LEFT JOIN `app_pecahan` `p` ON `p`.`id`=`app_journal_cpc`.`pecahan_id` 
 	LEFT JOIN `app_emisi` `e` ON `e`.`id`=`app_journal_cpc`.`emisi_id` 
 	LEFT JOIN `app_kondisi` `k` ON `k`.`id`=`app_journal_cpc`.`kondisi_id` 
-	LEFT JOIN `app_kategori_kondisi` `kat` ON `k`.`kategori_id`=`kat`.`id` 
-	LEFT JOIN `sys_user` `userinput` ON `userinput`.`id`=`app_journal_cpc`.`user_input` 
-	LEFT JOIN `sys_user` `userupdate` ON `userupdate`.`id`=`app_journal_cpc`.`user_update` 
-	LEFT JOIN `app_bank` `b` ON `b`.`id`=`app_journal_cpc`.`bank_id`
-	
 	LEFT JOIN (SELECT
-	`j`.`jenis_uang` as `jenis_uang`,
-	`p`.`pecahan` as `pecahan`,		
+	`app_journal_campur_cpc`.`jenis_uang_id` as `jenis_uang_id`,
+	`app_journal_campur_cpc`.`pecahan_id` as `pecahan_id`,		
 	`app_journal_campur_cpc`.`jumlah` as `jumlah_campur`
 	FROM `app_journal_campur_cpc` 
 	LEFT JOIN `app_sentra_kas` `s` ON `s`.`id`=`app_journal_campur_cpc`.`sentra_kas_id` 
-	LEFT JOIN `app_jenis_uang` `j` ON `j`.`id`=`app_journal_campur_cpc`.`jenis_uang_id` 
-	LEFT JOIN `app_pecahan` `p` ON `p`.`id`=`app_journal_campur_cpc`.`pecahan_id` 
-	LEFT JOIN `app_bank` `b` ON `b`.`id`=`app_journal_campur_cpc`.`bank_id` 
-	GROUP BY `p`.`pecahan`
-	ORDER BY `j`.`jenis_uang`,`p`.`pecahan` ASC) `C` on `C`.`pecahan`=`p`.`pecahan` and `C`.`jenis_uang`=`j`.`jenis_uang`
-
-	LEFT JOIN (SELECT
-	`j`.`jenis_uang` as `jenis_uang`,
-	`p`.`pecahan` as `pecahan`,		
+	LEFT JOIN `app_bank` `b` ON `b`.`id`=`app_journal_campur_cpc`.`bank_id`
+	WHERE `app_journal_campur_cpc`.`bank_id`=$bank_id
+	AND  `app_journal_campur_cpc`.`tanggal_pencatatan`='$tanggal'
+	GROUP BY `app_journal_campur_cpc`.`jenis_uang_id`,`app_journal_campur_cpc`.`pecahan_id`
+	) `C` on `C`.`pecahan_id`=`jp`.`pecahan_id` and `C`.`jenis_uang_id`=`jp`.`jenis_uang_id`
+    
+    LEFT JOIN (SELECT
+	`app_journal_belum_proses_cpc`.`jenis_uang_id` as `jenis_uang_id`,
+	`app_journal_belum_proses_cpc`.`pecahan_id` as `pecahan_id`,		
 	`app_journal_belum_proses_cpc`.`jumlah` as `jumlah_belum`
 	FROM `app_journal_belum_proses_cpc` 
 	LEFT JOIN `app_sentra_kas` `s` ON `s`.`id`=`app_journal_belum_proses_cpc`.`sentra_kas_id` 
-	LEFT JOIN `app_jenis_uang` `j` ON `j`.`id`=`app_journal_belum_proses_cpc`.`jenis_uang_id` 
-	LEFT JOIN `app_pecahan` `p` ON `p`.`id`=`app_journal_belum_proses_cpc`.`pecahan_id` 
-	LEFT JOIN `app_bank` `b` ON `b`.`id`=`app_journal_belum_proses_cpc`.`bank_id` 
-	GROUP BY `p`.`pecahan`
-	ORDER BY `j`.`jenis_uang`,`p`.`pecahan` ASC) `B` on `B`.pecahan=`p`.`pecahan` and `B`.`jenis_uang`=`j`.`jenis_uang`
-	
-	GROUP BY `p`.`pecahan`,`e`.`emisi`
-	ORDER BY `j`.`jenis_uang`,`p`.`pecahan` ASC";
-	
+	LEFT JOIN `app_bank` `b` ON `b`.`id`=`app_journal_belum_proses_cpc`.`bank_id`
+	WHERE `app_journal_belum_proses_cpc`.`bank_id`=$bank_id
+	AND  `app_journal_belum_proses_cpc`.`tanggal_pencatatan`='$tanggal'
+	GROUP BY `app_journal_belum_proses_cpc`.`jenis_uang_id`,`app_journal_belum_proses_cpc`.`pecahan_id`
+	) `B` on `B`.`pecahan_id`=`jp`.`pecahan_id` and `B`.`jenis_uang_id`=`jp`.`jenis_uang_id`
+
+	WHERE (`app_journal_cpc`.`jumlah`>0  OR `C`.`jumlah_campur` > 0 OR `B`.`jumlah_belum` > 0)
+	GROUP BY `jp`.`jenis_uang`,`jp`.`pecahan`,`e`.`emisi`  
+	ORDER BY `jp`.`jenis_uang` ASC,`jp`.`pecahan`  DESC";	
 	return $this->db->query($q)->result();
 }
 
