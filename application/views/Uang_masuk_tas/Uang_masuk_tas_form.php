@@ -1,5 +1,5 @@
 
-<?php echo _css('datatables,icheck,selectize,datepicker')?>
+<?php echo _css('selectize,datepicker')?>
 
 <?php echo card_open('Form','bg-green',true)?>	
 	
@@ -8,12 +8,12 @@
 	
 					<div class='col-md-12 col-xl-12'>				
 					<div class='form-group'> 
-							<label class='form-label'><?php echo $title->app_user_sentra_user_id ?></label> 
-							<?php $v='';  if(isset($data)) $v = $data->user_id; 
-								  echo create_cmb_database(array(	'id'			=>'user_id',
-																	'name'			=>'user_id',
-																	'table'			=>'sys_user',
-																	'field_show'	=>'nmuser',
+							<label class='form-label'><?php echo $title->app_uang_masuk_tas_uang_masuk_id ?></label> 
+							<?php $v='';  if(isset($data)) $v = $data->uang_masuk_id; 
+								  echo create_cmb_database(array(	'id'			=>'uang_masuk_id',
+																	'name'			=>'uang_masuk_id',
+																	'table'			=>'app_uang_masuk',
+																	'field_show'	=>'no',
 																	'primary_key'	=>'id', 
 																	'selected'		=>$v,
 																	'field_link'	=>'',
@@ -22,34 +22,28 @@
 					</div>
 					</div>			
 			
-					
 					<div class='col-md-12 col-xl-12'>
-					<div class="form-group">
-						<label class="form-label">Pilih Sentra Kas</label>
-						<label class="form-label"><small>hanya Sentra yang di pilih yang akan di tampilkan.</small></label>
-
-							<div class='box-body table-responsive'  id='box-table'>
-							<small>
-							<table id="table-detail-sentra" class="table ybs-table" style="width:150%">
-							<thead>
-						
-								<tr>
-								<th>No</th>
-								<th class="checkbox-header"></th>
-								<th>Sentra Kas</th>												
-								</tr>
-
-							</thead>
-							<tbody>
-							
-							</tbody>
-							</table>
-
-							</small>
-							</div>
+					<div class='form-group'>
+							<label class='form-label'><?php echo $title->app_uang_masuk_tas_no_segel ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='no_segel' name='no_segel' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->no_segel ?>' >
 					</div>
 					</div>
-							 
+			
+			
+					<div class='col-md-12 col-xl-12'>
+					<div class='form-group'>
+							<label class='form-label'><?php echo $title->app_uang_masuk_tas_no_tas ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='no_tas' name='no_tas' placeholder='' value='<?php if(isset($data)) echo $data->no_tas ?>' >
+					</div>
+					</div>
+			
+			
+					<div class='col-md-12 col-xl-12'>
+					<div class='form-group'>
+							<label class='form-label'><?php echo $title->app_uang_masuk_tas_keterangan ?></label>
+							<input type='text' class='form-control data-sending focus-color'  id='keterangan' name='keterangan' placeholder='' value='<?php if(isset($data)) echo $data->keterangan ?>' >
+					</div>
+					</div>
 	
 	<div class='col-md-12 col-xl-12'>
 
@@ -66,7 +60,7 @@
 
 <?php echo card_close()?>
 
-<?php echo _js('datatables,icheck,selectize,datepicker')?>
+<?php echo _js('selectize,datepicker')?>
 
 <script>var page_version="1.0.8"</script>
 
@@ -108,8 +102,6 @@ $(document).ready(function(){
 	|
 	*/
 	?>
-
-	refresh_table_sentra(<?php echo $data_sentra?>);
 })
 
 	
@@ -125,6 +117,11 @@ $('.data-sending').keydown(function(e){
 </script>
 
 <script>
+$('.input-simple-date').datepicker({ 
+		autoclose: true ,
+		format:'dd.mm.yyyy',
+ })
+
 $('#btn-apply').click(function(){
 		apply();
 		play_sound_apply();
@@ -188,15 +185,12 @@ function simpan(){
 	/* ex. data.push */
 	?>
 	var data = get_dataSending('form-a');
-
-	var s		= $('#table-detail-sentra').get_checked();
-	s     		= get_json_format('sentra_kas',s);
 	
 	<?php
 	/* complite json format */
 	/* ybs_dataSending(array); */
 	?>
-	send_data = ybs_dataSending([data,s]);
+	send_data = ybs_dataSending(data);
 
 	var a = new ybsRequest();
 	a.process('<?php echo $link_save?>',send_data,'POST');
@@ -206,85 +200,6 @@ function simpan(){
 	a.onBeforeFailed = function(){
 			cancel();
 	}
-}
-
-function refresh_table_sentra(list){
-
-$('#table-detail-sentra').DataTable({
-			data				: list,		
-						
-			 
-			columns				:	[	{data:'no',width:"5%"},
-										{data:null,width:"5%",
-											render: function ( data, type, row ) {
-													if ( type === 'display' ) {
-														 var konfirm="";
-														 return '<input type="checkbox" class="checkbox flat-red dt-select2" '+ row.checked +' value="'+row.id+'">';
-													}
-													
-													return data;
-											},
-										},
-										
-										
-										{data: "sentra",										
-										}
-									
-																				
-									],
-			
-			
-			columnDefs			:	[ 
-										//SETTING UNTUK KOLOM 0 (NOMOR URUT)
-										{"searchable": false,"orderable": false,"targets": 0} ,
-							
-										//SETTING UNTUK KOLOM 1 (CHECK)
-										{"searchable": false,"orderable": false,"targets": 1} ,
-						
-									],
-						
-			order				: 	[[ 1, 'asc' ]],
-		
-			
-									//MENAMBAHKAN CLASS PADA ROW
-			createdRow			: 	function ( row, data, index ) {
-										$(row).addClass('cursor-pointer');
-										$(row).addClass('ybs-rows-click');
-									},
-			
-									//MEMANGGIL ULANG FUNGSI SAAT TABLE DI DRAW ULANG	
-			drawCallback		: 	function() {
-										$('.dt-select2').iCheck({
-											checkboxClass: 'icheckbox_flat-green',
-										});
-										
-									},
-			
-			
-			scrollY 			:	"300px",
-			scrollCollapse		:	false,
-			scrollX 			:	true,
-			paging				: 	true,
-			lengthChange		: 	false,
-			lengthMenu			: 	[[ -1], [ "All"]],
-			searching			: 	true,
-			ordering			: 	true,
-			info				: 	true,
-			autoWidth			: 	false,
-			responsive			: 	false,
-
-		});
-		
-		//membuat nomor urut
-		var t = $('#table-detail-sentra').DataTable();
-		t.on( 'draw.dt', function () {
-		var PageInfo = $('#table-detail-sentra').DataTable().page.info();
-			 t.column(0, { page: 'current' }).nodes().each( function (cell, i) {
-				 var num = i + 1 + PageInfo.start;
-				cell.innerHTML = '<small>' + num + '</small>';
-			} );
-		} );
-
 }
 
 

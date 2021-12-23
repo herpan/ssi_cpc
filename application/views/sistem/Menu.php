@@ -132,7 +132,7 @@
 		
 		//logout
 		//echo menu_parent_open('Logout','fe fe-log-out',site_url().'sistem/logout',false);
-		echo menu_parent_close();	
+		//echo menu_parent_close();	
 		
 
 

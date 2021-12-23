@@ -49,12 +49,16 @@ class Home extends CI_Controller {
           $this->load->view('Dashboard/Dashboard_container',$data);
       }else{
           //echo $this->db->last_query();
+
           echo ' 
-          <div class="alert alert-danger my-4" role="alert">
-              <h4 class="alert-title">Informasi</h4>
-              <div class="text-muted">Belum ada data untuk tanggal '.$tanggal_pencatatan.'</div>
-          </div>                    
-          ';           
+            <iframe src="https://onedrive.live.com/embed?cid=B103F56077E63999&resid=B103F56077E63999%21149&authkey=ADRXEot3ItQDrMo&em=2" width="100%" height="800" frameborder="0" scrolling="yes"></iframe>                    
+            '; 
+        //   echo ' 
+        //   <div class="alert alert-danger my-4" role="alert">
+        //       <h4 class="alert-title">Informasi</h4>
+        //       <div class="text-muted">Belum ada data untuk tanggal '.$tanggal_pencatatan.'</div>
+        //   </div>                    
+        //   ';           
       }      
      
   }

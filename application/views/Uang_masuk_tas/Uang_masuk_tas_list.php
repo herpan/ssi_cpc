@@ -3,10 +3,13 @@
 
 <?php echo card_open('Daftar','bg-teal',true)?>
 <div class='row'>
-	<div class='col-md-6 col-lg-6'>
+	<div class='col-md-6 col-lg-4'>
 	<?php echo button_card($title->general->button_create,$title->general->button_create_desc,'text-green','btn-success','fe fe-list','bg-green','btn-create',$link_create)?>
 	</div>
-	<div class='col-md-6 col-lg-6'>
+	<div class='col-md-6 col-lg-4'>
+		<?php echo button_card('Buat Baru','upload from file excel','text-blue','btn-info','fa fa-upload','bg-blue','btn-create',$link_create_multiple)?>
+	</div>
+	<div class='col-md-6 col-lg-4'>
 	<?php echo button_card($title->general->button_delete,$title->general->button_delete_desc,'text-red','btn-danger','fe fe-trash','bg-red','btn-delete')?>
 	</div>
 </div>
@@ -144,16 +147,14 @@ table_detail = $('#table-detail').dataTable({
 														return data;
 												},
 											},
-											{data:null,width:"5%",
+											{data:null,width:"10%",
 												<?php //MENAMBAHKAN BUTTON ACTION ?>
 												render: function ( data, type, row ) {
 														if ( type === 'display' ) {
 															var konfirm='';
-															var btn_group='<div class="btn-group" role="group">';
-															btn_group = btn_group + '<a href="<?php echo $link_view ?>/' + row.id + '" class="btn btn-default text-red btn-sm " title="Cetak" target="_blank"><i class="fa fa-file-o"></i></a>';
+															var btn_group='';
 															btn_group = btn_group + '<a href="<?php echo $link_update?>/'+row.id+'" class="btn btn-default text-red btn-sm " title="update"><i class="fa fa-edit"></i></a>'; 
 															btn_group = btn_group + '<button type="button" class="btn btn-default text-red btn-sm"  id="btn_pre_delete" onclick=\' ybsDeleteTable("'+row.id+"-"+konfirm+'","<?php echo $link_delete ?>","#table-detail") \'  ><i class="fa fa-trash-o"></i></button></small>';
-															btn_group = btn_group + '</div>';
 															return btn_group;
 														}	
 														return data;	
@@ -161,10 +162,7 @@ table_detail = $('#table-detail').dataTable({
 											},
 											
 											<?php foreach($title->table_column as $alias_field=>$val){?>
-												{data:"<?php echo $alias_field ?>" ,										<?php if($alias_field=='jumlah_global'){?>
-														 render: $.fn.dataTable.render.number( ',', '.', 2, '' ),<?php }?>
-
-		},
+												{data:"<?php echo $alias_field ?>" ,		},
 											<?php }?>					
 											
 											

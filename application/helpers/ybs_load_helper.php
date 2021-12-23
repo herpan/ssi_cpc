@@ -51,7 +51,7 @@ function _css($plugin){
 			case 'lightbox' :
 				$result .= '<link rel="'.base_url().'assets/plugins/lightbox/css/lightbox.min.css">';
 				break;
-			case 'bootstrap-datetimepicker' :
+			case 'datetimepicker' :
 				$result .= '<link rel="stylesheet" href="'.base_url().'assets/plugins/datetimepicker/css/bootstrap-datetimepicker.min.css">';
 				break;
 			case 'bootstrap-select':
@@ -135,7 +135,7 @@ function _js($plugin){
 				$result .= '<script src="'.base_url().'assets/plugins/datetimepicker/js/moment.min.js"></script>';
 				break;
 
-			case 'bootstrap-datetimepicker' :
+			case 'datetimepicker' :
 				$result .= '<script src="'.base_url().'assets/plugins/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>';
 				break;
 			

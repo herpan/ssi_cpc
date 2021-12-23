@@ -54,28 +54,28 @@ if ( ! function_exists('ybs_tanggal_indo')){
 	 */
 	function ybs_tanggal_indo ($date){
 		//konversi tanggal
-		Date_default_timezone_set('Asia/Makassar');
+		Date_default_timezone_set('Asia/Jakarta');
 		$dt_s				= date('d M Y',$date);
 		return $dt_s;
 	}
 	
 	function _indonesia_date ($date){
 		//konversi tanggal
-		Date_default_timezone_set('Asia/Makassar');
+		Date_default_timezone_set('Asia/Jakarta');
 		$dt_s				= date('d M Y H:i:s',$date);
 		return $dt_s;
 	}
 	
 	function ybs_jam ($date){
 		//konversi tanggal
-		Date_default_timezone_set('Asia/Makassar');
+		Date_default_timezone_set('Asia/Jakarta');
 		$dt_s				= date('H:i:s',$date);
 		return $dt_s;
 	}
 
 	function ybs_nama_hari ($date){
 		//konversi tanggal
-		Date_default_timezone_set('Asia/Makassar');
+		Date_default_timezone_set('Asia/Jakarta');
 		$dt_s				= date('l',$date);
 		$day  = "";
 		switch(strtolower($dt_s)){

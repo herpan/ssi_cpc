@@ -15,11 +15,14 @@ class Uang_masuk_model extends CI_Model {
 			app_uang_masuk.no as no,
 			app_uang_masuk.cabang_id as cabang_id,
 			app_uang_masuk.sentra_kas_id as sentra_kas_id,
-			app_uang_masuk.jumlah_global as jumlah_global,
+			d.jumlah as jumlah_global,
 			app_uang_masuk.status_penerimaan as status_penerimaan,
 			app_uang_masuk.tanggal_penerimaan as tanggal_penerimaan,
 			app_uang_masuk.waktu_tiba as waktu_tiba,
 			app_uang_masuk.waktu_serah_terima as waktu_serah_terima,
+			app_uang_masuk.no_kendaraan as no_kendaraan,
+			app_uang_masuk.diserahkan_oleh as diserahkan_oleh,
+			app_uang_masuk.diterima_oleh as diterima_oleh,
 			app_uang_masuk.detail_tas as detail_tas,
 			app_uang_masuk.keterangan as keterangan,
 			app_uang_masuk.user_input as user_input,
@@ -73,6 +76,8 @@ class Uang_masuk_model extends CI_Model {
 		');
 		
 		$this->datatables->from('app_uang_masuk');
+
+		$this->datatables->join('(select uang_masuk_id,sum(jumlah) as jumlah from app_uang_masuk_detail group by uang_masuk_id) d','d.uang_masuk_id=app_uang_masuk.id','LEFT'); 
 	
 		$this->datatables->join('app_cabang_cpc c','c.id=app_uang_masuk.cabang_id','LEFT'); 
 	
@@ -84,7 +89,7 @@ class Uang_masuk_model extends CI_Model {
 	
 		$this->datatables->join('app_bank b','b.id=c.bank_id','LEFT'); 
 
-		
+			
 		
 		//mengembalikan dalam bentuk array
 		$q =  json_decode($this->datatables->generate(),true);
@@ -103,6 +108,9 @@ class Uang_masuk_model extends CI_Model {
 			'app_uang_masuk.tanggal_penerimaan as tanggal_penerimaan',
 			'app_uang_masuk.waktu_tiba as waktu_tiba',
 			'app_uang_masuk.waktu_serah_terima as waktu_serah_terima',
+			'app_uang_masuk.no_kendaraan as no_kendaraan',
+			'app_uang_masuk.diserahkan_oleh as diserahkan_oleh',
+			'app_uang_masuk.diterima_oleh as diterima_oleh',
 			'app_uang_masuk.detail_tas as detail_tas',
 			'app_uang_masuk.keterangan as keterangan',
 			'app_uang_masuk.user_input as user_input',
@@ -178,6 +186,9 @@ class Uang_masuk_model extends CI_Model {
 			'app_uang_masuk.tanggal_penerimaan as tanggal_penerimaan',
 			'app_uang_masuk.waktu_tiba as waktu_tiba',
 			'app_uang_masuk.waktu_serah_terima as waktu_serah_terima',
+			'app_uang_masuk.no_kendaraan as no_kendaraan',
+			'app_uang_masuk.diserahkan_oleh as diserahkan_oleh',
+			'app_uang_masuk.diterima_oleh as diterima_oleh',
 			'app_uang_masuk.detail_tas as detail_tas',
 			'app_uang_masuk.keterangan as keterangan',
 			'app_uang_masuk.user_input as user_input',
@@ -310,7 +321,33 @@ class Uang_masuk_model extends CI_Model {
 		$this->db->insert_batch('app_uang_masuk', $data);
 		$this->db->trans_complete();
 		return $this->db->trans_status();
- }
+ 	}
+	
+	function get_summary($id){
+		$this->db->select("
+		SUM(CASE WHEN jenis_uang_id = 1 then jumlah ELSE 0 END) as total_kertas,
+		SUM(CASE WHEN jenis_uang_id = 2 then jumlah ELSE 0 END) as total_logam,
+		SUM(jumlah) as total
+		");
+		$this->db->where('uang_masuk_id',$id);
+		$this->db->group_by('uang_masuk_id');
+		if($data=$this->db->get('app_uang_masuk_detail')){
+			return $data->row();
+		}
+		return false;
+	}
+
+	public function get_pecahan($id){
+		$afield = array(
+			'app_uang_masuk_detail.jenis_uang_id as jenis_uang_id',			
+			'p.pecahan as pecahan',
+			'app_uang_masuk_detail.jumlah as jumlah',		
+		);
+		$this->db->select($afield);		
+		$this->db->join('app_pecahan p','p.id=app_uang_masuk_detail.pecahan_id','LEFT'); 				
+		$this->db->where('app_uang_masuk_detail.uang_masuk_id',$id);
+		return $this->db->get('app_uang_masuk_detail')->result();
+   }
 
 
 };

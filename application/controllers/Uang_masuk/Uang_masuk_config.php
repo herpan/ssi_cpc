@@ -12,13 +12,16 @@ class Uang_masuk_config {
 	    $this->general		= new General_title();
 		$this->app_uang_masuk_id	= 'ID';
 		$this->app_uang_masuk_no	= 'NO';
-		$this->app_uang_masuk_cabang_id	= 'CABANG_ID';
-		$this->app_uang_masuk_sentra_kas_id	= 'SENTRA_KAS_ID';
+		$this->app_uang_masuk_cabang_id	= 'CABANG';
+		$this->app_uang_masuk_sentra_kas_id	= 'SENTRA_KAS';
 		$this->app_uang_masuk_jumlah_global	= 'JUMLAH_GLOBAL';
 		$this->app_uang_masuk_status_penerimaan	= 'STATUS_PENERIMAAN';
 		$this->app_uang_masuk_tanggal_penerimaan	= 'TANGGAL_PENERIMAAN';
 		$this->app_uang_masuk_waktu_tiba	= 'WAKTU_TIBA';
 		$this->app_uang_masuk_waktu_serah_terima	= 'WAKTU_SERAH_TERIMA';
+		$this->app_uang_masuk_no_kendaraan	= 'NO_POL_KENDARAAN';
+		$this->app_uang_masuk_diserahkan_oleh	= 'DISERAHKAN_OLEH';
+		$this->app_uang_masuk_diterima_oleh	= 'DITERIMA_OLEH';
 		$this->app_uang_masuk_detail_tas	= 'DETAIL_TAS';
 		$this->app_uang_masuk_keterangan	= 'KETERANGAN';
 		$this->app_uang_masuk_user_input	= 'USERID_INPUT';
@@ -26,7 +29,7 @@ class Uang_masuk_config {
 		$this->app_uang_masuk_user_update	= 'USERID_UPDATE';
 		$this->app_uang_masuk_update_time	= 'UPDATE_TIME';
 		$this->c_id	= 'C_ID';
-		$this->c_bank_id	= 'BANK_ID';
+		$this->c_bank_id	= 'BANK';
 		$this->c_kategori_cabang_id	= 'KATEGORI_CABANG_ID';
 		$this->c_nama_cabang	= 'NAMA_CABANG';
 		$this->c_alamat	= 'ALAMAT';
@@ -83,6 +86,9 @@ class Uang_masuk_config {
 		$this->f_tanggal_penerimaan	= 'tanggal_penerimaan';
 		$this->f_waktu_tiba	= 'waktu_tiba';
 		$this->f_waktu_serah_terima	= 'waktu_serah_terima';
+		$this->f_no_kendaraan ='no_kendaraan';
+		$this->f_diserahkan_oleh	= 'diserahkan_oleh';
+		$this->f_diterima_oleh	= 'diterima_oleh';
 		$this->f_detail_tas	= 'detail_tas';
 		$this->f_keterangan	= 'keterangan';
 		$this->f_user_input	= 'user_input';
@@ -151,6 +157,8 @@ class Uang_masuk_config {
 			$this->f_tanggal_penerimaan	=> $this->app_uang_masuk_tanggal_penerimaan,
 			$this->f_waktu_tiba	=> $this->app_uang_masuk_waktu_tiba,
 			$this->f_waktu_serah_terima	=> $this->app_uang_masuk_waktu_serah_terima,
+			$this->f_diserahkan_oleh	=> $this->app_uang_masuk_diserahkan_oleh,
+			$this->f_diterima_oleh	=> $this->app_uang_masuk_diterima_oleh,
 			//$this->f_detail_tas	=> $this->app_uang_masuk_detail_tas,
 			//$this->f_keterangan	=> $this->app_uang_masuk_keterangan,
 			$this->f_sentra	=> $this->s_sentra,

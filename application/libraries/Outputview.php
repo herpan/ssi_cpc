@@ -125,7 +125,7 @@ class Outputview {
    
    
    
-   public function auto_result($success,$elementid=""){
+   public function auto_result($success,$elementid="",$id=null){
 	   if($success){
 		   $this->success ='true';
 		   	if($this->message==''){
@@ -143,6 +143,7 @@ class Outputview {
        $r['message']   		= $this->message;
        $r['elementid'] 		= $elementid;
 	   $r['redirect']		= $this->redirect;
+       $r['id']		        = $id;
 
 	   $r['sec_val']	=  $this->CI->security->get_csrf_token_name()."=".$this->CI->security->get_csrf_hash()."&";
 	   $r = json_encode($r);

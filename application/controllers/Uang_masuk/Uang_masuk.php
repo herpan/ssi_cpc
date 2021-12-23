@@ -22,7 +22,7 @@ class Uang_masuk extends CI_Controller {
 			'link_create'			=> site_url().'Uang_masuk/Uang_masuk/create',
 			'link_update'			=> site_url().'Uang_masuk/Uang_masuk/update',
 			'link_delete'			=> site_url().'Uang_masuk/Uang_masuk/delete_multiple',
-			'link_create_multiple'			=> site_url().'Uang_masuk/Uang_masuk/create_multiple',
+			'link_view'				=> site_url().'Uang_masuk/Uang_masuk/view',			
 		);
 		
 		$this->template->load('Uang_masuk/Uang_masuk_list',$data);
@@ -60,7 +60,16 @@ class Uang_masuk extends CI_Controller {
 			'title_page_big'		=> 'Buat Baru',
 			'title'					=> $this->title,
 			'link_save'				=> site_url().'Uang_masuk/Uang_masuk/create_action',
-			'link_back'				=> $this->agent->referrer(),			
+			'link_save_update'		=> site_url().'Uang_masuk/Uang_masuk/update_action',
+			'link_refresh_table'	=> site_url().'Uang_masuk_detail/Uang_masuk_detail/refresh_table/'.$this->_token,
+			'link_back'				=> $this->agent->referrer(),'link_refresh_table'	=> site_url().'Uang_masuk_detail/Uang_masuk_detail/refresh_table/'.$this->_token.'/xxxx',
+			'link_delete'			=> site_url().'Uang_masuk_detail/Uang_masuk_detail/delete_multiple',
+			'link_save_detail'		=> site_url().'Uang_masuk_detail/Uang_masuk_detail/create_action',
+			'link_update_detail'			=> site_url().'Uang_masuk_detail/Uang_masuk_detail/update_action',
+			'link_refresh_table_tas'	=> site_url().'Uang_masuk_tas/Uang_masuk_tas/refresh_table/'.$this->_token.'/xxxx',
+			'link_delete_tas'			=> site_url().'Uang_masuk_tas/Uang_masuk_tas/delete_multiple',
+			'link_save_detail_tas'		=> site_url().'Uang_masuk_tas/Uang_masuk_tas/create_action',
+			'link_update_detail_tas'			=> site_url().'Uang_masuk_tas/Uang_masuk_tas/update_action',			
 		);
 		
 		$this->template->load('Uang_masuk/Uang_masuk_form',$data);
@@ -106,18 +115,6 @@ class Uang_masuk extends CI_Controller {
 		}
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['sentra_kas_id'],'#sentra_kas_id')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data kosong
-		if(!$o->not_empty($val['jumlah_global'],'#jumlah_global')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data kosong
 		if(!$o->not_empty($val['tanggal_penerimaan'],'#tanggal_penerimaan')){
 			echo $o->result();	
 			return;
@@ -135,15 +132,22 @@ class Uang_masuk extends CI_Controller {
 			return;
 		}
 
-		//mencegah data kosong
-		if(!$o->not_empty($val['detail_tas'],'#detail_tas')){
-			echo $o->result();	
-			return;
-		}
-
 		unset($val['id']);
+		unset($val['bank_id']);
+
+		//ambil sentra pengelola dari cabang yang dipilih
+
+		$this->load->model('Cabang_cpc/Cabang_cpc_model','cabang');
+		$cb=$this->cabang->get_by_id($val['cabang_id']);
+		$val['sentra_kas_id']= $cb->sentra_kas_id;
+
+		
+		$val['user_input']= $this->_user_id;
+
+
 		$success = $this->tmodel->insert($val);
-		echo $o->auto_result($success);
+		
+		echo $o->auto_result($success,'',$this->tmodel->id);
 
 	}
 
@@ -165,12 +169,21 @@ class Uang_masuk extends CI_Controller {
 		
 		if($row){
 			$data = array(
-				'title_page_big'		=> 'Buat Baru',
+				'title_page_big'		=> 'Edit Penerimaan Uang',
 				'title'					=> $this->title,
 				'link_save'				=> site_url().'Uang_masuk/Uang_masuk/update_action',
 				'link_back'				=> $this->agent->referrer(),
 				'data'					=> $row,
 				'id'					=> $id_generate,
+				'uang_masuk_id'			=> $id,
+				'link_refresh_table'	=> site_url().'Uang_masuk_detail/Uang_masuk_detail/refresh_table/'.$this->_token.'/'.$id,
+				'link_delete'			=> site_url().'Uang_masuk_detail/Uang_masuk_detail/delete_multiple',
+				'link_save_detail'		=> site_url().'Uang_masuk_detail/Uang_masuk_detail/create_action',
+				'link_update_detail'			=> site_url().'Uang_masuk_detail/Uang_masuk_detail/update_action',
+				'link_refresh_table_tas'	=> site_url().'Uang_masuk_tas/Uang_masuk_tas/refresh_table/'.$this->_token.'/'.$id,
+				'link_delete_tas'			=> site_url().'Uang_masuk_tas/Uang_masuk_tas/delete_multiple',
+				'link_save_detail_tas'		=> site_url().'Uang_masuk_tas/Uang_masuk_tas/create_action',
+				'link_update_detail_tas'			=> site_url().'Uang_masuk_tas/Uang_masuk_tas/update_action',
 			);
 			
 			$this->template->load('Uang_masuk/Uang_masuk_form',$data);
@@ -220,17 +233,11 @@ class Uang_masuk extends CI_Controller {
 			return;
 		}
 
-		//mencegah data kosong
-		if(!$o->not_empty($val['sentra_kas_id'],'#sentra_kas_id')){
-			echo $o->result();	
-			return;
-		}
+		//ambil sentra pengelola dari cabang yang dipilih
 
-		//mencegah data kosong
-		if(!$o->not_empty($val['jumlah_global'],'#jumlah_global')){
-			echo $o->result();	
-			return;
-		}
+		$this->load->model('Cabang_cpc/Cabang_cpc_model','cabang');
+		$cb=$this->cabang->get_by_id($val['cabang_id']);
+		$val['sentra_kas_id']= $cb->sentra_kas_id;
 
 		//mencegah data kosong
 		if(!$o->not_empty($val['tanggal_penerimaan'],'#tanggal_penerimaan')){
@@ -250,11 +257,11 @@ class Uang_masuk extends CI_Controller {
 			return;
 		}
 
-		//mencegah data kosong
-		if(!$o->not_empty($val['detail_tas'],'#detail_tas')){
-			echo $o->result();	
-			return;
-		}
+		unset($val['bank_id']);
+
+		$val['user_update']=$this->_user_id;	
+		$val['update_time']=date('Y-m-d H:i:s', now());
+	
 
 
 		$success = $this->tmodel->update($val['id'],$val);
@@ -295,34 +302,87 @@ class Uang_masuk extends CI_Controller {
 	
 	}
 
-	public function  create_multiple(){
-		$data = array(
-			'title_page_big'			=> 'Import data pengguna dari excel',
-			'link_download_template'	=> site_url().'Uang_masuk/Uang_masuk/download_template/'.$this->_token,
-			'link_upload_template'		=> site_url().'Uang_masuk/Uang_masuk/upload_template/'.$this->_token,
-			'link_back'					=> $this->agent->referrer(),			
-		);
+	public function view($id){
+		$id 				= $this->security->xss_clean($id);
+		$id_generate		= $id;
 		
-		$this->template->load('share/Form_multiple',$data);
-	}
+		/** proses decode id 
+		* important !! tempdata digunakan sbagai antisipasi
+		* perubahan session saat membuka tab baru secara bersamaan
+		**/
+		$this->log_temp	= $this->session->userdata($this->log_key);
+		$this->session->set_tempdata($id,$this->log_temp,300);
+		
+		//mengembalikan id asli
+		$id = _decode_id($id,$this->log_temp);
+		
+		$row = $this->tmodel->get_by_id($id);
+		
+		if($row){
 
-	public function  download_template($token){
-		if ($token == $this->_token) {
-			//Buat template upload
-		}else {
-			redirect('Auth');
+			//Pecahan kertas
+			
+			$pecahan['1-100000']=0;
+			$pecahan['1-75000']=0;
+			$pecahan['1-50000']=0;
+			$pecahan['1-20000']=0;
+			$pecahan['1-10000']=0;
+			$pecahan['1-5000']=0;
+			$pecahan['1-2000']=0;
+			$pecahan['1-1000']=0;
+			$pecahan['1-500']=0;
+
+			$pecahan['L-1-100000']=0;
+			$pecahan['L-1-75000']=0;
+			$pecahan['L-1-50000']=0;
+			$pecahan['L-1-20000']=0;
+			$pecahan['L-1-10000']=0;
+			$pecahan['L-1-5000']=0;
+			$pecahan['L-1-2000']=0;
+			$pecahan['L-1-1000']=0;
+			$pecahan['L-1-500']=0;
+
+			//Pecahan logam
+
+			$pecahan['2-1000']=0;
+			$pecahan['2-500']=0;
+			$pecahan['2-200']=0;
+			$pecahan['2-100']=0;
+
+			$pecahan['L-2-1000']=0;
+			$pecahan['L-2-500']=0;
+			$pecahan['L-2-200']=0;
+			$pecahan['L-2-100']=0;
+
+			//Total lembaran/koin
+
+			$pecahan['L-1']=0;
+			$pecahan['L-2']=0;
+
+			$p=$this->tmodel->get_pecahan($id);
+			
+			foreach($p as $r){
+
+				//Pecahan				
+				$pecahan[$r->jenis_uang_id.'-'.$r->pecahan]=$r->jumlah;
+				//Lembaran/koin
+				$pecahan['L-'.$r->jenis_uang_id.'-'.$r->pecahan]=$r->jumlah/$r->pecahan;
+				//Total lembaran/koin
+				$pecahan['L-'.$r->jenis_uang_id]+=$pecahan['L-'.$r->jenis_uang_id.'-'.$r->pecahan];
+			}
+
+			
+			$pecahan['L']=$pecahan['L-1']+$pecahan['L-2'];
+
+			$data['row']=$row;	
+			$data['pecahan']=$pecahan;
+			$data['total']=$this->tmodel->get_summary($id);
+			
+			$this->load->view('Uang_masuk/Berita_acara',$data);
+		}else{
+			redirect($this->agent->referrer());
 		}
 	}
-
-	public function  upload_template($token){
-		if ($token == $this->_token) {
-			//Buat template upload
-		}else {
-			redirect('Auth');
-		}
-	}
-
-
 
 };
 
