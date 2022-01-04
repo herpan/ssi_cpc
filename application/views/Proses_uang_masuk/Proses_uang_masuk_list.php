@@ -2,24 +2,14 @@
 <?php echo _css('datatables,icheck')?>
 
 <?php echo card_open('Daftar','bg-teal',true)?>
-<div class='row'>
-	<div class='col-md-6 col-lg-6'>
-	<?php echo button_card($title->general->button_create,$title->general->button_create_desc,'text-green','btn-success','fe fe-list','bg-green','btn-create',$link_create)?>
-	</div>
-	<div class='col-md-6 col-lg-6'>
-	<?php echo button_card($title->general->button_delete,$title->general->button_delete_desc,'text-red','btn-danger','fe fe-trash','bg-red','btn-delete')?>
-	</div>
-</div>
-
 	<div class='box-body table-responsive'  id='box-table'>
 		<small>
 		<table id='table-detail' class='table' style='width:150%'>
 		<thead>
 	
             <tr >
-			<th class="nst">No</th>
-			<th class="nst"><label><input type='checkbox'  id='general_check'> </label></th>
-			<th class="nst">Action</th>
+			<th class="nst">No</th>		
+			<th class="nst">Proses</th>
 			<?php foreach($title->table_column as $key=>$val){ ?>
 				<th><?php echo $val ?></th>
 			<?php } ?>
@@ -132,33 +122,18 @@ table_detail = $('#table-detail').dataTable({
 												},										},
 							
 				 
-				columns				:	[	{data:null,width:"5%"},
-											{data:null,width:"5%",
-												<?php //MEMBUAT CHECKBOX ?>
-												render: function ( data, type, row ) {
-														if ( type === 'display' ) {
-															 var konfirm='';
-															 return '<input type="checkbox" class="checkbox flat-red dt-select2" value="'+row.id+"-"+konfirm+"  "+'">';
-														}
-														
-														return data;
-												},
-											},
+				columns				:	[	{data:null,width:"5%"},										
 											{data:null,width:"5%",
 												<?php //MENAMBAHKAN BUTTON ACTION ?>
 												render: function ( data, type, row ) {
 														if ( type === 'display' ) {
 															var konfirm='';
-															let dis='onclick=\' ybsDeleteTable("'+row.id+"-"+konfirm+'","<?php echo $link_delete ?>","#table-detail") \'';
-															let button_edit='<a href="<?php echo $link_update?>/'+row.id+'" class="btn btn-default text-red btn-sm " title="update"><i class="fa fa-edit"></i></a>';
-															if(parseInt(row.jumlah_proses)>0){
-																dis='disabled=true';
-																button_edit='<button type="button" class="btn btn-default text-red btn-sm" '+dis+'><i class="fa fa-edit"></i></button></small>';
-															}
 															var btn_group='<div class="btn-group" role="group">';
-															btn_group = btn_group + '<a href="<?php echo $link_view ?>/' + row.id + '" class="btn btn-default text-red btn-sm " title="Cetak" target="_blank"><i class="fa fa-file-o"></i></a>';
-															btn_group = btn_group + button_edit; 
-															btn_group = btn_group + '<button type="button" class="btn btn-default text-red btn-sm"  id="btn_pre_delete" '+dis+'><i class="fa fa-trash-o"></i></button></small>';
+																												
+															btn_group = btn_group + '<a href="<?php echo $link_update?>/'+row.id+'" class="btn btn-default text-red btn-sm " title="update"><i class="fa fa-play"></i></a>'; 
+															if((parseInt(row.selisih_kurang)>0) || (parseInt(row.selisih_lebih)>0)) {
+																btn_group = btn_group + '<a href="<?php echo $link_view ?>/' + row.id + '" class="btn btn-default text-red btn-sm " title="Cetak" target="_blank"><i class="fa fa-file-o"></i></a>';
+															}
 															btn_group = btn_group + '</div>';
 															return btn_group;
 														}	
@@ -181,13 +156,10 @@ table_detail = $('#table-detail').dataTable({
 											<?php //SETTING UNTUK KOLOM 0 (NOMOR URUT) ?>
 											{"searchable": false,"orderable": false,"targets": 0, "className":"dt-center"} ,
 								
-											<?php //SETTING UNTUK KOLOM 1 (CHECK) ?>
-											{"searchable": false,"orderable": false,"targets": 1} ,
-
 											<?php //SETTING UNTUK KOLOM 2 (ACTION) ?>
-											{"searchable": false,"orderable": false,"targets": 2} ,
+											{"searchable": false,"orderable": false,"targets": 1} ,
 											<?php //SETTING UNTUK KOLOM 3 (ACTION) ?>
-											{"searchable": false,"orderable": false,"visible": false,"targets": 3} ,
+											{"searchable": false,"orderable": false,"visible": false,"targets": 2} ,
 							
 										],
 							
@@ -255,8 +227,4 @@ table_detail = $('#table-detail').dataTable({
 			});	
 }
 
-
-$('#btn-delete').click(function(){
-	ybsDeleteTableChecked('<?php echo $link_delete?>','#table-detail');
-});
 </script>

@@ -3,23 +3,23 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Uang_masuk_tas_model extends CI_Model {
+class Uang_keluar_tas_model extends CI_Model {
    public $id;	
    function __construct(){
         parent::__construct();
    }	
 	
-	public function json($uang_masuk_id=null){
+	public function json($uang_keluar_id=null){
 		$this->datatables->select('
-			app_uang_masuk_tas.id as id,
-			app_uang_masuk_tas.uang_masuk_id as uang_masuk_id,
-			app_uang_masuk_tas.no_segel as no_segel,
-			app_uang_masuk_tas.no_tas as no_tas,
-			app_uang_masuk_tas.keterangan as keterangan,
-			app_uang_masuk_tas.user_input as user_input,
-			app_uang_masuk_tas.input_time as input_time,
-			app_uang_masuk_tas.user_update as user_update,
-			app_uang_masuk_tas.update_time as update_time,
+			app_uang_keluar_tas.id as id,
+			app_uang_keluar_tas.uang_keluar_id as uang_keluar_id,
+			app_uang_keluar_tas.no_segel as no_segel,
+			app_uang_keluar_tas.no_tas as no_tas,
+			app_uang_keluar_tas.keterangan as keterangan,
+			app_uang_keluar_tas.user_input as user_input,
+			app_uang_keluar_tas.input_time as input_time,
+			app_uang_keluar_tas.user_update as user_update,
+			app_uang_keluar_tas.update_time as update_time,
 			u.id as u_id,
 			u.no as no,
 			u.cabang_id as cabang_id,
@@ -53,16 +53,16 @@ class Uang_masuk_tas_model extends CI_Model {
 			userupdate.picture as userupdate_picture,
 		');
 		
-		$this->datatables->from('app_uang_masuk_tas');
+		$this->datatables->from('app_uang_keluar_tas');
 	
-		$this->datatables->join('app_uang_masuk u','u.id=app_uang_masuk_tas.uang_masuk_id','LEFT'); 
+		$this->datatables->join('app_uang_keluar u','u.id=app_uang_keluar_tas.uang_keluar_id','LEFT'); 
 	
-		$this->datatables->join('sys_user userinput','userinput.id=app_uang_masuk_tas.user_input','LEFT'); 
+		$this->datatables->join('sys_user userinput','userinput.id=app_uang_keluar_tas.user_input','LEFT'); 
 	
-		$this->datatables->join('sys_user userupdate','userupdate.id=app_uang_masuk_tas.user_update','LEFT'); 
+		$this->datatables->join('sys_user userupdate','userupdate.id=app_uang_keluar_tas.user_update','LEFT'); 
 
-		if($uang_masuk_id!==null){
-			$this->datatables->where('uang_masuk_id',$uang_masuk_id);
+		if($uang_keluar_id!==null){
+			$this->datatables->where('uang_keluar_id',$uang_keluar_id);
 		}
 		
 		//mengembalikan dalam bentuk array
@@ -71,17 +71,17 @@ class Uang_masuk_tas_model extends CI_Model {
 	}
 	
 
-   public function get_all($uang_masuk_id=null){
+   public function get_all($uang_keluar_id=null){
 		$afield = array(
-			'app_uang_masuk_tas.id as id',
-			'app_uang_masuk_tas.uang_masuk_id as uang_masuk_id',
-			'app_uang_masuk_tas.no_segel as no_segel',
-			'app_uang_masuk_tas.no_tas as no_tas',
-			'app_uang_masuk_tas.keterangan as keterangan',
-			'app_uang_masuk_tas.user_input as user_input',
-			'app_uang_masuk_tas.input_time as input_time',
-			'app_uang_masuk_tas.user_update as user_update',
-			'app_uang_masuk_tas.update_time as update_time',
+			'app_uang_keluar_tas.id as id',
+			'app_uang_keluar_tas.uang_keluar_id as uang_keluar_id',
+			'app_uang_keluar_tas.no_segel as no_segel',
+			'app_uang_keluar_tas.no_tas as no_tas',
+			'app_uang_keluar_tas.keterangan as keterangan',
+			'app_uang_keluar_tas.user_input as user_input',
+			'app_uang_keluar_tas.input_time as input_time',
+			'app_uang_keluar_tas.user_update as user_update',
+			'app_uang_keluar_tas.update_time as update_time',
 			'u.id as u_id',
 			'u.no as no',
 			'u.cabang_id as cabang_id',
@@ -116,15 +116,15 @@ class Uang_masuk_tas_model extends CI_Model {
 		
 		);
 		$this->db->select($afield);
-		$this->db->join('app_uang_masuk u','u.id=app_uang_masuk_tas.uang_masuk_id','LEFT'); 
-		$this->db->join('sys_user userinput','userinput.id=app_uang_masuk_tas.user_input','LEFT'); 
-		$this->db->join('sys_user userupdate','userupdate.id=app_uang_masuk_tas.user_update','LEFT'); 
+		$this->db->join('app_uang_keluar u','u.id=app_uang_keluar_tas.uang_keluar_id','LEFT'); 
+		$this->db->join('sys_user userinput','userinput.id=app_uang_keluar_tas.user_input','LEFT'); 
+		$this->db->join('sys_user userupdate','userupdate.id=app_uang_keluar_tas.user_update','LEFT'); 
 		
-		if($uang_masuk_id!==null){
-			$this->db->where('app_uang_masuk_tas.uang_masuk_id',$uang_masuk_id);
+		if($uang_keluar_id!==null){
+			$this->db->where('app_uang_keluar_tas.uang_keluar_id',$uang_keluar_id);
 		}
-		$this->db->order_by('app_uang_masuk_tas.id', 'ASC');
-		if($data=$this->db->get('app_uang_masuk_tas')){
+		$this->db->order_by('app_uang_keluar_tas.id', 'ASC');
+		if($data=$this->db->get('app_uang_keluar_tas')){
 			return $data->result_array();
 		}
 		return false;		
@@ -133,15 +133,15 @@ class Uang_masuk_tas_model extends CI_Model {
 
 	public function get_by_id($id){
 		$afield = array(
-			'app_uang_masuk_tas.id as id',
-			'app_uang_masuk_tas.uang_masuk_id as uang_masuk_id',
-			'app_uang_masuk_tas.no_segel as no_segel',
-			'app_uang_masuk_tas.no_tas as no_tas',
-			'app_uang_masuk_tas.keterangan as keterangan',
-			'app_uang_masuk_tas.user_input as user_input',
-			'app_uang_masuk_tas.input_time as input_time',
-			'app_uang_masuk_tas.user_update as user_update',
-			'app_uang_masuk_tas.update_time as update_time',
+			'app_uang_keluar_tas.id as id',
+			'app_uang_keluar_tas.uang_keluar_id as uang_keluar_id',
+			'app_uang_keluar_tas.no_segel as no_segel',
+			'app_uang_keluar_tas.no_tas as no_tas',
+			'app_uang_keluar_tas.keterangan as keterangan',
+			'app_uang_keluar_tas.user_input as user_input',
+			'app_uang_keluar_tas.input_time as input_time',
+			'app_uang_keluar_tas.user_update as user_update',
+			'app_uang_keluar_tas.update_time as update_time',
 			'u.id as u_id',
 			'u.no as no',
 			'u.cabang_id as cabang_id',
@@ -176,13 +176,13 @@ class Uang_masuk_tas_model extends CI_Model {
 		
 		);
 		$this->db->select($afield);
-		$this->db->join('app_uang_masuk u','u.id=app_uang_masuk_tas.uang_masuk_id','LEFT'); 
-		$this->db->join('sys_user userinput','userinput.id=app_uang_masuk_tas.user_input','LEFT'); 
-		$this->db->join('sys_user userupdate','userupdate.id=app_uang_masuk_tas.user_update','LEFT'); 
+		$this->db->join('app_uang_keluar u','u.id=app_uang_keluar_tas.uang_keluar_id','LEFT'); 
+		$this->db->join('sys_user userinput','userinput.id=app_uang_keluar_tas.user_input','LEFT'); 
+		$this->db->join('sys_user userupdate','userupdate.id=app_uang_keluar_tas.user_update','LEFT'); 
 
-		$this->db->where('app_uang_masuk_tas.id', $id);
-		$this->db->order_by('app_uang_masuk_tas.id', 'ASC');
-		return $this->db->get('app_uang_masuk_tas')->row();
+		$this->db->where('app_uang_keluar_tas.id', $id);
+		$this->db->order_by('app_uang_keluar_tas.id', 'ASC');
+		return $this->db->get('app_uang_keluar_tas')->row();
    }
 
 
@@ -193,9 +193,9 @@ class Uang_masuk_tas_model extends CI_Model {
 	   -update : id di isi dengan id data yg di proses.	
 	*/	
 	function if_exist($id,$data){
-		$this->db->where('app_uang_masuk_tas.id <>',$id);
+		$this->db->where('app_uang_keluar_tas.id <>',$id);
 
-		$q = $this->db->get_where('app_uang_masuk_tas', $data)->result_array();
+		$q = $this->db->get_where('app_uang_keluar_tas', $data)->result_array();
 		
 		if(count($q)>0){
 			return true;
@@ -213,9 +213,9 @@ class Uang_masuk_tas_model extends CI_Model {
 		//Mencegah proses jika sudah ada data yang di proses
 		
 		$this->db->select('sum(app_journal_proses.jumlah) as jumlah');
-		$this->db->join('app_journal_proses','app_journal_proses.uang_masuk_detail_id=app_uang_masuk_detail.id','LEFT');
-		$this->db->where('app_uang_masuk_detail.uang_masuk_id',$data['uang_masuk_id']);
-		$cek=$this->db->get('app_uang_masuk_detail')->row();
+		$this->db->join('app_journal_proses','app_journal_proses.uang_keluar_detail_id=app_uang_keluar_detail.id','LEFT');
+		$this->db->where('app_uang_keluar_detail.uang_keluar_id',$data['uang_keluar_id']);
+		$cek=$this->db->get('app_uang_keluar_detail')->row();
 		if($cek->jumlah>0){
 			return false;
 		}
@@ -225,7 +225,7 @@ class Uang_masuk_tas_model extends CI_Model {
 	    /* transaction rollback */
 		$this->db->trans_start();
 		
-		$this->db->insert('app_uang_masuk_tas', $data);		
+		$this->db->insert('app_uang_keluar_tas', $data);		
 		/* id primary yg baru saja di input*/
 		$this->id = $this->db->insert_id(); 
 		
@@ -236,9 +236,9 @@ class Uang_masuk_tas_model extends CI_Model {
 	function update($id,$data){
 
 		$this->db->select('sum(app_journal_proses.jumlah) as jumlah');
-		$this->db->join('app_journal_proses','app_journal_proses.uang_masuk_detail_id=app_uang_masuk_detail.id','LEFT');
-		$this->db->where('app_uang_masuk_detail.uang_masuk_id',$data['uang_masuk_id']);
-		$cek=$this->db->get('app_uang_masuk_detail')->row();
+		$this->db->join('app_journal_proses','app_journal_proses.uang_keluar_detail_id=app_uang_keluar_detail.id','LEFT');
+		$this->db->where('app_uang_keluar_detail.uang_keluar_id',$data['uang_keluar_id']);
+		$cek=$this->db->get('app_uang_keluar_detail')->row();
 		if($cek->jumlah>0){
 			return false;
 		}
@@ -246,8 +246,8 @@ class Uang_masuk_tas_model extends CI_Model {
 		/* transaction rollback */
 		$this->db->trans_start();
 
-		$this->db->where('app_uang_masuk_tas.id', $id);
-		$this->db->update('app_uang_masuk_tas', $data);
+		$this->db->where('app_uang_keluar_tas.id', $id);
+		$this->db->update('app_uang_keluar_tas', $data);
 		
 		$this->db->trans_complete();
 		return $this->db->trans_status(); //return true or false	
@@ -256,11 +256,11 @@ class Uang_masuk_tas_model extends CI_Model {
 	function delete_multiple($data){
 
 		$this->db->select('sum(app_journal_proses.jumlah) as jumlah');
-		$this->db->join('app_uang_masuk','app_uang_masuk_tas.uang_masuk_id=app_uang_masuk.id','INNER');
-		$this->db->join('app_uang_masuk_detail','app_uang_masuk_detail.uang_masuk_id=app_uang_masuk.id','LEFT');
-		$this->db->join('app_journal_proses','app_journal_proses.uang_masuk_detail_id=app_uang_masuk_detail.id','LEFT');
-		$this->db->where_in('app_uang_masuk_tas.id',$data);
-		$cek=$this->db->get('app_uang_masuk_tas')->row();
+		$this->db->join('app_uang_keluar','app_uang_keluar_tas.uang_keluar_id=app_uang_keluar.id','INNER');
+		$this->db->join('app_uang_keluar_detail','app_uang_keluar_detail.uang_keluar_id=app_uang_keluar.id','LEFT');
+		$this->db->join('app_journal_proses','app_journal_proses.uang_keluar_detail_id=app_uang_keluar_detail.id','LEFT');
+		$this->db->where_in('app_uang_keluar_tas.id',$data);
+		$cek=$this->db->get('app_uang_keluar_tas')->row();
 		if($cek->jumlah>0){
 			return false;
 		}
@@ -268,9 +268,9 @@ class Uang_masuk_tas_model extends CI_Model {
 		$this->db->trans_start();
 		
 		if(!empty($data)){
-			$this->db->where_in('app_uang_masuk_tas.id',$data);	
+			$this->db->where_in('app_uang_keluar_tas.id',$data);	
 	
-			$this->db->delete('app_uang_masuk_tas');
+			$this->db->delete('app_uang_keluar_tas');
 		}
 		
 		$this->db->trans_complete();
@@ -280,7 +280,7 @@ class Uang_masuk_tas_model extends CI_Model {
 
 	function insert_multiple($data){
 		$this->db->trans_start();
-		$this->db->insert_batch('app_uang_masuk_tas', $data);
+		$this->db->insert_batch('app_uang_keluar_tas', $data);
 		$this->db->trans_complete();
 		return $this->db->trans_status();
  }

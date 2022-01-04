@@ -3,35 +3,31 @@ require APPPATH . 'controllers/sistem/General_title.php';
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Uang_masuk_config {
+class Uang_keluar_config {
 	
 
 
    function __construct(){
 	   /* title */
 	    $this->general		= new General_title();
-		$this->app_uang_masuk_id	= 'ID';
-		$this->app_uang_masuk_no	= 'NO';
-		$this->app_uang_masuk_cabang_id	= 'CABANG';
-		$this->app_uang_masuk_sentra_kas_id	= 'SENTRA_KAS';
-		$this->app_uang_masuk_jumlah_global	= 'JUMLAH_GLOBAL';
-		$this->app_uang_masuk_jumlah_proses	= 'JUMLAH_PROSES';
-		$this->app_uang_masuk_selisih_kurang	= 'SELISIH_KURANG';
-		$this->app_uang_masuk_selisih_lebih	= 'SELISIH_LEBIH';
-		$this->app_uang_masuk_jumlah_belum_proses	= 'BELUM_PROSES';
-		$this->app_uang_masuk_status_penerimaan	= 'STATUS_PENERIMAAN';
-		$this->app_uang_masuk_tanggal_penerimaan	= 'TANGGAL_PENERIMAAN';
-		$this->app_uang_masuk_waktu_tiba	= 'WAKTU_TIBA';
-		$this->app_uang_masuk_waktu_serah_terima	= 'WAKTU_SERAH_TERIMA';
-		$this->app_uang_masuk_no_kendaraan	= 'NO_POL_KENDARAAN';
-		$this->app_uang_masuk_diserahkan_oleh	= 'DISERAHKAN_OLEH';
-		$this->app_uang_masuk_diterima_oleh	= 'DITERIMA_OLEH';
-		$this->app_uang_masuk_detail_tas	= 'DETAIL_TAS';
-		$this->app_uang_masuk_keterangan	= 'KETERANGAN';
-		$this->app_uang_masuk_user_input	= 'USERID_INPUT';
-		$this->app_uang_masuk_input_time	= 'INPUT_TIME';
-		$this->app_uang_masuk_user_update	= 'USERID_UPDATE';
-		$this->app_uang_masuk_update_time	= 'UPDATE_TIME';
+		$this->app_uang_keluar_id	= 'ID';
+		$this->app_uang_keluar_no	= 'NO';
+		$this->app_uang_keluar_cabang_id	= 'CABANG';
+		$this->app_uang_keluar_sentra_kas_id	= 'SENTRA_KAS';
+		$this->app_uang_keluar_jumlah_global	= 'JUMLAH_GLOBAL';	
+		$this->app_uang_keluar_status_penerimaan	= 'STATUS_PENERIMAAN';
+		$this->app_uang_keluar_tanggal_penerimaan	= 'TANGGAL_PENERIMAAN';
+		$this->app_uang_keluar_waktu_tiba	= 'WAKTU_TIBA';
+		$this->app_uang_keluar_waktu_serah_terima	= 'WAKTU_SERAH_TERIMA';
+		$this->app_uang_keluar_no_kendaraan	= 'NO_POL_KENDARAAN';
+		$this->app_uang_keluar_diserahkan_oleh	= 'DISERAHKAN_OLEH';
+		$this->app_uang_keluar_diterima_oleh	= 'DITERIMA_OLEH';
+		$this->app_uang_keluar_detail_tas	= 'DETAIL_TAS';
+		$this->app_uang_keluar_keterangan	= 'KETERANGAN';
+		$this->app_uang_keluar_user_input	= 'USERID_INPUT';
+		$this->app_uang_keluar_input_time	= 'INPUT_TIME';
+		$this->app_uang_keluar_user_update	= 'USERID_UPDATE';
+		$this->app_uang_keluar_update_time	= 'UPDATE_TIME';
 		$this->c_id	= 'C_ID';
 		$this->c_bank_id	= 'BANK';
 		$this->c_kategori_cabang_id	= 'KATEGORI_CABANG_ID';
@@ -85,11 +81,7 @@ class Uang_masuk_config {
 		$this->f_no	= 'no';
 		$this->f_cabang_id	= 'cabang_id';
 		$this->f_sentra_kas_id	= 'sentra_kas_id';
-		$this->f_jumlah_global	= 'jumlah_global';
-		$this->f_jumlah_proses	= 'jumlah_proses';
-		$this->f_selisih_kurang	= 'selisih_kurang';
-		$this->f_selisih_lebih	= 'selisih_lebih';
-		$this->f_jumlah_belum_proses	= 'jumlah_belum_proses';
+		$this->f_jumlah_global	= 'jumlah_global';	
 		$this->f_status_penerimaan	= 'status_penerimaan';
 		$this->f_tanggal_penerimaan	= 'tanggal_penerimaan';
 		$this->f_waktu_tiba	= 'waktu_tiba';
@@ -154,32 +146,28 @@ class Uang_masuk_config {
 		/* CONFIG FORM LIST */
 		/* field_alias_database => $title */	
 		$this->table_column =array(
-			$this->f_id	=> $this->app_uang_masuk_id,
-			$this->f_no	=> $this->app_uang_masuk_no,
-			// $this->f_cabang_id	=> $this->app_uang_masuk_cabang_id,
-			// $this->f_sentra_kas_id	=> $this->app_uang_masuk_sentra_kas_id,
+			$this->f_id	=> $this->app_uang_keluar_id,
+			$this->f_no	=> $this->app_uang_keluar_no,
+			// $this->f_cabang_id	=> $this->app_uang_keluar_cabang_id,
+			// $this->f_sentra_kas_id	=> $this->app_uang_keluar_sentra_kas_id,
 			$this->f_bank	=> $this->b_bank,
 			$this->f_nama_cabang	=> $this->c_nama_cabang,
-			$this->f_jumlah_global	=> $this->app_uang_masuk_jumlah_global,
-			$this->f_selisih_kurang	=> $this->app_uang_masuk_selisih_kurang,
-			$this->f_selisih_lebih	=> $this->app_uang_masuk_selisih_lebih,
-			$this->f_jumlah_proses	=> $this->app_uang_masuk_jumlah_proses,
-			$this->f_jumlah_belum_proses	=> $this->app_uang_masuk_jumlah_belum_proses,
-			$this->f_status_penerimaan	=> $this->app_uang_masuk_status_penerimaan,
-			$this->f_tanggal_penerimaan	=> $this->app_uang_masuk_tanggal_penerimaan,
-			$this->f_waktu_tiba	=> $this->app_uang_masuk_waktu_tiba,
-			$this->f_waktu_serah_terima	=> $this->app_uang_masuk_waktu_serah_terima,
-			$this->f_diserahkan_oleh	=> $this->app_uang_masuk_diserahkan_oleh,
-			$this->f_diterima_oleh	=> $this->app_uang_masuk_diterima_oleh,
-			//$this->f_detail_tas	=> $this->app_uang_masuk_detail_tas,
-			//$this->f_keterangan	=> $this->app_uang_masuk_keterangan,
+			$this->f_jumlah_global	=> $this->app_uang_keluar_jumlah_global,
+			$this->f_status_penerimaan	=> $this->app_uang_keluar_status_penerimaan,
+			$this->f_tanggal_penerimaan	=> $this->app_uang_keluar_tanggal_penerimaan,
+			$this->f_waktu_tiba	=> $this->app_uang_keluar_waktu_tiba,
+			$this->f_waktu_serah_terima	=> $this->app_uang_keluar_waktu_serah_terima,
+			$this->f_diserahkan_oleh	=> $this->app_uang_keluar_diserahkan_oleh,
+			$this->f_diterima_oleh	=> $this->app_uang_keluar_diterima_oleh,
+			//$this->f_detail_tas	=> $this->app_uang_keluar_detail_tas,
+			//$this->f_keterangan	=> $this->app_uang_keluar_keterangan,
 			$this->f_sentra	=> $this->s_sentra,
-			//$this->f_user_input	=> $this->app_uang_masuk_user_input,
+			//$this->f_user_input	=> $this->app_uang_keluar_user_input,
 			$this->f_nama_lengkap	=> $this->userinput_nama_lengkap,
-			$this->f_input_time	=> $this->app_uang_masuk_input_time,
-			// $this->f_user_update	=> $this->app_uang_masuk_user_update,
+			$this->f_input_time	=> $this->app_uang_keluar_input_time,
+			// $this->f_user_update	=> $this->app_uang_keluar_user_update,
 			$this->f_userupdate_nama_lengkap	=> $this->userupdate_nama_lengkap,
-			$this->f_update_time	=> $this->app_uang_masuk_update_time,
+			$this->f_update_time	=> $this->app_uang_keluar_update_time,
 			// $this->f_c_id	=> $this->c_id,
 			// $this->f_bank_id	=> $this->c_bank_id,
 			// $this->f_kategori_cabang_id	=> $this->c_kategori_cabang_id,

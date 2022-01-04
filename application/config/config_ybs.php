@@ -42,6 +42,6 @@ $config['develop_email']='';
 
 
 /*LOGIN STYLE*/
-$config['login_style']='Style1';
+$config['login_style']='Style2';
 
 ?>

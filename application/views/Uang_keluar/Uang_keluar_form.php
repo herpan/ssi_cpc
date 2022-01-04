@@ -10,7 +10,7 @@
 	
 					<div class='col-md-6 col-xl-6'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_uang_masuk_no ?></label>
+							<label class='form-label'><?php echo $title->app_uang_keluar_no ?></label>
 							<input type='text' class='form-control data-sending focus-color'  id='no' name='no' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->no ?>' >
 					</div>
 					</div>
@@ -35,7 +35,7 @@
 			
 					<div class='col-md-6 col-xl-6'>				
 					<div class='form-group'> 
-							<label class='form-label'><?php echo $title->app_uang_masuk_cabang_id ?></label> 
+							<label class='form-label'><?php echo $title->app_uang_keluar_cabang_id ?></label> 
 							<?php $v='';  if(isset($data)) $v = $data->cabang_id; 
 								  echo create_cmb_database(array(	'id'			=>'cabang_id',
 																	'name'			=>'cabang_id',
@@ -51,7 +51,7 @@
 			
 					<div class='col-md-6 col-xl-6'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_uang_masuk_tanggal_penerimaan ?></label>
+							<label class='form-label'><?php echo $title->app_uang_keluar_tanggal_penerimaan ?></label>
 							<div class='input-group'>
 							<span class='input-group-prepend' id='basic-addon1'>
 							<span class='input-group-text'><i class="fa fa-calendar"></i></span>
@@ -63,7 +63,7 @@
 			
 					<div class='col-md-6 col-xl-6'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_uang_masuk_waktu_tiba ?></label>
+							<label class='form-label'><?php echo $title->app_uang_keluar_waktu_tiba ?></label>
 							<input type='text' class='form-control data-sending focus-color timepicker'  id='waktu_tiba' name='waktu_tiba' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->waktu_tiba ?>' >
 					</div>
 					</div>
@@ -71,7 +71,7 @@
 			
 					<div class='col-md-6 col-xl-6'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_uang_masuk_waktu_serah_terima ?></label>
+							<label class='form-label'><?php echo $title->app_uang_keluar_waktu_serah_terima ?></label>
 							<input type='text' class='form-control data-sending focus-color timepicker'  id='waktu_serah_terima' name='waktu_serah_terima' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->waktu_serah_terima ?>' >
 					</div>
 					</div>
@@ -79,21 +79,21 @@
 										
 					<div class='col-md-6 col-xl-6'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_uang_masuk_diserahkan_oleh ?></label>
+							<label class='form-label'><?php echo $title->app_uang_keluar_diserahkan_oleh ?></label>
 							<input type='text' class='form-control data-sending focus-color'  id='diserahkan_oleh' name='diserahkan_oleh' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->diserahkan_oleh ?>' >
 					</div>
 					</div>
 
 					<div class='col-md-6 col-xl-6'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_uang_masuk_diterima_oleh ?></label>
+							<label class='form-label'><?php echo $title->app_uang_keluar_diterima_oleh ?></label>
 							<input type='text' class='form-control data-sending focus-color'  id='diterima_oleh' name='diterima_oleh' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->diterima_oleh ?>' >
 					</div>
 					</div>
 
 					<div class='col-md-6 col-xl-6'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_uang_masuk_no_kendaraan ?></label>
+							<label class='form-label'><?php echo $title->app_uang_keluar_no_kendaraan ?></label>
 							<input type='text' class='form-control data-sending focus-color'  id='no_kendaraan' name='no_kendaraan' placeholder='' value='<?php if(isset($data)) echo $data->no_kendaraan ?>' >
 					</div>
 					</div>
@@ -101,7 +101,7 @@
 			
 					<div class='col-md-6 col-xl-6'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_uang_masuk_keterangan ?></label>
+							<label class='form-label'><?php echo $title->app_uang_keluar_keterangan ?></label>
 							<input type='text' class='form-control data-sending focus-color'  id='keterangan' name='keterangan' placeholder='' value='<?php if(isset($data)) echo $data->keterangan ?>' >
 					</div>
 					</div>	
@@ -129,7 +129,7 @@
 	<div class='col-md-4 col-lg-3'>
 	<div class='form-group'> 
 			<input hidden class='data-sending' id='detail_id' name="id" value=''>
-			<input hidden class='data-sending' id='uang_masuk_id' name="uang_masuk_id" value='<?php if(isset($uang_masuk_id))echo $uang_masuk_id?>'>
+			<input hidden class='data-sending' id='uang_keluar_id' name="uang_keluar_id" value='<?php if(isset($uang_keluar_id))echo $uang_keluar_id?>'>
 			<input hidden class='data-sending' id='kategori_selisih_id' name="kategori_selisih_id" value='0'>
 			<label class='form-label'>JENIS_UANG</label> 
 			<?php 
@@ -230,7 +230,7 @@
 <div class='row'>
 				<input hidden class='data-sending' id='detail_tas_id' name="id" value=''>
 	
-				<input hidden class='data-sending' id='tas_uang_masuk_id' name="uang_masuk_id" value='<?php if(isset($uang_masuk_id))echo $uang_masuk_id?>'>			
+				<input hidden class='data-sending' id='tas_uang_keluar_id' name="uang_keluar_id" value='<?php if(isset($uang_keluar_id))echo $uang_keluar_id?>'>			
 			
 					<div class='col-md-4 col-lg-3'>
 					<div class='form-group'>
@@ -475,19 +475,19 @@ function simpan(){
 		play_sound_success();		
 		//console.log(data);
 		if (data.id !== undefined){
-			url_save='<?php echo base_url('Uang_masuk/Uang_masuk/update_action')?>'
-			link_add ='<?php echo base_url('Uang_masuk_detail/Uang_masuk_detail/create_action')?>';
-			link_update ='<?php echo base_url('Uang_masuk_detail/Uang_masuk_detail/update_action')?>';
-			link_add_tas ='<?php echo base_url('Uang_masuk_tas/Uang_masuk_tas/create_action')?>';
-			link_update_tas ='<?php echo base_url('Uang_masuk/Uang_masuk/update_action')?>';
+			url_save='<?php echo base_url('Uang_keluar/Uang_keluar/update_action')?>'
+			link_add ='<?php echo base_url('Uang_keluar_detail/Uang_keluar_detail/create_action')?>';
+			link_update ='<?php echo base_url('Uang_keluar_detail/Uang_keluar_detail/update_action')?>';
+			link_add_tas ='<?php echo base_url('Uang_keluar_tas/Uang_keluar_tas/create_action')?>';
+			link_update_tas ='<?php echo base_url('Uang_keluar/Uang_keluar/update_action')?>';
 			link_refresh = link_refresh.replace("xxxx", data.id);
 			link_refresh_tas = link_refresh_tas.replace("xxxx", data.id);
 			action_link=link_add;
 			action_link_tas=link_add_tas;
 
 			$('#id').val(data.id);
-			$('#uang_masuk_id').val(data.id);
-			$('#tas_uang_masuk_id').val(data.id);
+			$('#uang_keluar_id').val(data.id);
+			$('#tas_uang_keluar_id').val(data.id);
 		}
 	}
 	a.onBeforeFailed = function(){

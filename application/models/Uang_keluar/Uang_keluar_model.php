@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Uang_masuk_model extends CI_Model {
+class Uang_keluar_model extends CI_Model {
    public $id;	
    function __construct(){
         parent::__construct();
@@ -11,28 +11,24 @@ class Uang_masuk_model extends CI_Model {
 	
 	public function json(){
 		$this->datatables->select('
-			app_uang_masuk.id as id,
-			app_uang_masuk.no as no,
-			app_uang_masuk.cabang_id as cabang_id,
-			app_uang_masuk.sentra_kas_id as sentra_kas_id,
-			d.jumlah as jumlah_global,
-			d.jumlah_proses as jumlah_proses,
-			d.selisih_kurang as selisih_kurang,
-			d.selisih_lebih as selisih_lebih,
-			d.jumlah_belum_proses,
-			app_uang_masuk.status_penerimaan as status_penerimaan,
-			app_uang_masuk.tanggal_penerimaan as tanggal_penerimaan,
-			app_uang_masuk.waktu_tiba as waktu_tiba,
-			app_uang_masuk.waktu_serah_terima as waktu_serah_terima,
-			app_uang_masuk.no_kendaraan as no_kendaraan,
-			app_uang_masuk.diserahkan_oleh as diserahkan_oleh,
-			app_uang_masuk.diterima_oleh as diterima_oleh,
-			app_uang_masuk.detail_tas as detail_tas,
-			app_uang_masuk.keterangan as keterangan,
-			app_uang_masuk.user_input as user_input,
-			app_uang_masuk.input_time as input_time,
-			app_uang_masuk.user_update as user_update,
-			app_uang_masuk.update_time as update_time,
+			app_uang_keluar.id as id,
+			app_uang_keluar.no as no,
+			app_uang_keluar.cabang_id as cabang_id,
+			app_uang_keluar.sentra_kas_id as sentra_kas_id,
+			sum(d.jumlah) as jumlah_global,
+			app_uang_keluar.status_penerimaan as status_penerimaan,
+			app_uang_keluar.tanggal_penerimaan as tanggal_penerimaan,
+			app_uang_keluar.waktu_tiba as waktu_tiba,
+			app_uang_keluar.waktu_serah_terima as waktu_serah_terima,
+			app_uang_keluar.no_kendaraan as no_kendaraan,
+			app_uang_keluar.diserahkan_oleh as diserahkan_oleh,
+			app_uang_keluar.diterima_oleh as diterima_oleh,
+			app_uang_keluar.detail_tas as detail_tas,
+			app_uang_keluar.keterangan as keterangan,
+			app_uang_keluar.user_input as user_input,
+			app_uang_keluar.input_time as input_time,
+			app_uang_keluar.user_update as user_update,
+			app_uang_keluar.update_time as update_time,
 			c.id as c_id,
 			c.bank_id as bank_id,
 			c.kategori_cabang_id as kategori_cabang_id,
@@ -79,19 +75,21 @@ class Uang_masuk_model extends CI_Model {
 			b.update_time as b_update_time,
 		');
 		
-		$this->datatables->from('app_uang_masuk');
+		$this->datatables->from('app_uang_keluar');
 
-		$this->datatables->join('(select uang_masuk_id,sum(jumlah) as jumlah,sum(jumlah_proses) as jumlah_proses,sum(selisih_kurang) as selisih_kurang,sum(selisih_lebih) as selisih_lebih,sum(jumlah_belum_diproses) as jumlah_belum_proses  from proses_list_view group by uang_masuk_id) d','d.uang_masuk_id=app_uang_masuk.id','LEFT'); 
+		$this->datatables->join('app_uang_keluar_detail d','d.uang_keluar_detail=app_uang_keluar.id','LEFT'); 
 	
-		$this->datatables->join('app_cabang_cpc c','c.id=app_uang_masuk.cabang_id','LEFT'); 
+		$this->datatables->join('app_cabang_cpc c','c.id=app_uang_keluar.cabang_id','LEFT'); 
 	
-		$this->datatables->join('app_sentra_kas s','s.id=app_uang_masuk.sentra_kas_id','LEFT'); 
+		$this->datatables->join('app_sentra_kas s','s.id=app_uang_keluar.sentra_kas_id','LEFT'); 
 	
-		$this->datatables->join('sys_user userinput','userinput.id=app_uang_masuk.user_input','LEFT'); 
+		$this->datatables->join('sys_user userinput','userinput.id=app_uang_keluar.user_input','LEFT'); 
 	
-		$this->datatables->join('sys_user userupdate','userupdate.id=app_uang_masuk.user_update','LEFT'); 
+		$this->datatables->join('sys_user userupdate','userupdate.id=app_uang_keluar.user_update','LEFT'); 
 	
 		$this->datatables->join('app_bank b','b.id=c.bank_id','LEFT'); 
+
+		$this->datatables->group_by('d.uang_keluar_id');
 
 			
 		
@@ -103,24 +101,24 @@ class Uang_masuk_model extends CI_Model {
 
    public function get_all(){
 		$afield = array(
-			'app_uang_masuk.id as id',
-			'app_uang_masuk.no as no',
-			'app_uang_masuk.cabang_id as cabang_id',
-			'app_uang_masuk.sentra_kas_id as sentra_kas_id',
-			'app_uang_masuk.jumlah_global as jumlah_global',
-			'app_uang_masuk.status_penerimaan as status_penerimaan',
-			'app_uang_masuk.tanggal_penerimaan as tanggal_penerimaan',
-			'app_uang_masuk.waktu_tiba as waktu_tiba',
-			'app_uang_masuk.waktu_serah_terima as waktu_serah_terima',
-			'app_uang_masuk.no_kendaraan as no_kendaraan',
-			'app_uang_masuk.diserahkan_oleh as diserahkan_oleh',
-			'app_uang_masuk.diterima_oleh as diterima_oleh',
-			'app_uang_masuk.detail_tas as detail_tas',
-			'app_uang_masuk.keterangan as keterangan',
-			'app_uang_masuk.user_input as user_input',
-			'app_uang_masuk.input_time as input_time',
-			'app_uang_masuk.user_update as user_update',
-			'app_uang_masuk.update_time as update_time',
+			'app_uang_keluar.id as id',
+			'app_uang_keluar.no as no',
+			'app_uang_keluar.cabang_id as cabang_id',
+			'app_uang_keluar.sentra_kas_id as sentra_kas_id',
+			'app_uang_keluar.jumlah_global as jumlah_global',
+			'app_uang_keluar.status_penerimaan as status_penerimaan',
+			'app_uang_keluar.tanggal_penerimaan as tanggal_penerimaan',
+			'app_uang_keluar.waktu_tiba as waktu_tiba',
+			'app_uang_keluar.waktu_serah_terima as waktu_serah_terima',
+			'app_uang_keluar.no_kendaraan as no_kendaraan',
+			'app_uang_keluar.diserahkan_oleh as diserahkan_oleh',
+			'app_uang_keluar.diterima_oleh as diterima_oleh',
+			'app_uang_keluar.detail_tas as detail_tas',
+			'app_uang_keluar.keterangan as keterangan',
+			'app_uang_keluar.user_input as user_input',
+			'app_uang_keluar.input_time as input_time',
+			'app_uang_keluar.user_update as user_update',
+			'app_uang_keluar.update_time as update_time',
 			'c.id as c_id',
 			'c.bank_id as bank_id',
 			'c.kategori_cabang_id as kategori_cabang_id',
@@ -168,41 +166,41 @@ class Uang_masuk_model extends CI_Model {
 		
 		);
 		$this->db->select($afield);
-		$this->db->join('app_cabang_cpc c','c.id=app_uang_masuk.cabang_id','LEFT'); 
-		$this->db->join('app_sentra_kas s','s.id=app_uang_masuk.sentra_kas_id','LEFT'); 
-		$this->db->join('sys_user userinput','userinput.id=app_uang_masuk.user_input','LEFT'); 
-		$this->db->join('sys_user userupdate','userupdate.id=app_uang_masuk.user_update','LEFT'); 
+		$this->db->join('app_cabang_cpc c','c.id=app_uang_keluar.cabang_id','LEFT'); 
+		$this->db->join('app_sentra_kas s','s.id=app_uang_keluar.sentra_kas_id','LEFT'); 
+		$this->db->join('sys_user userinput','userinput.id=app_uang_keluar.user_input','LEFT'); 
+		$this->db->join('sys_user userupdate','userupdate.id=app_uang_keluar.user_update','LEFT'); 
 		$this->db->join('app_bank b','b.id=c.bank_id','LEFT'); 
 
-		$this->db->order_by('app_uang_masuk.id', 'ASC');
-		return $this->db->get('app_uang_masuk')->result_array();
+		$this->db->order_by('app_uang_keluar.id', 'ASC');
+		return $this->db->get('app_uang_keluar')->result_array();
    }
 
 
 	public function get_by_id($id){
 		$afield = array(
-			'app_uang_masuk.id as id',
-			'app_uang_masuk.no as no',
-			'app_uang_masuk.cabang_id as cabang_id',
-			'app_uang_masuk.sentra_kas_id as sentra_kas_id',
+			'app_uang_keluar.id as id',
+			'app_uang_keluar.no as no',
+			'app_uang_keluar.cabang_id as cabang_id',
+			'app_uang_keluar.sentra_kas_id as sentra_kas_id',
 			'd.jumlah as jumlah_global',
 			'd.jumlah_proses as jumlah_proses',
 			'd.selisih_kurang as selisih_kurang',
 			'd.selisih_lebih as selisih_lebih',
 			'd.jumlah_belum_proses',
-			'app_uang_masuk.status_penerimaan as status_penerimaan',
-			'app_uang_masuk.tanggal_penerimaan as tanggal_penerimaan',
-			'app_uang_masuk.waktu_tiba as waktu_tiba',
-			'app_uang_masuk.waktu_serah_terima as waktu_serah_terima',
-			'app_uang_masuk.no_kendaraan as no_kendaraan',
-			'app_uang_masuk.diserahkan_oleh as diserahkan_oleh',
-			'app_uang_masuk.diterima_oleh as diterima_oleh',
-			'app_uang_masuk.detail_tas as detail_tas',
-			'app_uang_masuk.keterangan as keterangan',
-			'app_uang_masuk.user_input as user_input',
-			'app_uang_masuk.input_time as input_time',
-			'app_uang_masuk.user_update as user_update',
-			'app_uang_masuk.update_time as update_time',
+			'app_uang_keluar.status_penerimaan as status_penerimaan',
+			'app_uang_keluar.tanggal_penerimaan as tanggal_penerimaan',
+			'app_uang_keluar.waktu_tiba as waktu_tiba',
+			'app_uang_keluar.waktu_serah_terima as waktu_serah_terima',
+			'app_uang_keluar.no_kendaraan as no_kendaraan',
+			'app_uang_keluar.diserahkan_oleh as diserahkan_oleh',
+			'app_uang_keluar.diterima_oleh as diterima_oleh',
+			'app_uang_keluar.detail_tas as detail_tas',
+			'app_uang_keluar.keterangan as keterangan',
+			'app_uang_keluar.user_input as user_input',
+			'app_uang_keluar.input_time as input_time',
+			'app_uang_keluar.user_update as user_update',
+			'app_uang_keluar.update_time as update_time',
 			'c.id as c_id',
 			'c.bank_id as bank_id',
 			'c.kategori_cabang_id as kategori_cabang_id',
@@ -250,16 +248,16 @@ class Uang_masuk_model extends CI_Model {
 		
 		);
 		$this->db->select($afield);
-		$this->datatables->join('(select uang_masuk_id,sum(jumlah) as jumlah,sum(jumlah_proses) as jumlah_proses,sum(selisih_kurang) as selisih_kurang,sum(selisih_lebih) as selisih_lebih,sum(jumlah_belum_diproses) as jumlah_belum_proses  from proses_list_view group by uang_masuk_id) d','d.uang_masuk_id=app_uang_masuk.id','LEFT');
-		$this->db->join('app_cabang_cpc c','c.id=app_uang_masuk.cabang_id','LEFT'); 
-		$this->db->join('app_sentra_kas s','s.id=app_uang_masuk.sentra_kas_id','LEFT'); 
-		$this->db->join('sys_user userinput','userinput.id=app_uang_masuk.user_input','LEFT'); 
-		$this->db->join('sys_user userupdate','userupdate.id=app_uang_masuk.user_update','LEFT'); 
+		$this->datatables->join('(select uang_keluar_id,sum(jumlah) as jumlah,sum(jumlah_proses) as jumlah_proses,sum(selisih_kurang) as selisih_kurang,sum(selisih_lebih) as selisih_lebih,sum(jumlah_belum_diproses) as jumlah_belum_proses  from proses_list_view group by uang_keluar_id) d','d.uang_keluar_id=app_uang_keluar.id','LEFT');
+		$this->db->join('app_cabang_cpc c','c.id=app_uang_keluar.cabang_id','LEFT'); 
+		$this->db->join('app_sentra_kas s','s.id=app_uang_keluar.sentra_kas_id','LEFT'); 
+		$this->db->join('sys_user userinput','userinput.id=app_uang_keluar.user_input','LEFT'); 
+		$this->db->join('sys_user userupdate','userupdate.id=app_uang_keluar.user_update','LEFT'); 
 		$this->db->join('app_bank b','b.id=c.bank_id','LEFT'); 
 
-		$this->db->where('app_uang_masuk.id', $id);
-		$this->db->order_by('app_uang_masuk.id', 'ASC');
-		return $this->db->get('app_uang_masuk')->row();
+		$this->db->where('app_uang_keluar.id', $id);
+		$this->db->order_by('app_uang_keluar.id', 'ASC');
+		return $this->db->get('app_uang_keluar')->row();
    }
 
 
@@ -270,9 +268,9 @@ class Uang_masuk_model extends CI_Model {
 	   -update : id di isi dengan id data yg di proses.	
 	*/	
 	function if_exist($id,$data){
-		$this->db->where('app_uang_masuk.id <>',$id);
+		$this->db->where('app_uang_keluar.id <>',$id);
 
-		$q = $this->db->get_where('app_uang_masuk', $data)->result_array();
+		$q = $this->db->get_where('app_uang_keluar', $data)->result_array();
 		
 		if(count($q)>0){
 			return true;
@@ -290,7 +288,7 @@ class Uang_masuk_model extends CI_Model {
 	    /* transaction rollback */
 		$this->db->trans_start();
 		
-		$this->db->insert('app_uang_masuk', $data);		
+		$this->db->insert('app_uang_keluar', $data);		
 		/* id primary yg baru saja di input*/
 		$this->id = $this->db->insert_id(); 
 		
@@ -302,9 +300,9 @@ class Uang_masuk_model extends CI_Model {
 
 		//Mencegah proses jika sudah ada data yang di proses
 		$this->db->select('sum(app_journal_proses.jumlah) as jumlah');
-		$this->db->join('app_journal_proses','app_journal_proses.uang_masuk_detail_id=app_uang_masuk_detail.id','LEFT');
-		$this->db->where('app_uang_masuk_detail.uang_masuk_id',$id);
-		$cek=$this->db->get('app_uang_masuk_detail')->row();
+		$this->db->join('app_journal_proses','app_journal_proses.uang_keluar_detail_id=app_uang_keluar_detail.id','LEFT');
+		$this->db->where('app_uang_keluar_detail.uang_keluar_id',$id);
+		$cek=$this->db->get('app_uang_keluar_detail')->row();
 		if($cek->jumlah>0){
 			return false;
 		}
@@ -312,8 +310,8 @@ class Uang_masuk_model extends CI_Model {
 		/* transaction rollback */
 		$this->db->trans_start();
 
-		$this->db->where('app_uang_masuk.id', $id);
-		$this->db->update('app_uang_masuk', $data);
+		$this->db->where('app_uang_keluar.id', $id);
+		$this->db->update('app_uang_keluar', $data);
 		
 		$this->db->trans_complete();
 		return $this->db->trans_status(); //return true or false	
@@ -324,9 +322,9 @@ class Uang_masuk_model extends CI_Model {
 		//Mencegah proses jika sudah ada data yang di proses
 
 		$this->db->select('sum(app_journal_proses.jumlah) as jumlah');
-		$this->db->join('app_journal_proses','app_journal_proses.uang_masuk_detail_id=app_uang_masuk_detail.id','LEFT');
-		$this->db->where_in('app_uang_masuk_detail.uang_masuk_id',$data);
-		$cek=$this->db->get('app_uang_masuk_detail')->row();
+		$this->db->join('app_journal_proses','app_journal_proses.uang_keluar_detail_id=app_uang_keluar_detail.id','LEFT');
+		$this->db->where_in('app_uang_keluar_detail.uang_keluar_id',$data);
+		$cek=$this->db->get('app_uang_keluar_detail')->row();
 		if($cek->jumlah>0){
 			return false;
 		}
@@ -336,9 +334,9 @@ class Uang_masuk_model extends CI_Model {
 		$this->db->trans_start();
 		
 		if(!empty($data)){
-			$this->db->where_in('app_uang_masuk.id',$data);	
+			$this->db->where_in('app_uang_keluar.id',$data);	
 	
-			$this->db->delete('app_uang_masuk');
+			$this->db->delete('app_uang_keluar');
 		}
 		
 		$this->db->trans_complete();
@@ -348,7 +346,7 @@ class Uang_masuk_model extends CI_Model {
 
 	function insert_multiple($data){
 		$this->db->trans_start();
-		$this->db->insert_batch('app_uang_masuk', $data);
+		$this->db->insert_batch('app_uang_keluar', $data);
 		$this->db->trans_complete();
 		return $this->db->trans_status();
  	}
@@ -361,10 +359,10 @@ class Uang_masuk_model extends CI_Model {
 		SUM(CASE WHEN jenis_uang_id = 2 then jumlah ELSE 0 END) as total_logam,
 		SUM(jumlah) as total
 		");
-		$this->db->where('uang_masuk_id',$id);
+		$this->db->where('uang_keluar_id',$id);
 		$this->db->where('kategori_selisih_id','0');
-		$this->db->group_by('uang_masuk_id');
-		if($data=$this->db->get('app_uang_masuk_detail')){
+		$this->db->group_by('uang_keluar_id');
+		if($data=$this->db->get('app_uang_keluar_detail')){
 			return $data->row();
 		}
 		return false;
@@ -372,29 +370,29 @@ class Uang_masuk_model extends CI_Model {
 
 	public function get_pecahan($id){
 		$afield = array(
-			'app_uang_masuk_detail.jenis_uang_id as jenis_uang_id',			
+			'app_uang_keluar_detail.jenis_uang_id as jenis_uang_id',			
 			'p.pecahan as pecahan',
-			'app_uang_masuk_detail.jumlah as jumlah',		
+			'app_uang_keluar_detail.jumlah as jumlah',		
 		);
 		$this->db->select($afield);		
-		$this->db->join('app_pecahan p','p.id=app_uang_masuk_detail.pecahan_id','LEFT'); 				
-		$this->db->where('app_uang_masuk_detail.uang_masuk_id',$id);
-		$this->db->where('app_uang_masuk_detail.kategori_selisih_id','0');
-		return $this->db->get('app_uang_masuk_detail')->result();
+		$this->db->join('app_pecahan p','p.id=app_uang_keluar_detail.pecahan_id','LEFT'); 				
+		$this->db->where('app_uang_keluar_detail.uang_keluar_id',$id);
+		$this->db->where('app_uang_keluar_detail.kategori_selisih_id','0');
+		return $this->db->get('app_uang_keluar_detail')->result();
     }
 
 	public function get_selisih($id){
 		$afield = array(
-			'app_uang_masuk_detail.jenis_uang_id as jenis_uang_id',			
+			'app_uang_keluar_detail.jenis_uang_id as jenis_uang_id',			
 			'p.pecahan as pecahan',
-			'app_uang_masuk_detail.kategori_selisih_id as kategori_selisih_id',
-			'app_uang_masuk_detail.jumlah as jumlah',		
+			'app_uang_keluar_detail.kategori_selisih_id as kategori_selisih_id',
+			'app_uang_keluar_detail.jumlah as jumlah',		
 		);
 		$this->db->select($afield);		
-		$this->db->join('app_pecahan p','p.id=app_uang_masuk_detail.pecahan_id','LEFT'); 				
-		$this->db->where('app_uang_masuk_detail.uang_masuk_id',$id);
-		$this->db->where('app_uang_masuk_detail.kategori_selisih_id<>0');
-		return $this->db->get('app_uang_masuk_detail')->result();
+		$this->db->join('app_pecahan p','p.id=app_uang_keluar_detail.pecahan_id','LEFT'); 				
+		$this->db->where('app_uang_keluar_detail.uang_keluar_id',$id);
+		$this->db->where('app_uang_keluar_detail.kategori_selisih_id<>0');
+		return $this->db->get('app_uang_keluar_detail')->result();
     }
 
     //End Untuk Berita Acara
@@ -414,24 +412,24 @@ class Uang_masuk_model extends CI_Model {
 		SUM(CASE WHEN app_kondisi.kondisi='MINOR' then app_journal_proses.jumlah ELSE 0 END) as 'MINOR',
 		SUM(CASE WHEN app_kondisi.kondisi='MAYOR' then app_journal_proses.jumlah ELSE 0 END) as 'MAYOR',
 		0 as jumlah_campur,
-		app_uang_masuk_detail.jumlah_belum_diproses as jumlah_belum
-		FROM app_uang_masuk
-		INNER JOIN  proses_list_view AS app_uang_masuk_detail ON app_uang_masuk.id=app_uang_masuk_detail.uang_masuk_id
-		INNER JOIN  app_cabang_cpc ON app_cabang_cpc.id=app_uang_masuk.cabang_id
-		LEFT JOIN  app_journal_proses ON app_uang_masuk_detail.id=app_journal_proses.uang_masuk_detail_id
-		LEFT JOIN  app_pecahan ON app_pecahan.id=app_uang_masuk_detail.pecahan_id
-		LEFT JOIN  app_jenis_uang ON app_jenis_uang.id=app_uang_masuk_detail.jenis_uang_id
+		app_uang_keluar_detail.jumlah_belum_diproses as jumlah_belum
+		FROM app_uang_keluar
+		INNER JOIN  proses_list_view AS app_uang_keluar_detail ON app_uang_keluar.id=app_uang_keluar_detail.uang_keluar_id
+		INNER JOIN  app_cabang_cpc ON app_cabang_cpc.id=app_uang_keluar.cabang_id
+		LEFT JOIN  app_journal_proses ON app_uang_keluar_detail.id=app_journal_proses.uang_keluar_detail_id
+		LEFT JOIN  app_pecahan ON app_pecahan.id=app_uang_keluar_detail.pecahan_id
+		LEFT JOIN  app_jenis_uang ON app_jenis_uang.id=app_uang_keluar_detail.jenis_uang_id
 		LEFT JOIN  app_emisi ON app_emisi.id=app_journal_proses.emisi_id
 		LEFT JOIN  app_kondisi ON app_kondisi.id=app_journal_proses.kondisi_id
 		LEFT JOIN (select
-                   app_journal_proses.uang_masuk_detail_id,
-                   app_uang_masuk_detail.pecahan_id,
+                   app_journal_proses.uang_keluar_detail_id,
+                   app_uang_keluar_detail.pecahan_id,
                    sum(COALESCE(app_journal_proses.jumlah, 0)) as jumlah_proses 
-                   from app_uang_masuk_detail  
-                   left join app_journal_proses ON app_journal_proses.uang_masuk_detail_id=app_uang_masuk_detail.id
-                   group by app_uang_masuk_detail.pecahan_id,app_journal_proses.uang_masuk_detail_id) pr ON pr.uang_masuk_detail_id=app_uang_masuk_detail.id AND pr.pecahan_id=app_uang_masuk_detail.pecahan_id
+                   from app_uang_keluar_detail  
+                   left join app_journal_proses ON app_journal_proses.uang_keluar_detail_id=app_uang_keluar_detail.id
+                   group by app_uang_keluar_detail.pecahan_id,app_journal_proses.uang_keluar_detail_id) pr ON pr.uang_keluar_detail_id=app_uang_keluar_detail.id AND pr.pecahan_id=app_uang_keluar_detail.pecahan_id
 		WHERE app_cabang_cpc.bank_id=$bank_id
-		AND app_uang_masuk.tanggal_penerimaan='$tanggal'
+		AND app_uang_keluar.tanggal_penerimaan='$tanggal'
 		GROUP BY app_jenis_uang.jenis_uang,app_pecahan.pecahan,app_emisi.emisi  
 		ORDER BY app_jenis_uang.jenis_uang ASC,app_pecahan.pecahan  DESC;";	
 		return $this->db->query($q)->result();

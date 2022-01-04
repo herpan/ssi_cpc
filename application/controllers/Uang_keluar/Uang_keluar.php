@@ -1,16 +1,16 @@
 <?php
-require APPPATH. '/controllers/Uang_masuk/Uang_masuk_config.php';
+require APPPATH. '/controllers/Uang_keluar/Uang_keluar_config.php';
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Uang_masuk extends CI_Controller {
+class Uang_keluar extends CI_Controller {
    private $log_key,$log_temp,$title;
    function __construct(){
         parent::__construct();
-		$this->load->model('Uang_masuk/Uang_masuk_model','tmodel');
-		$this->log_key ='log_Uang_masuk';
-		$this->title = new Uang_masuk_config();
+		$this->load->model('Uang_keluar/Uang_keluar_model','tmodel');
+		$this->log_key ='log_Uang_keluar';
+		$this->title = new Uang_keluar_config();
    }
 
 
@@ -18,14 +18,14 @@ class Uang_masuk extends CI_Controller {
 		$data = array(
 			'title_page_big'		=> 'DAFTAR',
 			'title'					=> $this->title,
-			'link_refresh_table'	=> site_url().'Uang_masuk/Uang_masuk/refresh_table/'.$this->_token,
-			'link_create'			=> site_url().'Uang_masuk/Uang_masuk/create',
-			'link_update'			=> site_url().'Uang_masuk/Uang_masuk/update',
-			'link_delete'			=> site_url().'Uang_masuk/Uang_masuk/delete_multiple',
-			'link_view'				=> site_url().'Uang_masuk/Uang_masuk/view',			
+			'link_refresh_table'	=> site_url().'Uang_keluar/Uang_keluar/refresh_table/'.$this->_token,
+			'link_create'			=> site_url().'Uang_keluar/Uang_keluar/create',
+			'link_update'			=> site_url().'Uang_keluar/Uang_keluar/update',
+			'link_delete'			=> site_url().'Uang_keluar/Uang_keluar/delete_multiple',
+			'link_view'				=> site_url().'Uang_keluar/Uang_keluar/view',			
 		);
 		
-		$this->template->load('Uang_masuk/Uang_masuk_list',$data);
+		$this->template->load('Uang_keluar/Uang_keluar_list',$data);
 	}
 
 	public function refresh_table($token){
@@ -59,20 +59,20 @@ class Uang_masuk extends CI_Controller {
 		$data = array(
 			'title_page_big'		=> 'Buat Baru',
 			'title'					=> $this->title,
-			'link_save'				=> site_url().'Uang_masuk/Uang_masuk/create_action',
-			'link_save_update'		=> site_url().'Uang_masuk/Uang_masuk/update_action',
-			'link_refresh_table'	=> site_url().'Uang_masuk_detail/Uang_masuk_detail/refresh_table/'.$this->_token,
-			'link_back'				=> $this->agent->referrer(),'link_refresh_table'	=> site_url().'Uang_masuk_detail/Uang_masuk_detail/refresh_table/'.$this->_token.'/xxxx',
-			'link_delete'			=> site_url().'Uang_masuk_detail/Uang_masuk_detail/delete_multiple',
-			'link_save_detail'		=> site_url().'Uang_masuk_detail/Uang_masuk_detail/create_action',
-			'link_update_detail'			=> site_url().'Uang_masuk_detail/Uang_masuk_detail/update_action',
-			'link_refresh_table_tas'	=> site_url().'Uang_masuk_tas/Uang_masuk_tas/refresh_table/'.$this->_token.'/xxxx',
-			'link_delete_tas'			=> site_url().'Uang_masuk_tas/Uang_masuk_tas/delete_multiple',
-			'link_save_detail_tas'		=> site_url().'Uang_masuk_tas/Uang_masuk_tas/create_action',
-			'link_update_detail_tas'			=> site_url().'Uang_masuk_tas/Uang_masuk_tas/update_action',			
+			'link_save'				=> site_url().'Uang_keluar/Uang_keluar/create_action',
+			'link_save_update'		=> site_url().'Uang_keluar/Uang_keluar/update_action',
+			'link_refresh_table'	=> site_url().'Uang_keluar_detail/Uang_keluar_detail/refresh_table/'.$this->_token,
+			'link_back'				=> $this->agent->referrer(),'link_refresh_table'	=> site_url().'Uang_keluar_detail/Uang_keluar_detail/refresh_table/'.$this->_token.'/xxxx',
+			'link_delete'			=> site_url().'Uang_keluar_detail/Uang_keluar_detail/delete_multiple',
+			'link_save_detail'		=> site_url().'Uang_keluar_detail/Uang_keluar_detail/create_action',
+			'link_update_detail'			=> site_url().'Uang_keluar_detail/Uang_keluar_detail/update_action',
+			'link_refresh_table_tas'	=> site_url().'Uang_keluar_tas/Uang_keluar_tas/refresh_table/'.$this->_token.'/xxxx',
+			'link_delete_tas'			=> site_url().'Uang_keluar_tas/Uang_keluar_tas/delete_multiple',
+			'link_save_detail_tas'		=> site_url().'Uang_keluar_tas/Uang_keluar_tas/create_action',
+			'link_update_detail_tas'			=> site_url().'Uang_keluar_tas/Uang_keluar_tas/update_action',			
 		);
 		
-		$this->template->load('Uang_masuk/Uang_masuk_form',$data);
+		$this->template->load('Uang_keluar/Uang_keluar_form',$data);
 
 	}
 
@@ -171,22 +171,22 @@ class Uang_masuk extends CI_Controller {
 			$data = array(
 				'title_page_big'		=> 'Edit Penerimaan Uang',
 				'title'					=> $this->title,
-				'link_save'				=> site_url().'Uang_masuk/Uang_masuk/update_action',
+				'link_save'				=> site_url().'Uang_keluar/Uang_keluar/update_action',
 				'link_back'				=> $this->agent->referrer(),
 				'data'					=> $row,
 				'id'					=> $id_generate,
-				'uang_masuk_id'			=> $id,
-				'link_refresh_table'	=> site_url().'Uang_masuk_detail/Uang_masuk_detail/refresh_table/'.$this->_token.'/'.$id,
-				'link_delete'			=> site_url().'Uang_masuk_detail/Uang_masuk_detail/delete_multiple',
-				'link_save_detail'		=> site_url().'Uang_masuk_detail/Uang_masuk_detail/create_action',
-				'link_update_detail'			=> site_url().'Uang_masuk_detail/Uang_masuk_detail/update_action',
-				'link_refresh_table_tas'	=> site_url().'Uang_masuk_tas/Uang_masuk_tas/refresh_table/'.$this->_token.'/'.$id,
-				'link_delete_tas'			=> site_url().'Uang_masuk_tas/Uang_masuk_tas/delete_multiple',
-				'link_save_detail_tas'		=> site_url().'Uang_masuk_tas/Uang_masuk_tas/create_action',
-				'link_update_detail_tas'			=> site_url().'Uang_masuk_tas/Uang_masuk_tas/update_action',
+				'uang_keluar_id'			=> $id,
+				'link_refresh_table'	=> site_url().'Uang_keluar_detail/Uang_keluar_detail/refresh_table/'.$this->_token.'/'.$id,
+				'link_delete'			=> site_url().'Uang_keluar_detail/Uang_keluar_detail/delete_multiple',
+				'link_save_detail'		=> site_url().'Uang_keluar_detail/Uang_keluar_detail/create_action',
+				'link_update_detail'			=> site_url().'Uang_keluar_detail/Uang_keluar_detail/update_action',
+				'link_refresh_table_tas'	=> site_url().'Uang_keluar_tas/Uang_keluar_tas/refresh_table/'.$this->_token.'/'.$id,
+				'link_delete_tas'			=> site_url().'Uang_keluar_tas/Uang_keluar_tas/delete_multiple',
+				'link_save_detail_tas'		=> site_url().'Uang_keluar_tas/Uang_keluar_tas/create_action',
+				'link_update_detail_tas'			=> site_url().'Uang_keluar_tas/Uang_keluar_tas/update_action',
 			);
 			
-			$this->template->load('Uang_masuk/Uang_masuk_form',$data);
+			$this->template->load('Uang_keluar/Uang_keluar_form',$data);
 		}else{
 			redirect($this->agent->referrer());
 		}
@@ -378,7 +378,7 @@ class Uang_masuk extends CI_Controller {
 
 			// Segel 
 
-			$this->load->model('Uang_masuk_tas/Uang_masuk_tas_model','tas');
+			$this->load->model('Uang_keluar_tas/Uang_keluar_tas_model','tas');
 
 			$t=$this->tas->get_all($id);
 
@@ -387,7 +387,7 @@ class Uang_masuk extends CI_Controller {
 			$data['tas']=$t;
 			$data['total']=$this->tmodel->get_summary($id);
 			
-			$this->load->view('Uang_masuk/Berita_acara',$data);
+			$this->load->view('Uang_keluar/Berita_acara',$data);
 		}else{
 			redirect($this->agent->referrer());
 		}

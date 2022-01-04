@@ -22,7 +22,7 @@ class Home extends CI_Controller {
     // }
   public function __construct() {
       parent::__construct();
-      $this->load->model('Journal_cpc/Journal_cpc_model','journal_kondisi');
+      $this->load->model('Uang_masuk/Uang_masuk_model','uang_masuk');
   }
 
   public function index() {
@@ -33,7 +33,7 @@ class Home extends CI_Controller {
 
       $bank_id=$this->input->post('bank_id');
       $tanggal_pencatatan=$this->input->post('tanggal_pencatatan');
-      $kondisi=$this->journal_kondisi->get_dashboard($bank_id,$tanggal_pencatatan);  
+      $kondisi=$this->uang_masuk->get_dashboard($bank_id,$tanggal_pencatatan);  
       
       if($kondisi){
           foreach($kondisi as $row) { 
@@ -48,17 +48,13 @@ class Home extends CI_Controller {
           $data['kondisi']=$kondisi;
           $this->load->view('Dashboard/Dashboard_container',$data);
       }else{
-          //echo $this->db->last_query();
-
+          //echo $this->db->last_query();         
           echo ' 
-            <iframe src="https://onedrive.live.com/embed?cid=B103F56077E63999&resid=B103F56077E63999%21149&authkey=ADRXEot3ItQDrMo&em=2" width="100%" height="800" frameborder="0" scrolling="yes"></iframe>                    
-            '; 
-        //   echo ' 
-        //   <div class="alert alert-danger my-4" role="alert">
-        //       <h4 class="alert-title">Informasi</h4>
-        //       <div class="text-muted">Belum ada data untuk tanggal '.$tanggal_pencatatan.'</div>
-        //   </div>                    
-        //   ';           
+          <div class="alert alert-danger my-4" role="alert">
+              <h4 class="alert-title">Informasi</h4>
+              <div class="text-muted">Belum ada data untuk tanggal '.$tanggal_pencatatan.'</div>
+          </div>                    
+          ';           
       }      
      
   }

@@ -54,8 +54,8 @@ if ( ! function_exists('ybs_tanggal_indo')){
 	 */
 	function ybs_tanggal_indo ($date){
 		//konversi tanggal
-		Date_default_timezone_set('Asia/Jakarta');
-		$dt_s				= date('d M Y',$date);
+		//Date_default_timezone_set('Asia/Jakarta');
+		$dt_s				= date('d/m/Y',$date);
 		return $dt_s;
 	}
 	

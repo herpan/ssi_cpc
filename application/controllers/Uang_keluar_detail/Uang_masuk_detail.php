@@ -1,17 +1,17 @@
 <?php
-require APPPATH. '/controllers/Uang_masuk_detail/Uang_masuk_detail_config.php';
+require APPPATH. '/controllers/Uang_keluar_detail/Uang_keluar_detail_config.php';
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Uang_masuk_detail extends CI_Controller {
+class Uang_keluar_detail extends CI_Controller {
    private $log_key,$log_temp,$title;
    function __construct(){
         parent::__construct();
-		$this->load->model('Uang_masuk_detail/Uang_masuk_detail_model','tmodel');
+		$this->load->model('Uang_keluar_detail/Uang_keluar_detail_model','tmodel');
 		$this->load->model('Pecahan/Pecahan_model','pecahan');
-		$this->log_key ='log_Uang_masuk_detail';
-		$this->title = new Uang_masuk_detail_config();
+		$this->log_key ='log_Uang_keluar_detail';
+		$this->title = new Uang_keluar_detail_config();
    }
 
 
@@ -19,19 +19,19 @@ class Uang_masuk_detail extends CI_Controller {
 		$data = array(
 			'title_page_big'		=> 'DAFTAR',
 			'title'					=> $this->title,
-			'link_refresh_table'	=> site_url().'Uang_masuk_detail/Uang_masuk_detail/refresh_table/'.$this->_token,
-			'link_create'			=> site_url().'Uang_masuk_detail/Uang_masuk_detail/create',
-			'link_update'			=> site_url().'Uang_masuk_detail/Uang_masuk_detail/update',
-			'link_delete'			=> site_url().'Uang_masuk_detail/Uang_masuk_detail/delete_multiple',			
+			'link_refresh_table'	=> site_url().'Uang_keluar_detail/Uang_keluar_detail/refresh_table/'.$this->_token,
+			'link_create'			=> site_url().'Uang_keluar_detail/Uang_keluar_detail/create',
+			'link_update'			=> site_url().'Uang_keluar_detail/Uang_keluar_detail/update',
+			'link_delete'			=> site_url().'Uang_keluar_detail/Uang_keluar_detail/delete_multiple',			
 		);
 		
-		$this->template->load('Uang_masuk_detail/Uang_masuk_detail_list',$data);
+		$this->template->load('Uang_keluar_detail/Uang_keluar_detail_list',$data);
 	}
 
-	public function refresh_table($token,$uang_masuk_id=null,$kategori_selisih_id=0){
+	public function refresh_table($token,$uang_keluar_id=null,$kategori_selisih_id=0){
 		if($token==$this->_token){
 			
-			$row = $this->tmodel->json($uang_masuk_id,$kategori_selisih_id);
+			$row = $this->tmodel->json($uang_keluar_id,$kategori_selisih_id);
 			
 			//encode id 
 			// $tm = time();
@@ -56,10 +56,10 @@ class Uang_masuk_detail extends CI_Controller {
 		}
 	}
 
-	public function refresh_table2($token,$uang_masuk_id=null){
+	public function refresh_table2($token,$uang_keluar_id=null){
 		if($token==$this->_token){
 			
-			$row = $this->tmodel->json2($uang_masuk_id);
+			$row = $this->tmodel->json2($uang_keluar_id);
 			
 			$o = new Outputview();
 			$o->success	= 'true';
@@ -79,11 +79,11 @@ class Uang_masuk_detail extends CI_Controller {
 		$data = array(
 			'title_page_big'		=> 'Buat Baru',
 			'title'					=> $this->title,
-			'link_save'				=> site_url().'Uang_masuk_detail/Uang_masuk_detail/create_action',
+			'link_save'				=> site_url().'Uang_keluar_detail/Uang_keluar_detail/create_action',
 			'link_back'				=> $this->agent->referrer(),			
 		);
 		
-		$this->template->load('Uang_masuk_detail/Uang_masuk_detail_form',$data);
+		$this->template->load('Uang_keluar_detail/Uang_keluar_detail_form',$data);
 
 	}
 
@@ -108,7 +108,7 @@ class Uang_masuk_detail extends CI_Controller {
 		//mencegah data kosong
 		$o->message = 'Silahkan simpan Form utama terlebih dahulu';
 
-		if(!$o->not_empty($val['uang_masuk_id'],'#no')){
+		if(!$o->not_empty($val['uang_keluar_id'],'#no')){
 			echo $o->result();	
 			return;
 		}
@@ -129,7 +129,7 @@ class Uang_masuk_detail extends CI_Controller {
 
 		//mencegah data double
 		$field=[
-			'uang_masuk_id'=>$val['uang_masuk_id'],
+			'uang_keluar_id'=>$val['uang_keluar_id'],
 			'jenis_uang_id'=>$val['jenis_uang_id'],
 			'pecahan_id'=>$val['pecahan_id'],
 			'kategori_selisih_id'=>$val['kategori_selisih_id'],
@@ -223,13 +223,13 @@ class Uang_masuk_detail extends CI_Controller {
 			$data = array(
 				'title_page_big'		=> 'Buat Baru',
 				'title'					=> $this->title,
-				'link_save'				=> site_url().'Uang_masuk_detail/Uang_masuk_detail/update_action',
+				'link_save'				=> site_url().'Uang_keluar_detail/Uang_keluar_detail/update_action',
 				'link_back'				=> $this->agent->referrer(),
 				'data'					=> $row,
 				'id'					=> $id,
 			);
 			
-			$this->template->load('Uang_masuk_detail/Uang_masuk_detail_form',$data);
+			$this->template->load('Uang_keluar_detail/Uang_keluar_detail_form',$data);
 		}else{
 			redirect($this->agent->referrer());
 		}
@@ -259,7 +259,7 @@ class Uang_masuk_detail extends CI_Controller {
 		*/			
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['uang_masuk_id'],'#uang_masuk_id')){
+		if(!$o->not_empty($val['uang_keluar_id'],'#uang_keluar_id')){
 			echo $o->result();	
 			return;
 		}
@@ -278,7 +278,7 @@ class Uang_masuk_detail extends CI_Controller {
 
 		//mencegah data double
 		$field=[
-			'uang_masuk_id'=>$val['uang_masuk_id'],
+			'uang_keluar_id'=>$val['uang_keluar_id'],
 			'jenis_uang_id'=>$val['jenis_uang_id'],
 			'pecahan_id'=>$val['pecahan_id'],
 			'kategori_selisih_id'=>$val['kategori_selisih_id'],
