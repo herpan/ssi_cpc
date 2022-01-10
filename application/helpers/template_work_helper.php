@@ -1239,8 +1239,9 @@ function create_cmb_database($data,$where=NULL){
 	$field_show 	= $data['field_show'];
 	
     $cmb = "<select  id='$id' name='$name' class='form-control $class' >";
+	
 	if($where!==NULL) $ci->db->where($where);
-    $row = $ci->db->get("$table")->result();
+    $row = $ci->db->get("$table")->result();	
 	$data_link='';
 	
 	$afs =explode(",",$field_show);

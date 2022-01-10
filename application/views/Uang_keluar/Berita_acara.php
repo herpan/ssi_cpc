@@ -119,15 +119,15 @@
 </tr>
 <tr style="height: 18px;">
 <td style="width: 10%; height: 18px;" class="bordered">PERUSAHAAN</td>
-<td style="width: 48.4294%; height: 18px;" colspan="2" class="bordered"><?php echo $row->nama_cabang?></td>
+<td style="width: 48.4294%; height: 18px;" colspan="2" class="bordered"><?php echo $row->nama_sentra?></td>
 <td style="width: 34.9113%; height: 18px;" class="bordered">PERUSAHAAN</td>
-<td style="width: 48.8059%; height: 18px;" colspan="6" class="bordered"><?php echo $row->nama_sentra?></td>
+<td style="width: 48.8059%; height: 18px;" colspan="6" class="bordered"><?php echo $row->nama_cabang?></td>
 </tr>
 <tr style="height: 18px;">
 <td style="width: 10%; height: 18px;" class="bordered">ALAMAT</td>
-<td style="width: 48.4294%; height: 18px;" colspan="2" class="bordered"><?php echo $row->alamat?></td>
+<td style="width: 48.4294%; height: 18px;" colspan="2" class="bordered"><?php echo $row->s_alamat?></td>
 <td style="width: 34.9113%; height: 18px;" class="bordered">ALAMAT</td>
-<td style="width: 48.8059%; height: 18px;" colspan="6" class="bordered"><?php echo $row->s_alamat?></td>
+<td style="width: 48.8059%; height: 18px;" colspan="6" class="bordered"><?php echo $row->alamat?></td>
 </tr>
 <tr>
 <td class="spacer" colspan="11" ></td>
@@ -417,21 +417,21 @@
 </tr>
 <tr style="height: 18px;">
 <td style="width: 10%; height: 18px; text-align: left;" class="bordered" colspan="2">Tanggal</td>
-<td style="width: 48.4294%; height: 18px; text-align: left;" class="bordered"><?php echo ybs_tanggal_indo(strtotime($row->tanggal_penerimaan)) ?></td>
+<td style="width: 48.4294%; height: 18px; text-align: left;" class="bordered"></td>
 <td style="width: 34.9113%; height: 18px; text-align: left;" class="bordered" colspan="3">Tanggal</td>
-<td style="width: 48.8059%; height: 18px; text-align: left;" colspan="4" class="bordered">:</td>
+<td style="width: 48.8059%; height: 18px; text-align: left;" colspan="4" class="bordered"><?php echo ybs_tanggal_indo(strtotime($row->tanggal_pengiriman)) ?></td>
 </tr>
 <tr style="height: 18px;">
 <td style="width: 10%; height: 18px; text-align: left;" class="bordered" colspan="2">Waktu Tiba</td>
-<td style="width: 48.4294%; height: 18px; text-align: left;" class="bordered"><?php echo $row->waktu_tiba ?></td>
+<td style="width: 48.4294%; height: 18px; text-align: left;" class="bordered"></td>
 <td style="width: 34.9113%; height: 18px; text-align: left;" class="bordered" colspan="3">Waktu Tiba</td>
-<td style="width: 48.8059%; height: 18px; text-align: left;" colspan="4" class="bordered">:</td>
+<td style="width: 48.8059%; height: 18px; text-align: left;" colspan="4" class="bordered"><?php echo $row->waktu_kirim ?></td>
 </tr>
 <tr style="height: 18px;">
 <td style="width: 10%; height: 18px; text-align: left;" class="bordered" colspan="2">Waktu Serah Terima</td>
-<td style="width: 48.4294%; height: 18px; text-align: left;" class="bordered"><?php echo $row->waktu_tiba ?></td>
+<td style="width: 48.4294%; height: 18px; text-align: left;" class="bordered"></td>
 <td style="width: 34.9113%; height: 18px; text-align: left;" class="bordered" colspan="3">Waktu Serah Terima</td>
-<td style="width: 48.8059%; height: 18px; text-align: left;" colspan="4" class="bordered">:</td>
+<td style="width: 48.8059%; height: 18px; text-align: left;" colspan="4" class="bordered"><?php echo $row->waktu_serah_terima ?></td>
 </tr>
 <tr style="height: 18px;">
 <td style="width: 10%; height: 18px; text-align: left;" class="bordered" colspan="2">No. Pol Kendaraan</td>
@@ -447,19 +447,19 @@
 </tr>
 <tr style="height: 18px;">
 <td style="text-align: center; height: 18px; width: 12.8469%;" colspan="2" class="bordered">
-<p style="text-align: left;">Nama&nbsp; : <?php echo $row->diserahkan_oleh ?></p>
+<p style="text-align: left;">Nama&nbsp; : </p>
 <p style="text-align: left;">TTD&nbsp;&nbsp;&nbsp; :</p>
 </td>
 <td style="width: 45.5825%; height: 18px; text-align: left;" class="bordered">
-<p>Nama&nbsp; : <?php echo $row->diterima_oleh ?></p>
-<p>TTD&nbsp;&nbsp;&nbsp; :</p>
-</td>
-<td style="width: 34.9113%; height: 18px;" class="bordered" colspan="3">
 <p>Nama&nbsp; : </p>
 <p>TTD&nbsp;&nbsp;&nbsp; :</p>
 </td>
+<td style="width: 34.9113%; height: 18px;" class="bordered" colspan="3">
+<p>Nama&nbsp; : <?php echo $row->diserahkan_oleh ?></p>
+<p>TTD&nbsp;&nbsp;&nbsp; :</p>
+</td>
 <td style="height: 18px; width: 48.8059%;" colspan="4" class="bordered">
-<p>Nama&nbsp; :</p>
+<p>Nama&nbsp; : <?php echo $row->diterima_oleh ?></p>
 <p>TTD&nbsp;&nbsp;&nbsp; :</p>
 </td>
 </tr>

@@ -25,9 +25,9 @@ class Uang_keluar_tas_model extends CI_Model {
 			u.cabang_id as cabang_id,
 			u.sentra_kas_id as sentra_kas_id,
 			u.jumlah_global as jumlah_global,
-			u.status_penerimaan as status_penerimaan,
-			u.tanggal_penerimaan as tanggal_penerimaan,
-			u.waktu_tiba as waktu_tiba,
+			u.status_pengiriman as status_pengiriman,
+			u.tanggal_pengiriman as tanggal_pengiriman,
+			u.waktu_kirim as waktu_kirim,
 			u.waktu_serah_terima as waktu_serah_terima,
 			u.detail_tas as detail_tas,
 			u.keterangan as u_keterangan,
@@ -87,9 +87,9 @@ class Uang_keluar_tas_model extends CI_Model {
 			'u.cabang_id as cabang_id',
 			'u.sentra_kas_id as sentra_kas_id',
 			'u.jumlah_global as jumlah_global',
-			'u.status_penerimaan as status_penerimaan',
-			'u.tanggal_penerimaan as tanggal_penerimaan',
-			'u.waktu_tiba as waktu_tiba',
+			'u.status_pengiriman as status_pengiriman',
+			'u.tanggal_pengiriman as tanggal_pengiriman',
+			'u.waktu_kirim as waktu_kirim',
 			'u.waktu_serah_terima as waktu_serah_terima',
 			'u.detail_tas as detail_tas',
 			'u.keterangan as u_keterangan',
@@ -147,9 +147,9 @@ class Uang_keluar_tas_model extends CI_Model {
 			'u.cabang_id as cabang_id',
 			'u.sentra_kas_id as sentra_kas_id',
 			'u.jumlah_global as jumlah_global',
-			'u.status_penerimaan as status_penerimaan',
-			'u.tanggal_penerimaan as tanggal_penerimaan',
-			'u.waktu_tiba as waktu_tiba',
+			'u.status_pengiriman as status_pengiriman',
+			'u.tanggal_pengiriman as tanggal_pengiriman',
+			'u.waktu_kirim as waktu_kirim',
 			'u.waktu_serah_terima as waktu_serah_terima',
 			'u.detail_tas as detail_tas',
 			'u.keterangan as u_keterangan',
@@ -212,17 +212,7 @@ class Uang_keluar_tas_model extends CI_Model {
 
 		//Mencegah proses jika sudah ada data yang di proses
 		
-		$this->db->select('sum(app_journal_proses.jumlah) as jumlah');
-		$this->db->join('app_journal_proses','app_journal_proses.uang_keluar_detail_id=app_uang_keluar_detail.id','LEFT');
-		$this->db->where('app_uang_keluar_detail.uang_keluar_id',$data['uang_keluar_id']);
-		$cek=$this->db->get('app_uang_keluar_detail')->row();
-		if($cek->jumlah>0){
-			return false;
-		}
-	
-
-	
-	    /* transaction rollback */
+		/* transaction rollback */
 		$this->db->trans_start();
 		
 		$this->db->insert('app_uang_keluar_tas', $data);		
@@ -234,14 +224,6 @@ class Uang_keluar_tas_model extends CI_Model {
 	}
 
 	function update($id,$data){
-
-		$this->db->select('sum(app_journal_proses.jumlah) as jumlah');
-		$this->db->join('app_journal_proses','app_journal_proses.uang_keluar_detail_id=app_uang_keluar_detail.id','LEFT');
-		$this->db->where('app_uang_keluar_detail.uang_keluar_id',$data['uang_keluar_id']);
-		$cek=$this->db->get('app_uang_keluar_detail')->row();
-		if($cek->jumlah>0){
-			return false;
-		}
 
 		/* transaction rollback */
 		$this->db->trans_start();
@@ -255,15 +237,6 @@ class Uang_keluar_tas_model extends CI_Model {
 
 	function delete_multiple($data){
 
-		$this->db->select('sum(app_journal_proses.jumlah) as jumlah');
-		$this->db->join('app_uang_keluar','app_uang_keluar_tas.uang_keluar_id=app_uang_keluar.id','INNER');
-		$this->db->join('app_uang_keluar_detail','app_uang_keluar_detail.uang_keluar_id=app_uang_keluar.id','LEFT');
-		$this->db->join('app_journal_proses','app_journal_proses.uang_keluar_detail_id=app_uang_keluar_detail.id','LEFT');
-		$this->db->where_in('app_uang_keluar_tas.id',$data);
-		$cek=$this->db->get('app_uang_keluar_tas')->row();
-		if($cek->jumlah>0){
-			return false;
-		}
 		/* transaction rollback */
 		$this->db->trans_start();
 		

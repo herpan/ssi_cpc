@@ -114,11 +114,11 @@
   <div class="page">
 <img class="logo-ssi" src="<?php echo base_url('api/Public_Access/get_logo_login')?>">
 <div class="letter-header">
-<p><strong>NO : <?php echo $row4->no ?></strong></p>
+<p><strong>NO : <?php echo @$row4->no ?></strong></p>
 <p><strong>PT. SWADHARMA SARANA INFORMATIKA</strong></p>
 <p><strong>Kepada Yth :</strong></p>
 <p><strong></strong></p>
-<p><strong>U.P : <?php echo $row4->up ?></strong></p>
+<p><strong>U.P : <?php echo @$row4->up ?></strong></p>
 </div>
 <p style="text-align: center;"><strong><u>BERITA ACARA SELISIH HASIL PROSES</u></strong></p>
 <table class="ba-table">
@@ -134,8 +134,8 @@
 </tr>
 <tr style="height: 18px;">
 <td class="bordered" style="width: 40%; height: 18px;" colspan="3">Jam Mulai Proses / Selesai Proses</td>
-<td class="bordered" style="width: 30%; height: 18px;" colspan="2"><?php echo $row4->mulai_proses?></td>
-<td class="bordered" style="width: 30%; height: 18px;" colspan="3"><?php echo $row4->selesai_proses?></td>
+<td class="bordered" style="width: 30%; height: 18px;" colspan="2"><?php echo @$row4->mulai_proses?></td>
+<td class="bordered" style="width: 30%; height: 18px;" colspan="3"><?php echo @$row4->selesai_proses?></td>
 </tr>
 <tr style="height: 18px;">
 <td class="bordered" style="width: 40%; height: 18px;" colspan="3">No. Segel</td>
@@ -158,8 +158,8 @@
 </tr>
 <tr style="height: 18px;">
 <td class="bordered" style="width: 40%; height: 18px;" colspan="3">Nama OA / Kasir di TTP</td>
-<td class="bordered" style="height: 18px; width: 15%;"><?php echo $row4->nama_oa?></td>
-<td class="bordered" style="width: 15%; height: 18px;"><?php echo $row4->kasir_ttp?></td>
+<td class="bordered" style="height: 18px; width: 15%;"><?php echo @$row4->nama_oa?></td>
+<td class="bordered" style="width: 15%; height: 18px;"><?php echo @$row4->kasir_ttp?></td>
 <td class="bordered" style="width: 30%; height: 18px;" colspan="3">&nbsp;</td>
 </tr>
 <tr style="height: 18px;">
@@ -212,7 +212,7 @@
 <td class="bordered" style="width: 12%; height: 18px; text-align: center;"><?php echo @$s11000002/100000>0 ? @$s11000002/100000:'' ?></td>
 <td class="bordered" style="width: 12%; height: 18px; text-align: center;"><?php echo @$s11000003/100000>0 ? @$s11000003/100000:'' ?></td>
 <td class="bordered" style="width: 12%; height: 18px; text-align: center;"><?php echo @$s11000004/100000>0 ? @$s11000004/100000:'' ?></td>
-<td class="bordered" style="width: 24%; height: 18px; text-align: right;" colspan="2">Rp.<?php $s1100000=@$s11000004-@$s11000003-@$s11000002-@$s11000001; echo $s1100000<0 ? "(".rupiah($s1100000).")" : ($s1100000==0 ? '': rupiah($s1100000)) ?></td>
+<td class="bordered" style="width: 24%; height: 18px; text-align: right;" colspan="2">Rp.<?php $s1100000=@$s11000004-@$s11000003-@$s11000002-@$s11000001; echo $s1100000<0 ? "(".rupiah(0-$s1100000).")" : ($s1100000==0 ? '': rupiah($s1100000)) ?></td>
 </tr>
 <tr style="height: 18px;">
 <td class="bordered" style="width: 10%; height: 18px; text-align: center;">2</td>
@@ -363,7 +363,7 @@
 </tr>
 <tr style="height: 18px;">
 <td class="bordered" style="width: 25%; height: 36px;" colspan="2">Catatan:</td>
-<td class="bordered" style="width: 75%; height: 36px;" colspan="6"><?php echo $row4->catatan?></td>
+<td class="bordered" style="width: 75%; height: 36px;" colspan="6"><?php echo @$row4->catatan?></td>
 </tr>
 <tr style="height: 18px;">
 <td class="bordered" style="width: 64%; height: 18px;" colspan="5">Penjelasan</td>
@@ -381,7 +381,7 @@
 <?php } ?>
 <tr style="height: 18px;">
 <td class="bordered" style="width: 25%; height: 36px; text-align: center;" colspan="2">Lampiran:</td>
-<td class="bordered" style="width: 75%; height: 36px;" colspan="6"><?php echo $row4->lampiran?></td>
+<td class="bordered" style="width: 75%; height: 36px;" colspan="6"><?php echo @$row4->lampiran?></td>
 </tr>
 <tr style="height: 18px;">
 <td class="bordered" style="width: 100%; height: 18px;" colspan="8">&nbsp;</td>
@@ -395,8 +395,8 @@
 </tr>
 <tr style="height: 18px;">
 <td class="bordered" style="width: 25%; height: 36px;" colspan="2">Ditemukan Oleh,</td>
-<td class="bordered" style="width: 15%; height: 36px;"><?php echo $row4->ditemukan_oleh?></td>
-<td class="bordered" style="width: 12%; height: 36px;"><?php echo $row4->ditemukan_id?></td>
+<td class="bordered" style="width: 15%; height: 36px;"><?php echo @$row4->ditemukan_oleh?></td>
+<td class="bordered" style="width: 12%; height: 36px;"><?php echo @$row4->ditemukan_id?></td>
 <td class="bordered" style="width: 12%; height: 36px;">&nbsp;</td>
 <td class="bordered" style="width: 12%; height: 36px;">&nbsp;</td>
 <td class="bordered" style="width: 12%; height: 36px;">&nbsp;</td>
@@ -404,8 +404,8 @@
 </tr>
 <tr style="height: 18px;">
 <td class="bordered" style="width: 25%; height: 36px;" colspan="2">Disaksikan Oleh,</td>
-<td class="bordered" style="width: 15%; height: 36px;"><?php echo $row4->disaksikan_oleh?></td>
-<td class="bordered" style="width: 12%; height: 36px;"><?php echo $row4->disaksikan_id?></td>
+<td class="bordered" style="width: 15%; height: 36px;"><?php echo @$row4->disaksikan_oleh?></td>
+<td class="bordered" style="width: 12%; height: 36px;"><?php echo @$row4->disaksikan_id?></td>
 <td class="bordered" style="width: 12%; height: 36px;">&nbsp;</td>
 <td class="bordered" style="width: 12%; height: 36px;">&nbsp;</td>
 <td class="bordered" style="width: 12%; height: 36px;">&nbsp;</td>
@@ -413,8 +413,8 @@
 </tr>
 <tr style="height: 36px;">
 <td class="bordered" style="width: 25%; height: 36px;" colspan="2">Diketahui Oleh,</td>
-<td class="bordered" style="width: 15%; height: 36px;"><?php echo $row4->diketahui_oleh?></td>
-<td class="bordered" style="width: 12%; height: 36px;"><?php echo $row4->diketahui_id?></td>
+<td class="bordered" style="width: 15%; height: 36px;"><?php echo @$row4->diketahui_oleh?></td>
+<td class="bordered" style="width: 12%; height: 36px;"><?php echo @$row4->diketahui_id?></td>
 <td class="bordered" style="width: 12%; height: 36px;">&nbsp;</td>
 <td class="bordered" style="width: 12%; height: 36px;">&nbsp;</td>
 <td class="bordered" style="width: 12%; height: 36px;">&nbsp;</td>

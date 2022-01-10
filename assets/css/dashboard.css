@@ -19632,7 +19632,7 @@ svg {
 
 .styled-table {  
   border-collapse: collapse;
-  min-width: 400px;
+  width: 116%;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 .styled-table thead tr {
@@ -19665,9 +19665,18 @@ svg {
   border-left: 1px solid #dddddd;
   border-right: 1px solid #dddddd;
 }
-.styled-table th{
+.styled-table th {
   border: 1px solid #dddddd
 }
+.lebar1{
+  width: 7%;
+}
+.lebar2{
+  width: 9%;
+}
+
+
+
 
 .headcol {
   position: absolute;

@@ -217,34 +217,5 @@ class Pecahan extends CI_Controller {
 	
 	}
 
-	public function  create_multiple(){
-		$data = array(
-			'title_page_big'			=> 'Import data pengguna dari excel',
-			'link_download_template'	=> site_url().'Pecahan/Pecahan/download_template/'.$this->_token,
-			'link_upload_template'		=> site_url().'Pecahan/Pecahan/upload_template/'.$this->_token,
-			'link_back'					=> $this->agent->referrer(),			
-		);
-		
-		$this->template->load('share/Form_multiple',$data);
-	}
-
-	public function  download_template($token){
-		if ($token == $this->_token) {
-			//Buat template upload
-		}else {
-			redirect('Auth');
-		}
-	}
-
-	public function  upload_template($token){
-		if ($token == $this->_token) {
-			//Buat template upload
-		}else {
-			redirect('Auth');
-		}
-	}
-
-
-
 };
 

@@ -37,6 +37,10 @@
 					<div class='form-group'> 
 							<label class='form-label'><?php echo $title->app_uang_masuk_cabang_id ?></label> 
 							<?php $v='';  if(isset($data)) $v = $data->cabang_id; 
+								  $where=null;
+							      if($this->_user_sentra_ids!==NULL){
+									$where="sentra_kas_id in ($this->_user_sentra_ids)";
+								  }
 								  echo create_cmb_database(array(	'id'			=>'cabang_id',
 																	'name'			=>'cabang_id',
 																	'table'			=>'app_cabang_cpc',
@@ -44,7 +48,7 @@
 																	'primary_key'	=>'id', 
 																	'selected'		=>$v,
 																	'field_link'	=>'bank_id',
-																	'class'			=>'custom-select-link data-sending'),"sentra_kas_id in ($this->_user_sentra_ids)"); 
+																	'class'			=>'custom-select-link data-sending'),$where); 
 						    ?> 
 					</div>
 					</div>					
@@ -140,7 +144,8 @@
 													'primary_key'	=>'id', 
 													'selected'		=>'',
 													'field_link'	=>'',
-													'class'			=>'custom-select data-sending')); 
+													'class'			=>'custom-select-link data-sending')); 
+					
 			?> 
 	</div>
 	</div>	
@@ -151,12 +156,12 @@
 			<?php
 					echo create_cmb_database(array(	'id'			=>'pecahan_id',
 													'name'			=>'pecahan_id',
-													'table'			=>'app_pecahan',
+													'table'			=>'select_pecahan_view',
 													'field_show'	=>'pecahan',
 													'primary_key'	=>'id', 
 													'selected'		=>'',
-													'field_link'	=>'',
-													'class'			=>'custom-select data-sending')); 
+													'field_link'	=>'jenis_uang_id',
+													'class'			=>'custom-select-link data-sending')); 
 			?> 
 	</div>
 	</div>
@@ -299,6 +304,9 @@
 
 <?php echo _js('ybs,selectize,mommentjs,datepicker,datetimepicker,datatables,icheck')?>
 
+<script src=" <?= base_url('node_modules/socket.io/client-dist/socket.io.js') ?>"></script>
+<script src=" <?= base_url('assets/js/ws.js') ?>"></script>
+
 <script>var page_version="1.0.8"</script>
 
 <script> 
@@ -317,6 +325,8 @@ var action_link_tas=link_add_tas;
 
 var link_refresh='<?php echo $link_refresh_table;?>';
 var link_refresh_tas='<?php echo $link_refresh_table_tas;?>';
+
+var updated=false;
 
 $(document).ready(function(){
 	<?php
@@ -354,6 +364,8 @@ $(document).ready(function(){
 	?>
 
 	linkToSelectize('bank_id','cabang_id');
+
+	linkToSelectize('jenis_uang_id','pecahan_id');
 
 	$('.timepicker').datetimepicker({
 		format: 'HH:mm'        
@@ -514,7 +526,7 @@ function simpan_detail(){
 	a.process(action_link,send_data,'POST');
 	a.onAfterSuccess = function(){
 		refresh_table();
-		reset_form_detail();
+		reset_form_detail();		
 	}	
 }
 
@@ -823,6 +835,12 @@ table_detail = $('#table-detail').dataTable({
 
 			});	
 			refresh_table_tas();
+			if(updated){
+				update_data($('#bank_id').val());
+			}
+			else{
+				updated=true;
+			}
 }
 </script>
 

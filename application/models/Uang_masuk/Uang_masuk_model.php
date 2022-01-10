@@ -83,7 +83,7 @@ class Uang_masuk_model extends CI_Model {
 
 		$this->datatables->join('(select uang_masuk_id,sum(jumlah) as jumlah,sum(jumlah_proses) as jumlah_proses,sum(selisih_kurang) as selisih_kurang,sum(selisih_lebih) as selisih_lebih,sum(jumlah_belum_diproses) as jumlah_belum_proses  from proses_list_view group by uang_masuk_id) d','d.uang_masuk_id=app_uang_masuk.id','LEFT'); 
 	
-		$this->datatables->join('app_cabang_cpc c','c.id=app_uang_masuk.cabang_id','LEFT'); 
+		$this->datatables->join('app_cabang_cpc c','c.id=app_uang_masuk.cabang_id','INNER'); 
 	
 		$this->datatables->join('app_sentra_kas s','s.id=app_uang_masuk.sentra_kas_id','LEFT'); 
 	
@@ -92,6 +92,14 @@ class Uang_masuk_model extends CI_Model {
 		$this->datatables->join('sys_user userupdate','userupdate.id=app_uang_masuk.user_update','LEFT'); 
 	
 		$this->datatables->join('app_bank b','b.id=c.bank_id','LEFT'); 
+
+		if($this->_user_bank_id!==NULL){ 		
+			$this->datatables->where('c.bank_id',$this->_user_bank_id);
+		}
+
+		if($this->_user_sentra_ids!==NULL){
+			$this->datatables->where('app_uang_masuk.sentra_kas_id in ('.$this->_user_sentra_ids.')'); 			
+		}
 
 			
 		
@@ -168,11 +176,19 @@ class Uang_masuk_model extends CI_Model {
 		
 		);
 		$this->db->select($afield);
-		$this->db->join('app_cabang_cpc c','c.id=app_uang_masuk.cabang_id','LEFT'); 
-		$this->db->join('app_sentra_kas s','s.id=app_uang_masuk.sentra_kas_id','LEFT'); 
+		$this->db->join('app_cabang_cpc c','c.id=app_uang_masuk.cabang_id','INNER'); 
+		$this->db->join('app_sentra_kas s','s.id=app_uang_masuk.sentra_kas_id','INNER'); 
 		$this->db->join('sys_user userinput','userinput.id=app_uang_masuk.user_input','LEFT'); 
 		$this->db->join('sys_user userupdate','userupdate.id=app_uang_masuk.user_update','LEFT'); 
 		$this->db->join('app_bank b','b.id=c.bank_id','LEFT'); 
+
+		if($this->_user_bank_id!==NULL){ 		
+			$this->db->where('c.bank_id',$this->_user_bank_id);
+		}
+
+		if($this->_user_sentra_ids!==NULL){
+			$this->db->where('app_uang_masuk.sentra_kas_id in ('.$this->_user_sentra_ids.')'); 			
+		}
 
 		$this->db->order_by('app_uang_masuk.id', 'ASC');
 		return $this->db->get('app_uang_masuk')->result_array();
@@ -258,6 +274,12 @@ class Uang_masuk_model extends CI_Model {
 		$this->db->join('app_bank b','b.id=c.bank_id','LEFT'); 
 
 		$this->db->where('app_uang_masuk.id', $id);
+		if($this->_user_bank_id!==NULL){ 		
+			$this->db->where('c.bank_id',$this->_user_bank_id);
+		}
+		if($this->_user_sentra_ids!==NULL){
+			$this->db->where('app_uang_masuk.sentra_kas_id in ('.$this->_user_sentra_ids.')'); 			
+		}
 		$this->db->order_by('app_uang_masuk.id', 'ASC');
 		return $this->db->get('app_uang_masuk')->row();
    }
@@ -401,43 +423,283 @@ class Uang_masuk_model extends CI_Model {
 
 	//Untuk Dashboard 
 
-	public function get_dashboard($bank_id,$tanggal){
+	public function get_dashboard($tanggal=null,$bank_id=null,$sentra_kas_id=null,$cabang_id=null){
+		// $q="SELECT 
+		// app_jenis_uang.jenis_uang as jenis_uang,
+		// app_pecahan.pecahan as pecahan,
+		// app_emisi.emisi as emisi,
+		// SUM(CASE WHEN app_kondisi.kondisi='GRESS BI' then app_journal_proses.jumlah ELSE 0 END) as 'GRESS_BI',
+		// SUM(CASE WHEN app_kondisi.kondisi='RECYCLE BI' then app_journal_proses.jumlah ELSE 0 END) as 'RECYCLE_BI',
+		// SUM(CASE WHEN app_kondisi.kondisi='DROPSHOT' then app_journal_proses.jumlah ELSE 0 END) as 'DROPSHOT',
+		// SUM(CASE WHEN app_kondisi.kondisi='ULE' then app_journal_proses.jumlah ELSE 0 END) as 'ULE',
+		// SUM(CASE WHEN app_kondisi.kondisi='UTLE' then app_journal_proses.jumlah ELSE 0 END) as 'UTLE',
+		// SUM(CASE WHEN app_kondisi.kondisi='MINOR' then app_journal_proses.jumlah ELSE 0 END) as 'MINOR',
+		// SUM(CASE WHEN app_kondisi.kondisi='MAYOR' then app_journal_proses.jumlah ELSE 0 END) as 'MAYOR',
+		// 0 as jumlah_campur,
+		// app_uang_masuk_detail.jumlah_belum_diproses as jumlah_belum
+		// FROM app_uang_masuk
+		// INNER JOIN  proses_list_view AS app_uang_masuk_detail ON app_uang_masuk.id=app_uang_masuk_detail.uang_masuk_id
+		// INNER JOIN  app_cabang_cpc ON app_cabang_cpc.id=app_uang_masuk.cabang_id
+		// LEFT JOIN  app_journal_proses ON app_uang_masuk_detail.id=app_journal_proses.uang_masuk_detail_id
+		// LEFT JOIN  app_pecahan ON app_pecahan.id=app_uang_masuk_detail.pecahan_id
+		// LEFT JOIN  app_jenis_uang ON app_jenis_uang.id=app_uang_masuk_detail.jenis_uang_id
+		// LEFT JOIN  app_emisi ON app_emisi.id=app_journal_proses.emisi_id
+		// LEFT JOIN  app_kondisi ON app_kondisi.id=app_journal_proses.kondisi_id
+		// LEFT JOIN (select
+        //            app_journal_proses.uang_masuk_detail_id,
+        //            app_uang_masuk_detail.pecahan_id,
+        //            sum(COALESCE(app_journal_proses.jumlah, 0)) as jumlah_proses 
+        //            from app_uang_masuk_detail  
+        //            left join app_journal_proses ON app_journal_proses.uang_masuk_detail_id=app_uang_masuk_detail.id
+        //            group by app_uang_masuk_detail.pecahan_id,app_journal_proses.uang_masuk_detail_id) pr ON pr.uang_masuk_detail_id=app_uang_masuk_detail.id AND pr.pecahan_id=app_uang_masuk_detail.pecahan_id
+		// WHERE app_cabang_cpc.bank_id=$bank_id
+		// AND app_uang_masuk.tanggal_penerimaan='$tanggal'
+		// GROUP BY app_jenis_uang.jenis_uang,app_pecahan.pecahan,app_emisi.emisi  
+		// ORDER BY app_jenis_uang.jenis_uang ASC,app_pecahan.pecahan  DESC;";
+
+		$tanggalmasuk="";
+		$tanggalkeluar="";
+		$sentramasuk="";
+		$sentrakeluar="";
+		$bank="";		
+		$cabang="";
+
+
+		if($tanggal!==null){
+			$tanggalmasuk="WHERE app_uang_masuk.tanggal_penerimaan<='$tanggal'";
+			$tanggalkeluar="WHERE app_uang_keluar.tanggal_pengiriman<='$tanggal'";
+		}
+
+		if($bank_id!==null){
+			$bank="AND app_cabang_cpc.bank_id=$bank_id";			
+		}
+
+		if($sentra_kas_id!==null){
+			$sentramasuk="AND app_uang_masuk.sentra_kas_id=$sentra_kas_id";
+			$sentrakeluar="AND app_uang_keluar.sentra_kas_id=$sentra_kas_id";
+		}
+
+		if($cabang_id!==null){
+			$cabang="AND app_cabang_cpc.id=$cabang_id";			
+		}
+
 		$q="SELECT 
 		app_jenis_uang.jenis_uang as jenis_uang,
 		app_pecahan.pecahan as pecahan,
 		app_emisi.emisi as emisi,
-		SUM(CASE WHEN app_kondisi.kondisi='GRESS BI' then app_journal_proses.jumlah ELSE 0 END) as 'GRESS_BI',
-		SUM(CASE WHEN app_kondisi.kondisi='RECYCLE BI' then app_journal_proses.jumlah ELSE 0 END) as 'RECYCLE_BI',
-		SUM(CASE WHEN app_kondisi.kondisi='DROPSHOT' then app_journal_proses.jumlah ELSE 0 END) as 'DROPSHOT',
-		SUM(CASE WHEN app_kondisi.kondisi='ULE' then app_journal_proses.jumlah ELSE 0 END) as 'ULE',
-		SUM(CASE WHEN app_kondisi.kondisi='UTLE' then app_journal_proses.jumlah ELSE 0 END) as 'UTLE',
-		SUM(CASE WHEN app_kondisi.kondisi='MINOR' then app_journal_proses.jumlah ELSE 0 END) as 'MINOR',
-		SUM(CASE WHEN app_kondisi.kondisi='MAYOR' then app_journal_proses.jumlah ELSE 0 END) as 'MAYOR',
-		0 as jumlah_campur,
-		app_uang_masuk_detail.jumlah_belum_diproses as jumlah_belum
-		FROM app_uang_masuk
-		INNER JOIN  proses_list_view AS app_uang_masuk_detail ON app_uang_masuk.id=app_uang_masuk_detail.uang_masuk_id
-		INNER JOIN  app_cabang_cpc ON app_cabang_cpc.id=app_uang_masuk.cabang_id
-		LEFT JOIN  app_journal_proses ON app_uang_masuk_detail.id=app_journal_proses.uang_masuk_detail_id
-		LEFT JOIN  app_pecahan ON app_pecahan.id=app_uang_masuk_detail.pecahan_id
-		LEFT JOIN  app_jenis_uang ON app_jenis_uang.id=app_uang_masuk_detail.jenis_uang_id
-		LEFT JOIN  app_emisi ON app_emisi.id=app_journal_proses.emisi_id
-		LEFT JOIN  app_kondisi ON app_kondisi.id=app_journal_proses.kondisi_id
-		LEFT JOIN (select
-                   app_journal_proses.uang_masuk_detail_id,
-                   app_uang_masuk_detail.pecahan_id,
-                   sum(COALESCE(app_journal_proses.jumlah, 0)) as jumlah_proses 
-                   from app_uang_masuk_detail  
-                   left join app_journal_proses ON app_journal_proses.uang_masuk_detail_id=app_uang_masuk_detail.id
-                   group by app_uang_masuk_detail.pecahan_id,app_journal_proses.uang_masuk_detail_id) pr ON pr.uang_masuk_detail_id=app_uang_masuk_detail.id AND pr.pecahan_id=app_uang_masuk_detail.pecahan_id
-		WHERE app_cabang_cpc.bank_id=$bank_id
-		AND app_uang_masuk.tanggal_penerimaan='$tanggal'
-		GROUP BY app_jenis_uang.jenis_uang,app_pecahan.pecahan,app_emisi.emisi  
-		ORDER BY app_jenis_uang.jenis_uang ASC,app_pecahan.pecahan  DESC;";	
-		return $this->db->query($q)->result();
+		SUM(CASE WHEN app_kondisi.kondisi='GRESS BI' then saldo.jumlah ELSE 0 END) as 'GRESS_BI',
+		SUM(CASE WHEN app_kondisi.kondisi='RECYCLE BI' then saldo.jumlah ELSE 0 END) as 'RECYCLE_BI',
+		SUM(CASE WHEN app_kondisi.kondisi='DROPSHOT' then saldo.jumlah ELSE 0 END) as 'DROPSHOT',
+		SUM(CASE WHEN app_kondisi.kondisi='ULE' then saldo.jumlah ELSE 0 END) as 'ULE',
+		SUM(CASE WHEN app_kondisi.kondisi='UTLE' then saldo.jumlah ELSE 0 END) as 'UTLE',
+		SUM(CASE WHEN app_kondisi.kondisi='MINOR' then saldo.jumlah ELSE 0 END) as 'MINOR',
+		SUM(CASE WHEN app_kondisi.kondisi='MAYOR' then saldo.jumlah ELSE 0 END) as 'MAYOR',
+		0 as jumlah_campur
+		FROM
+		(SELECT 
+		app_cabang_cpc.bank_id,
+		app_uang_masuk.sentra_kas_id,
+		app_uang_masuk_detail.jenis_uang_id,
+		app_uang_masuk_detail.pecahan_id,
+		app_journal_proses.emisi_id,
+		app_journal_proses.kondisi_id,
+		SUM(app_journal_proses.jumlah) as jumlah FROM app_cabang_cpc
+		INNER JOIN app_uang_masuk ON app_uang_masuk.cabang_id=app_cabang_cpc.id
+		INNER JOIN app_uang_masuk_detail ON app_uang_masuk_detail.uang_masuk_id=app_uang_masuk.id
+		INNER JOIN app_journal_proses ON app_journal_proses.uang_masuk_detail_id=app_uang_masuk_detail.id
+		".$tanggalmasuk."
+		".$bank."
+		".$sentramasuk."
+		".$cabang."
+		GROUP BY 
+		app_cabang_cpc.bank_id,
+		app_uang_masuk.sentra_kas_id,
+		app_uang_masuk_detail.jenis_uang_id,
+		app_uang_masuk_detail.pecahan_id,
+		app_journal_proses.emisi_id,
+		app_journal_proses.kondisi_id
+		UNION 
+		SELECT 
+		app_cabang_cpc.bank_id,
+		app_uang_keluar.sentra_kas_id,
+		app_uang_keluar_detail.jenis_uang_id,
+		app_uang_keluar_detail.pecahan_id,
+		app_uang_keluar_detail.emisi_id,
+		app_uang_keluar_detail.kondisi_id,
+		SUM(0-app_uang_keluar_detail.jumlah) as jumlah FROM app_cabang_cpc
+		INNER JOIN app_uang_keluar ON app_uang_keluar.cabang_id=app_cabang_cpc.id
+		INNER JOIN app_uang_keluar_detail ON app_uang_keluar_detail.uang_keluar_id=app_uang_keluar.id
+		".$tanggalkeluar."
+		".$bank."
+		".$sentrakeluar."
+		".$cabang."
+		GROUP BY 
+		app_cabang_cpc.bank_id,
+		app_uang_keluar.sentra_kas_id,
+		app_uang_keluar_detail.jenis_uang_id,
+		app_uang_keluar_detail.pecahan_id,
+		app_uang_keluar_detail.emisi_id,
+		app_uang_keluar_detail.kondisi_id) AS saldo
+		LEFT JOIN  app_pecahan ON app_pecahan.id=saldo.pecahan_id
+		LEFT JOIN  app_jenis_uang ON app_jenis_uang.id=saldo.jenis_uang_id
+		LEFT JOIN  app_emisi ON app_emisi.id=saldo.emisi_id
+		LEFT JOIN  app_kondisi ON app_kondisi.id=saldo.kondisi_id
+		GROUP BY
+		bank_id,
+		jenis_uang_id,
+		pecahan_id,
+		emisi_id";		
+
+		return $this->db->query($q)->result();	
 		
 	}
-   
 
+	public function get_belum($tanggal=null,$bank_id=null,$sentra_kas_id=null,$cabang_id=null){
+		
+		$tanggalmasuk="";		
+		$sentramasuk="";		
+		$bank="";		
+		$cabang="";
+
+
+		if($tanggal!==null){
+			$tanggalmasuk="WHERE app_uang_masuk.tanggal_penerimaan<='$tanggal'";			
+		}
+
+		if($bank_id!==null){
+			$bank="AND app_cabang_cpc.bank_id=$bank_id";			
+		}
+
+		if($sentra_kas_id!==null){
+			$sentramasuk="AND app_uang_masuk.sentra_kas_id=$sentra_kas_id";		
+		}
+
+		if($cabang_id!==null){
+			$cabang="AND app_cabang_cpc.id=$cabang_id";			
+		}
+
+		$q="SELECT jenis_uang,pecahan,SUM(jumlah_belum_diproses) as jumlah_belum FROM proses_list_view
+		INNER JOIN app_uang_masuk ON proses_list_view.uang_masuk_id=app_uang_masuk.id
+		INNER JOIN app_cabang_cpc ON app_uang_masuk.cabang_id=app_cabang_cpc.id
+		".$tanggalmasuk."
+		".$bank."
+		".$sentramasuk."
+		".$cabang."
+		GROUP BY jenis_uang,pecahan";		
+		return $this->db->query($q)->result();
+	}
+
+	public function get_mutasi(){
+
+		$bank='';
+		$sentra='';
+		$sentra2='';
+
+		if($this->_user_bank_id!==NULL){			
+			$bank='WHERE app_cabang_cpc.bank_id='.$this->_user_bank_id;
+		}
+
+		if($this->_user_sentra_ids!==NULL){
+			if($bank==''){
+				$sentra='WHERE app_uang_masuk.sentra_kas_id IN('.$this->_user_sentra_ids.')';
+				$sentra2='WHERE app_uang_keluar.sentra_kas_id IN('.$this->_user_sentra_ids.')';
+			}else{
+				$sentra=' AND app_uang_masuk.sentra_kas_id IN('.$this->_user_sentra_ids.')';
+				$sentra2=' AND app_uang_keluar.sentra_kas_id IN('.$this->_user_sentra_ids.')';	
+			}			 			
+		}
+
+		$q="SELECT
+		CASE 
+		WHEN kategori_selisih_id=0 THEN CONCAT('Penerimaan uang dari ',nama_cabang,' No: ',no,' pecahan ', app_pecahan.pecahan) WHEN kategori_selisih_id=1 THEN CONCAT('Selisih kurang Penerimaan Uang Dari ',nama_cabang,' No: ',no, ' pecahan ', app_pecahan.pecahan)
+		WHEN kategori_selisih_id=2 THEN CONCAT('Diduga palsu Penerimaan Uang dari ',nama_cabang,' No: ',no,' pecahan ', app_pecahan.pecahan)
+		WHEN kategori_selisih_id=3 THEN CONCAT('Uang mutilasi Penerimaan Uang dari ',nama_cabang,' No: ',no,' pecahan ', app_pecahan.pecahan)
+		WHEN kategori_selisih_id=4 THEN CONCAT('Selisih lebih Penerimaan Uang dari ',nama_cabang,' No: ',no,' pecahan ', app_pecahan.pecahan)
+		ELSE CONCAT('Pengiriman Uang ke ',nama_cabang,' No: ',no,' pecahan ', app_pecahan.pecahan) END AS uraian,
+		mutasi.input_time,
+		type,
+		jumlah
+		FROM (SELECT 
+		app_uang_masuk.no,
+		app_uang_masuk.cabang_id,
+		app_uang_masuk.sentra_kas_id,
+		app_uang_masuk_detail.jenis_uang_id,
+		app_uang_masuk_detail.pecahan_id,
+		app_uang_masuk_detail.kategori_selisih_id,
+		app_uang_masuk_detail.input_time,
+        app_cabang_cpc.nama_cabang,
+		CASE WHEN app_uang_masuk_detail.kategori_selisih_id>0 AND app_uang_masuk_detail.kategori_selisih_id<4 THEN 'D' ELSE 'K' END AS type, 
+		app_uang_masuk_detail.jumlah
+		FROM app_uang_masuk_detail
+		INNER JOIN app_uang_masuk on app_uang_masuk_detail.uang_masuk_id=app_uang_masuk.id
+        INNER JOIN app_cabang_cpc on app_uang_masuk.cabang_id=app_cabang_cpc.id
+		".$bank."
+		".$sentra."
+		UNION
+		SELECT 
+		app_uang_keluar.no,
+		app_uang_keluar.cabang_id,
+		app_uang_keluar.sentra_kas_id,
+		app_uang_keluar_detail.jenis_uang_id,
+		app_uang_keluar_detail.pecahan_id,
+		5 kategori_selisih_id,
+		app_uang_keluar.input_time,
+        app_cabang_cpc.nama_cabang,
+		'D' as type, 
+		SUM(app_uang_keluar_detail.jumlah) as jumlah
+		FROM app_uang_keluar_detail
+		INNER JOIN app_uang_keluar on app_uang_keluar_detail.uang_keluar_id=app_uang_keluar.id
+        INNER JOIN app_cabang_cpc on app_uang_keluar.cabang_id=app_cabang_cpc.id
+		".$bank."
+		".$sentra2."
+		GROUP BY 
+		app_uang_keluar.no,
+		app_uang_keluar.cabang_id,
+		app_uang_keluar.sentra_kas_id,
+		app_uang_keluar_detail.jenis_uang_id,
+		app_uang_keluar_detail.pecahan_id,
+        app_cabang_cpc.nama_cabang,
+		app_uang_keluar.input_time) AS mutasi 
+        INNER JOIN app_pecahan ON mutasi.pecahan_id=app_pecahan.id
+		ORDER BY mutasi.input_time DESC";
+		return $this->db->query($q)->result();
+	}
+	public function get_saldo(){
+		$bank='';
+		$sentra='';
+		$sentra2='';
+
+		if($this->_user_bank_id!==NULL){			
+			$bank='WHERE app_cabang_cpc.bank_id='.$this->_user_bank_id;
+		}
+
+		if($this->_user_sentra_ids!==NULL){
+			if($bank==''){
+				$sentra='WHERE app_uang_masuk.sentra_kas_id IN('.$this->_user_sentra_ids.')';
+				$sentra2='WHERE app_uang_keluar.sentra_kas_id IN('.$this->_user_sentra_ids.')';
+			}else{
+				$sentra=' AND app_uang_masuk.sentra_kas_id IN('.$this->_user_sentra_ids.')';
+				$sentra2=' AND app_uang_keluar.sentra_kas_id IN('.$this->_user_sentra_ids.')';	
+			}			 			
+		}
+
+		$q="SELECT SUM(jumlah) AS saldo FROM(SELECT 
+		CASE WHEN app_uang_masuk_detail.kategori_selisih_id>0 AND app_uang_masuk_detail.kategori_selisih_id<4 THEN 		0-app_uang_masuk_detail.jumlah ELSE app_uang_masuk_detail.jumlah END as jumlah
+		FROM app_uang_masuk_detail
+		INNER JOIN app_uang_masuk on app_uang_masuk_detail.uang_masuk_id=app_uang_masuk.id
+        INNER JOIN app_cabang_cpc on app_uang_masuk.cabang_id=app_cabang_cpc.id
+		".$bank."
+		".$sentra."	
+		UNION
+		SELECT 	
+		0-SUM(app_uang_keluar_detail.jumlah) as jumlah
+		FROM app_uang_keluar_detail
+		INNER JOIN app_uang_keluar on app_uang_keluar_detail.uang_keluar_id=app_uang_keluar.id
+        INNER JOIN app_cabang_cpc on app_uang_keluar.cabang_id=app_cabang_cpc.id
+		".$bank."
+		".$sentra2."
+		) AS Mutasi";		
+		return $this->db->query($q)->row();
+	}
 
 };

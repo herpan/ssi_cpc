@@ -71,40 +71,18 @@ class Pecahan_config {
 			$this->f_id	=> $this->app_pecahan_id,
 			$this->f_pecahan	=> $this->app_pecahan_pecahan,
 			$this->f_keterangan	=> $this->app_pecahan_keterangan,
-			//$this->f_user_input	=> $this->app_pecahan_user_input,
+		
 			$this->f_nama_lengkap	=> $this->userinput_nama_lengkap,
 			$this->f_input_time	=> $this->app_pecahan_input_time,
-			//$this->f_user_update	=> $this->app_pecahan_user_update,
+	
 			$this->f_userupdate_nama_lengkap	=> $this->userupdate_nama_lengkap,
 			$this->f_update_time	=> $this->app_pecahan_update_time,
-			// $this->f_userinput_id	=> $this->userinput_id,
-			// $this->f_nmuser	=> $this->userinput_nmuser,
-			// $this->f_passuser	=> $this->userinput_passuser,
-			// $this->f_nama_lengkap	=> $this->userinput_nama_lengkap,
-			// $this->f_tanda_tangan	=> $this->userinput_tanda_tangan,
-			// $this->f_opt_level	=> $this->userinput_opt_level,
-			// $this->f_opt_status	=> $this->userinput_opt_status,
-			// $this->f_picture	=> $this->userinput_picture,
-			// $this->f_userupdate_id	=> $this->userupdate_id,
-			// $this->f_userupdate_nmuser	=> $this->userupdate_nmuser,
-			// $this->f_userupdate_passuser	=> $this->userupdate_passuser,
-			// $this->f_userupdate_nama_lengkap	=> $this->userupdate_nama_lengkap,
-			// $this->f_userupdate_tanda_tangan	=> $this->userupdate_tanda_tangan,
-			// $this->f_userupdate_opt_level	=> $this->userupdate_opt_level,
-			// $this->f_userupdate_opt_status	=> $this->userupdate_opt_status,
-			// $this->f_userupdate_picture	=> $this->userupdate_picture,
+
 		);
 
 	}
 
 };
-
-
-
-
-
-
-
 
 
 /* END */

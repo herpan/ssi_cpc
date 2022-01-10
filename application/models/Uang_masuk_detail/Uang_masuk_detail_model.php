@@ -312,7 +312,7 @@ class Uang_masuk_detail_model extends CI_Model {
 			$this->db->join('app_journal_proses','app_journal_proses.uang_masuk_detail_id=app_uang_masuk_detail.id','LEFT');
 			$this->db->where('app_uang_masuk_detail.uang_masuk_id',$data['uang_masuk_id']);
 			$cek=$this->db->get('app_uang_masuk_detail')->row();
-			if($cek->jumlah!==0 && $cek->jumlah!==NULL){
+			if($cek->jumlah!=='0' && $cek->jumlah!==NULL){
 				return false;
 			}
 		}		

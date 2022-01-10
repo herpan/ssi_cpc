@@ -10,38 +10,15 @@ class Uang_masuk_detail extends CI_Controller {
         parent::__construct();
 		$this->load->model('Uang_masuk_detail/Uang_masuk_detail_model','tmodel');
 		$this->load->model('Pecahan/Pecahan_model','pecahan');
-		$this->log_key ='log_Uang_masuk_detail';
-		$this->title = new Uang_masuk_detail_config();
+		$this->log_key ='log_Uang_masuk_detail';		
    }
-
-
-	public function index(){
-		$data = array(
-			'title_page_big'		=> 'DAFTAR',
-			'title'					=> $this->title,
-			'link_refresh_table'	=> site_url().'Uang_masuk_detail/Uang_masuk_detail/refresh_table/'.$this->_token,
-			'link_create'			=> site_url().'Uang_masuk_detail/Uang_masuk_detail/create',
-			'link_update'			=> site_url().'Uang_masuk_detail/Uang_masuk_detail/update',
-			'link_delete'			=> site_url().'Uang_masuk_detail/Uang_masuk_detail/delete_multiple',			
-		);
-		
-		$this->template->load('Uang_masuk_detail/Uang_masuk_detail_list',$data);
-	}
-
+   public function index(){	
+   }
 	public function refresh_table($token,$uang_masuk_id=null,$kategori_selisih_id=0){
 		if($token==$this->_token){
 			
 			$row = $this->tmodel->json($uang_masuk_id,$kategori_selisih_id);
 			
-			//encode id 
-			// $tm = time();
-			// $this->session->set_userdata($this->log_key,$tm);
-			// $x = 0;
-			// foreach($row['data'] as $val){
-			// 	$idgenerate = _encode_id($val['id'],$tm);
-			// 	$row['data'][$x]['id'] = $idgenerate;
-			// 	$x++;
-			// }
 			
 			$o = new Outputview();
 			$o->success	= 'true';
@@ -72,19 +49,6 @@ class Uang_masuk_detail extends CI_Controller {
 		}else{
 			redirect('Auth');
 		}
-	}
-
-
-	public function create(){
-		$data = array(
-			'title_page_big'		=> 'Buat Baru',
-			'title'					=> $this->title,
-			'link_save'				=> site_url().'Uang_masuk_detail/Uang_masuk_detail/create_action',
-			'link_back'				=> $this->agent->referrer(),			
-		);
-		
-		$this->template->load('Uang_masuk_detail/Uang_masuk_detail_form',$data);
-
 	}
 
 	public function create_action(){
@@ -184,9 +148,17 @@ class Uang_masuk_detail extends CI_Controller {
 
 		if($val['kategori_selisih_id']!=='0' && $val['kategori_selisih_id']!=='4'){
 			$cek_jumlah=$this->tmodel->cek_input_proses(['jenis_uang_id'=>$val['jenis_uang_id'],'pecahan_id'=>$val['pecahan_id']]);
-			if($val['jumlah']>$cek_jumlah->jumlah_belum_diproses){
+			if(!$cek_jumlah){
 				$val['jumlah']='';
-				$o->message = $val['kategori_selisih_id'].'Jumlah selisih tidak boleh lebih besar dari sisa yang belum di proses';
+				$o->message = 'Jenis uang dengan pecahan yang dipilih tidak ada pada daftar uang masuk';
+				if(!$o->not_empty($val['jumlah'],'#jumlah2')){
+					echo $o->result();	
+					return;
+				}
+			}
+			elseif($val['jumlah']>@$cek_jumlah->jumlah_belum_diproses){
+				$val['jumlah']='';
+				$o->message = 'Jumlah selisih kurang tidak boleh lebih besar dari sisa yang belum di proses';
 				if(!$o->not_empty($val['jumlah'],'#jumlah2')){
 					echo $o->result();	
 					return;
@@ -203,45 +175,9 @@ class Uang_masuk_detail extends CI_Controller {
 
 	}
 
-	public function update($id){
-		$id 				= $this->security->xss_clean($id);
-		// $id_generate		= $id;
-		
-		// /** proses decode id 
-		// * important !! tempdata digunakan sbagai antisipasi
-		// * perubahan session saat membuka tab baru secara bersamaan
-		// **/
-		// $this->log_temp	= $this->session->userdata($this->log_key);
-		// $this->session->set_tempdata($id,$this->log_temp,300);
-		
-		// //mengembalikan id asli
-		// $id = _decode_id($id,$this->log_temp);
-		
-		$row = $this->tmodel->get_by_id($id);
-		
-		if($row){
-			$data = array(
-				'title_page_big'		=> 'Buat Baru',
-				'title'					=> $this->title,
-				'link_save'				=> site_url().'Uang_masuk_detail/Uang_masuk_detail/update_action',
-				'link_back'				=> $this->agent->referrer(),
-				'data'					=> $row,
-				'id'					=> $id,
-			);
-			
-			$this->template->load('Uang_masuk_detail/Uang_masuk_detail_form',$data);
-		}else{
-			redirect($this->agent->referrer());
-		}
-	}
-
 	public function update_action(){
 		$data 	= $this->input->post('data_ajax',true);
 		$val	= json_decode($data,true);
-
-		// $this->log_temp		= $this->session->tempdata($val['id']);
-		// $val['id']				= _decode_id($val['id'],$this->log_temp);
-		
 		
 		$o		= new Outputview(); 
 			
@@ -322,15 +258,6 @@ class Uang_masuk_detail extends CI_Controller {
 		$val=json_decode($data,true);
 		$data = explode(',',$val['data_delete']);
 
-		//get key generate
-		// $log_id = $this->session->userdata($this->log_key);
-		// $xx=0;
-		// foreach($data as $value){
-		// 	$value =  _decode_id($value,$log_id);
-		// 	//menganti ke id asli
-		// 	$data[$xx] = $value;
-		// 	$xx++;	
-		// }
 		
 		$success = $this->tmodel->delete_multiple($data);
 		

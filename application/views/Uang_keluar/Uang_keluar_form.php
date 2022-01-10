@@ -37,6 +37,11 @@
 					<div class='form-group'> 
 							<label class='form-label'><?php echo $title->app_uang_keluar_cabang_id ?></label> 
 							<?php $v='';  if(isset($data)) $v = $data->cabang_id; 
+								$where=null;
+								if($this->_user_sentra_ids!==NULL){
+									$where="sentra_kas_id in ($this->_user_sentra_ids)";
+								}
+								
 								  echo create_cmb_database(array(	'id'			=>'cabang_id',
 																	'name'			=>'cabang_id',
 																	'table'			=>'app_cabang_cpc',
@@ -44,27 +49,27 @@
 																	'primary_key'	=>'id', 
 																	'selected'		=>$v,
 																	'field_link'	=>'bank_id',
-																	'class'			=>'custom-select-link data-sending'),"sentra_kas_id in ($this->_user_sentra_ids)"); 
+																	'class'			=>'custom-select-link data-sending'),$where); 
 						    ?> 
 					</div>
 					</div>					
 			
 					<div class='col-md-6 col-xl-6'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_uang_keluar_tanggal_penerimaan ?></label>
+							<label class='form-label'><?php echo $title->app_uang_keluar_tanggal_pengiriman ?></label>
 							<div class='input-group'>
 							<span class='input-group-prepend' id='basic-addon1'>
 							<span class='input-group-text'><i class="fa fa-calendar"></i></span>
 							</span>
-							<input readonly type='text' class='form-control data-sending input-simple-date' placeholder='<?php echo $title->general->desc_required ?>' id='tanggal_penerimaan' value='<?php if(isset($data)) echo $data->tanggal_penerimaan?>'>
+							<input readonly type='text' class='form-control data-sending input-simple-date' placeholder='<?php echo $title->general->desc_required ?>' id='tanggal_pengiriman' value='<?php if(isset($data)) echo $data->tanggal_pengiriman?>'>
 							</div>
 					</div>
 					</div>
 			
 					<div class='col-md-6 col-xl-6'>
 					<div class='form-group'>
-							<label class='form-label'><?php echo $title->app_uang_keluar_waktu_tiba ?></label>
-							<input type='text' class='form-control data-sending focus-color timepicker'  id='waktu_tiba' name='waktu_tiba' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->waktu_tiba ?>' >
+							<label class='form-label'><?php echo $title->app_uang_keluar_waktu_kirim ?></label>
+							<input type='text' class='form-control data-sending focus-color timepicker'  id='waktu_kirim' name='waktu_kirim' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->waktu_kirim ?>' >
 					</div>
 					</div>
 			
@@ -123,14 +128,13 @@
 
 <?php echo card_close()?>
 
-<?php echo card_open('Detail Uang Masuk','bg-teal',true)?>
+<?php echo card_open('Detail Uang Keluar','bg-teal',true)?>
 <form id="form-b">
 <div class='row'>	
-	<div class='col-md-4 col-lg-3'>
+	<div class='col-md-4 col-lg-2'>
 	<div class='form-group'> 
 			<input hidden class='data-sending' id='detail_id' name="id" value=''>
 			<input hidden class='data-sending' id='uang_keluar_id' name="uang_keluar_id" value='<?php if(isset($uang_keluar_id))echo $uang_keluar_id?>'>
-			<input hidden class='data-sending' id='kategori_selisih_id' name="kategori_selisih_id" value='0'>
 			<label class='form-label'>JENIS_UANG</label> 
 			<?php 
 					echo create_cmb_database(array(	'id'			=>'jenis_uang_id',
@@ -140,35 +144,67 @@
 													'primary_key'	=>'id', 
 													'selected'		=>'',
 													'field_link'	=>'',
-													'class'			=>'custom-select data-sending')); 
+													'class'			=>'custom-select-link data-sending')); 
 			?> 
 	</div>
 	</div>	
 
-	<div class='col-md-4 col-lg-3'>
+	<div class='col-md-4 col-lg-2'>
 	<div class='form-group'> 
 			<label class='form-label'>PECAHAN</label> 
 			<?php
 					echo create_cmb_database(array(	'id'			=>'pecahan_id',
 													'name'			=>'pecahan_id',
-													'table'			=>'app_pecahan',
+													'table'			=>'select_pecahan_view',
 													'field_show'	=>'pecahan',
 													'primary_key'	=>'id', 
 													'selected'		=>'',
-													'field_link'	=>'',
-													'class'			=>'custom-select data-sending')); 
+													'field_link'	=>'jenis_uang_id',
+													'class'			=>'custom-select-link data-sending')); 
 			?> 
 	</div>
 	</div>
 
-	<div class='col-md-4 col-lg-3'>
+	<div class='col-md-4 col-lg-2'>
+	<div class='form-group'>
+			<label class='form-label'>EMISI</label> 
+			<?php 
+					echo create_cmb_database(array(	'id'			=>'emisi_id',
+													'name'			=>'emisi_id',
+													'table'			=>'select_emisi_view',
+													'field_show'	=>'emisi',
+													'primary_key'	=>'id', 
+													'selected'		=>'',
+													'field_link'	=>'pecahan_id',
+													'class'			=>'custom-select-link data-sending')); 
+			?>
+	</div>
+	</div>
+
+	<div class='col-md-4 col-lg-2'>
+	<div class='form-group'>
+			<label class='form-label'>KONDISI</label> 
+			<?php
+					echo create_cmb_database(array(	'id'			=>'kondisi_id',
+													'name'			=>'kondisi_id',
+													'table'			=>'app_kondisi',
+													'field_show'	=>'kondisi',
+													'primary_key'	=>'id', 
+													'selected'		=>'',
+													'field_link'	=>'',
+													'class'			=>'custom-select data-sending')); 
+			?>
+	</div>
+	</div>
+
+	<div class='col-md-4 col-lg-2'>
 	<div class='form-group'>
 			<label class='form-label'>JUMLAH (Rp)</label>
 			<input type='text' class='form-control data-sending focus-color ybs-input-number' id='jumlah' name='jumlah' placeholder='<?php echo $title->general->desc_required ?>' value='' autocomplete='off'>
 	</div>
 	</div>
 
-	<div class='col-md-4 col-lg-3'>
+	<div class='col-md-4 col-lg-2'>
 	<div class='form-group'>
 	<label class='form-label'><br/></label>
 	<div class="btn-group pull-right" role="group">
@@ -192,6 +228,8 @@
 			<th>ID</th>	
 			<th>JENIS_UANG</th>
 			<th>PECAHAN</th>
+			<th>EMISI</th>
+			<th>KONDISI</th>
 			<th>JUMLAH</th>
 			<th>USER_INPUT</th>
 			<th>INPUT_TIME</th>
@@ -205,6 +243,8 @@
 
 		<tfoot align="right">
 			<tr>
+				<th></th>
+				<th></th>
 				<th></th>
 				<th></th>
 				<th></th>
@@ -298,6 +338,8 @@
 <?php echo card_close()?>
 
 <?php echo _js('ybs,selectize,mommentjs,datepicker,datetimepicker,datatables,icheck')?>
+<script src=" <?= base_url('node_modules/socket.io/client-dist/socket.io.js') ?>"></script>
+<script src=" <?= base_url('assets/js/ws.js') ?>"></script>
 
 <script>var page_version="1.0.8"</script>
 
@@ -317,6 +359,8 @@ var action_link_tas=link_add_tas;
 
 var link_refresh='<?php echo $link_refresh_table;?>';
 var link_refresh_tas='<?php echo $link_refresh_table_tas;?>';
+
+var updated=false;
 
 $(document).ready(function(){
 	<?php
@@ -354,7 +398,8 @@ $(document).ready(function(){
 	?>
 
 	linkToSelectize('bank_id','cabang_id');
-
+	linkToSelectize('jenis_uang_id','pecahan_id');
+	linkToSelectize('pecahan_id','emisi_id');
 	$('.timepicker').datetimepicker({
 		format: 'HH:mm'        
 	});	
@@ -558,6 +603,15 @@ function reset_form_detail(){
 	var $select2 = $("#pecahan_id").selectize();
 	var selectize2 = $select2[0].selectize;
 	selectize2.clear();
+
+	var $select3 = $("#emisi_id").selectize();
+	var selectize3 = $select2[0].selectize;
+	selectize2.clear();
+
+	var $select3 = $("#kondisi_id").selectize();
+	var selectize3 = $select2[0].selectize;
+	selectize2.clear();
+
 	$("#jumlah").val('');
 
 	$('#btn-save-detail').html('Tambah');
@@ -565,27 +619,27 @@ function reset_form_detail(){
 	action_link=link_add;
 }
 
-function getEdit(id,jenis_uang_id,pecahan_id,jumlah){	
+// function getEdit(id,jenis_uang_id,pecahan_id,jumlah){	
 	
-	$('#detail_id').val(id);
+// 	$('#detail_id').val(id);
 
-	$('#jumlah').val(numberFormat(jumlah));	
-	
-
-	var $select = $("#jenis_uang_id").selectize();
-	var selectize = $select[0].selectize;
-
-	selectize.setValue(jenis_uang_id,false); 
+// 	$('#jumlah').val(numberFormat(jumlah));	
 	
 
-	var $select2 = $("#pecahan_id").selectize();
-	var selectize2 = $select2[0].selectize;
-	selectize2.setValue(pecahan_id,false); 
+// 	var $select = $("#jenis_uang_id").selectize();
+// 	var selectize = $select[0].selectize;
 
-	$('#btn-save-detail').html('Update');
+// 	selectize.setValue(jenis_uang_id,false); 
+	
 
-	action_link=link_update;
-}
+// 	var $select2 = $("#pecahan_id").selectize();
+// 	var selectize2 = $select2[0].selectize;
+// 	selectize2.setValue(pecahan_id,false); 
+
+// 	$('#btn-save-detail').html('Update');
+
+// 	action_link=link_update;
+// }
 
 function reset_form_detail_tas(){	
 	$("#no_segel").val('');
@@ -696,7 +750,7 @@ table_detail = $('#table-detail').dataTable({
 														if ( type === 'display' ) {
 															var konfirm='';
 															var btn_group='';
-															btn_group = btn_group + '<button type="button" class="btn btn-default text-red btn-sm " title="update" onclick=\' getEdit('+row.id+','+row.jenis_uang_id+','+row.pecahan_id+','+row.jumlah+') \'><i class="fa fa-edit"></i></button>'; 
+															//btn_group = btn_group + '<button type="button" class="btn btn-default text-red btn-sm " title="update" onclick=\' getEdit('+row.id+','+row.jenis_uang_id+','+row.pecahan_id+','+row.jumlah+') \'><i class="fa fa-edit"></i></button>'; 
 															btn_group = btn_group + '<button type="button" class="btn btn-default text-red btn-sm"  id="btn_pre_delete" onclick=\' ybsDeleteTable("'+row.id+"-"+konfirm+'","<?php echo $link_delete ?>","#table-detail") \'  ><i class="fa fa-trash-o"></i></button></small>';
 															return btn_group;
 														}	
@@ -709,6 +763,8 @@ table_detail = $('#table-detail').dataTable({
 		// },
 											{data:"jenis_uang" ,},
 											{data:"pecahan" ,render: $.fn.dataTable.render.number( ',', '.', 2, '' ),},
+											{data:"emisi" ,},
+											{data:"kondisi" ,},
 											{data:"jumlah" ,render: $.fn.dataTable.render.number( ',', '.', 2, '' ),},
 											{data:"nama_lengkap" ,},
 											{data:"input_time" ,},
@@ -771,7 +827,7 @@ table_detail = $('#table-detail').dataTable({
 							
 										// computing column Total of the complete result 
 										var Total = api
-											.column(5)
+											.column(7)
 											.data()
 											.reduce( function (a, b) {
 												return intVal(a) + intVal(b);
@@ -780,7 +836,7 @@ table_detail = $('#table-detail').dataTable({
 											
 										// Update footer by showing the total with the reference of the column index 
 									$( api.column(0).footer() ).html('Total');
-										$( api.column(5).footer() ).html(numberFormat(Total)+".00");           
+										$( api.column(7).footer() ).html(numberFormat(Total)+".00");           
 									},
 				dom					: 'Blfrtip',
 				
@@ -818,11 +874,17 @@ table_detail = $('#table-detail').dataTable({
 				ordering			: 	true,
 				info				: 	true,
 				autoWidth			: 	false,
-				responsive			: 	resp_table,
+				responsive			: 	false,
 				orderCellsTop		:   true,
 
 			});	
 			refresh_table_tas();
+			if(updated){
+				update_data($('#bank_id').val());
+			}
+			else{
+				updated=true;
+			}
 }
 </script>
 

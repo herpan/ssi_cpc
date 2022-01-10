@@ -115,13 +115,13 @@ class Uang_keluar extends CI_Controller {
 		}
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['tanggal_penerimaan'],'#tanggal_penerimaan')){
+		if(!$o->not_empty($val['tanggal_pengiriman'],'#tanggal_pengiriman')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['waktu_tiba'],'#waktu_tiba')){
+		if(!$o->not_empty($val['waktu_kirim'],'#waktu_kirim')){
 			echo $o->result();	
 			return;
 		}
@@ -240,13 +240,13 @@ class Uang_keluar extends CI_Controller {
 		$val['sentra_kas_id']= $cb->sentra_kas_id;
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['tanggal_penerimaan'],'#tanggal_penerimaan')){
+		if(!$o->not_empty($val['tanggal_pengiriman'],'#tanggal_pengiriman')){
 			echo $o->result();	
 			return;
 		}
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['waktu_tiba'],'#waktu_tiba')){
+		if(!$o->not_empty($val['waktu_kirim'],'#waktu_kirim')){
 			echo $o->result();	
 			return;
 		}

@@ -31,31 +31,83 @@ class Home extends CI_Controller {
 
   public function load_dashboard(){
 
-      $bank_id=$this->input->post('bank_id');
-      $tanggal_pencatatan=$this->input->post('tanggal_pencatatan');
-      $kondisi=$this->uang_masuk->get_dashboard($bank_id,$tanggal_pencatatan);  
-      
-      if($kondisi){
-          foreach($kondisi as $row) { 
-              @$jml_jenis[$row->jenis_uang]++;
-              @$jml_pecahan[$row->jenis_uang.$row->pecahan]++; 
-              @$jml[$row->jenis_uang.$row->pecahan]+=$row->GRESS_BI+$row->RECYCLE_BI+$row->DROPSHOT+$row->ULE+$row->UTLE+$row->MINOR+$row->MAYOR;      
-          } 
-          
-          $data['jml_jenis']=@$jml_jenis;
-          $data['jml_pecahan']=@$jml_pecahan;
-          $data['jml']=@$jml;
-          $data['kondisi']=$kondisi;
-          $this->load->view('Dashboard/Dashboard_container',$data);
+      if($this->_user_bank_id!==NULL){        
+        $bank_id=$this->_user_bank_id;
       }else{
-          //echo $this->db->last_query();         
-          echo ' 
-          <div class="alert alert-danger my-4" role="alert">
-              <h4 class="alert-title">Informasi</h4>
-              <div class="text-muted">Belum ada data untuk tanggal '.$tanggal_pencatatan.'</div>
-          </div>                    
-          ';           
-      }      
-     
+        $bank_id=$this->input->post('bank_id')=='' ? NULL : $this->input->post('bank_id');
+      }
+
+      $tanggal_pencatatan=$this->input->post('tanggal_pencatatan');
+
+      $kondisi=$this->uang_masuk->get_dashboard($tanggal_pencatatan,$bank_id);
+      $belum=$this->uang_masuk->get_belum($tanggal_pencatatan,$bank_id); 
+
+   
+
+           
+    //   if($kondisi){
+          $sub_total['KERTAS']=0;
+          $sub_total['KERTASGRESS_BI']=0;
+          $sub_total['KERTASRECYCLE_BI']=0;
+          $sub_total['KERTASDROPSHOT']=0;
+          $sub_total['KERTASULE']=0;
+          $sub_total['KERTASUTLE']=0;
+          $sub_total['KERTASMINOR']=0;
+          $sub_total['KERTASMAYOR']=0;
+
+          $sub_total['LOGAM']=0;
+          $sub_total['LOGAMGRESS_BI']=0;
+          $sub_total['LOGAMRECYCLE_BI']=0;
+          $sub_total['LOGAMDROPSHOT']=0;
+          $sub_total['LOGAMULE']=0;
+          $sub_total['LOGAMUTLE']=0;
+          $sub_total['LOGAMMINOR']=0;
+          $sub_total['LOGAMMAYOR']=0;
+
+          foreach($kondisi as $row) { 
+
+            @$jml[$row->jenis_uang.$row->pecahan]+=$row->GRESS_BI+$row->RECYCLE_BI+$row->DROPSHOT+$row->ULE+$row->UTLE+$row->MINOR+$row->MAYOR+$row->jumlah_campur;      
+            
+            $sub_total[$row->jenis_uang]+=$row->GRESS_BI+$row->RECYCLE_BI+$row->DROPSHOT+$row->ULE+$row->UTLE+$row->MINOR+$row->MAYOR+$row->jumlah_campur;
+            
+            $sub_total[$row->jenis_uang.'GRESS_BI']+=$row->GRESS_BI;
+            $sub_total[$row->jenis_uang.'RECYCLE_BI']+=$row->RECYCLE_BI;
+            $sub_total[$row->jenis_uang.'DROPSHOT']+=$row->DROPSHOT;
+            $sub_total[$row->jenis_uang.'ULE']+=$row->ULE;
+            $sub_total[$row->jenis_uang.'UTLE']+=$row->UTLE;
+            $sub_total[$row->jenis_uang.'MINOR']+=$row->MINOR;
+            $sub_total[$row->jenis_uang.'MAYOR']+=$row->MAYOR;
+              
+            $data['GRESS_BI'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$row->GRESS_BI;         
+            $data['RECYCLE_BI'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$row->RECYCLE_BI;
+            $data['DROPSHOT'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$row->DROPSHOT;
+            $data['ULE'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$row->ULE;
+            $data['UTLE'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$row->UTLE;
+            $data['MINOR'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$row->MINOR;
+            $data['MAYOR'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$row->MAYOR;                    
+           
+
+            
+          }
+
+                    
+
+        foreach($belum as $row2){
+            @$belum[$row2->jenis_uang.$row2->pecahan]=$row2->jumlah_belum;
+
+            @$lembarbelum[$row2->jenis_uang.$row2->pecahan]=$row2->jumlah_belum/$row2->pecahan;
+
+            @$belum[$row2->jenis_uang]+=$row2->jumlah_belum;
+            @$lembarbelum[$row2->jenis_uang]+=$lembarbelum[$row2->jenis_uang.$row2->pecahan];
+        }
+
+          $data['jml']=@$jml;
+          $data['sub_total']=$sub_total;
+          $data['belum']=@$belum;
+          $data['lembarbelum']=@$lembarbelum;
+
+         
+      $this->load->view('Dashboard/Dashboard_container',$data);
+    
   }
 }

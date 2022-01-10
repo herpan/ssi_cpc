@@ -74,6 +74,7 @@ class CI_Controller {
 	public $_methode_register_name;
 	public $_user_full_name;
 	public $_user_sentra_ids;
+	public $_user_bank_id;
 	
 	
 	
@@ -135,6 +136,7 @@ class CI_Controller {
 					$this->_separator_a			=   "53d25_52e22";
 					$this->_user_full_name 		= 	$data_user[0]['nama_lengkap'];
 					$this->_user_sentra_ids 	= 	$data_user[0]['sentra_kas'];
+					$this->_user_bank_id 		= 	$data_user[0]['bank_id'];
 				}else{
 					$this->session->set_flashdata('auth_login','Opps..max 1 login per user, anda telah login pada perangkat yang lain');
 					$this->session->unset_userdata('token');

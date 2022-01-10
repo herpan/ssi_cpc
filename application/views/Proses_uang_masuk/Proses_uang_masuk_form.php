@@ -142,24 +142,33 @@
 
 <?php echo card_open('Detail proses uang masuk','bg-teal',true)?>
 <form id="form-b">
-<div class='row'>	
+<div class='row'>
 	<div class='col-md-2 col-lg-2'>
 	<div class='form-group'> 
 			<input hidden class='data-sending' id='proses_id' name="id" value=''>
 			<input hidden class='data-sending' id='uang_masuk_detail_id' name="uang_masuk_detail_id" value=''>
-			<!-- <input hidden class='data-sending' id='jenis_uang_id' name="jenis_uang_id" value=''> -->
-			<input hidden class='data-sending' id='pecahan_id' name="pecahan_id" value=''>
+			<input hidden class='data-sending' id='pecahan_id' name="pecahan_id" value=''>			
 			<input hidden class='data-sending' id='jumlah_old' name="jumlah_old" value=''>			
 			<label class='form-label'>EMISI</label> 
+			<?php
+					echo create_cmb_database(array(	'id'			=>'jenis_pecahan_id',
+													'name'			=>'jenis_pecahan_id',
+													'table'			=>'select_pecahan_view',
+													'field_show'	=>'pecahan',
+													'primary_key'	=>'jenis_pecahan_id', 
+													'selected'		=>'',
+													'field_link'	=>'',
+													'class'			=>'custom-select-link d-none')); 
+			?>
 			<?php 
 					echo create_cmb_database(array(	'id'			=>'emisi_id',
 													'name'			=>'emisi_id',
-													'table'			=>'app_emisi',
+													'table'			=>'select_emisi_view',
 													'field_show'	=>'emisi',
 													'primary_key'	=>'id', 
 													'selected'		=>'',
-													'field_link'	=>'',
-													'class'			=>'custom-select data-sending')); 
+													'field_link'	=>'jenis_pecahan_id',
+													'class'			=>'custom-select-link data-sending')); 
 			?>
 	</div>
 	</div>	
@@ -389,7 +398,7 @@
 													'primary_key'	=>'id', 
 													'selected'		=>'',
 													'field_link'	=>'',
-													'class'			=>'custom-select data-sending')); 
+													'class'			=>'custom-select-link data-sending')); 
 			?> 
 	</div>
 	</div>	
@@ -400,12 +409,12 @@
 			<?php
 					echo create_cmb_database(array(	'id'			=>'pecahan_id2',
 													'name'			=>'pecahan_id',
-													'table'			=>'app_pecahan',
+													'table'			=>'select_pecahan_view',
 													'field_show'	=>'pecahan',
 													'primary_key'	=>'id', 
 													'selected'		=>'',
-													'field_link'	=>'',
-													'class'			=>'custom-select data-sending')); 
+													'field_link'	=>'jenis_uang_id',
+													'class'			=>'custom-select-link data-sending')); 
 			?> 
 	</div>
 	</div>
@@ -554,6 +563,9 @@
 
 <?php echo _js('ybs,selectize,mommentjs,datepicker,datetimepicker,datatables,icheck')?>
 
+<script src=" <?= base_url('node_modules/socket.io/client-dist/socket.io.js') ?>"></script>
+<script src=" <?= base_url('assets/js/ws.js') ?>"></script>
+
 <script>var page_version="1.0.8"</script>
 
 <script> 
@@ -569,6 +581,9 @@ var action_link_penjelasan='<?php echo $action_link_penjelasan;?>';
 var link_refresh_selisih='<?php echo $link_refresh_selisih;?>';
 var link_refresh_penjelasan='<?php echo $link_refresh_penjelasan;?>';
 
+var bank_id='<?php echo $data->bank_id?>';
+
+var updated=false;
 
 
 $(document).ready(function(){
@@ -605,6 +620,10 @@ $(document).ready(function(){
 	|
 	*/
 	?>
+
+	linkToSelectize('jenis_pecahan_id','emisi_id');
+
+	linkToSelectize('jenis_uang_id','pecahan_id2');
 
 	$('.timepicker').datetimepicker({
 		format: 'HH:mm'        
@@ -837,7 +856,14 @@ table_detail = $('#table-detail').dataTable({
 			});
 			refresh_table_proses();
 			refresh_table_selisih();	
-			refresh_table_penjelasan();			
+			refresh_table_penjelasan();	
+			if(updated){
+				update_data(bank_id);
+			}
+			else{
+				updated=true;
+			}
+				
 }
 
 function getProses(id,jenis,pecahan,jumlah){
@@ -845,6 +871,9 @@ function getProses(id,jenis,pecahan,jumlah){
 		$('#uang_masuk_detail_id').val(id);
 		$('#jenis_uang_id').val(jenis);
 		$('#pecahan_id').val(pecahan);
+		var $select = $("#jenis_pecahan_id").selectize();
+		var selectize = $select[0].selectize;
+		selectize.setValue(jenis+''+pecahan,false); 
 		$('#jumlah').val(numberFormat(jumlah));
 		$('#jumlah').focus();
 	}else{
@@ -888,7 +917,7 @@ function resetProses(){
 	action_link='<?php echo $link_save_proses;?>';
 }
 
-function getEdit(id,uang_masuk_detail_id,emisi_id,kondisi_id,jumlah,pecahan_id){	
+function getEdit(id,uang_masuk_detail_id,emisi_id,kondisi_id,jumlah,pecahan_id,jenis_uang_id){	
 	
 	$('#proses_id').val(id);
 
@@ -898,6 +927,11 @@ function getEdit(id,uang_masuk_detail_id,emisi_id,kondisi_id,jumlah,pecahan_id){
 
 	$("#jumlah_old").val(jumlah);	
 	$("#pecahan_id").val(pecahan_id);
+
+	var $select2 = $("#jenis_pecahan_id").selectize();
+	var selectize2 = $select2[0].selectize;
+
+	selectize2.setValue(jenis_uang_id+''+pecahan_id,false);
 
 	var $select = $("#emisi_id").selectize();
 	var selectize = $select[0].selectize;
@@ -1042,7 +1076,7 @@ function refresh_table_proses(value_search){
 														if ( type === 'display' ) {
 															var konfirm='';
 															var btn_group='';
-															btn_group = btn_group + '<button type="button" class="btn btn-default text-red btn-sm " title="update" onclick=\' getEdit('+row.id+','+row.uang_masuk_detail_id+','+row.emisi_id+','+row.kondisi_id+','+row.jumlah+','+row.pecahan_id+') \'><i class="fa fa-edit"></i></button>'; 
+															btn_group = btn_group + '<button type="button" class="btn btn-default text-red btn-sm " title="update" onclick=\' getEdit('+row.id+','+row.uang_masuk_detail_id+','+row.emisi_id+','+row.kondisi_id+','+row.jumlah+','+row.pecahan_id+','+row.jenis_uang_id+') \'><i class="fa fa-edit"></i></button>'; 
 															btn_group = btn_group + '<button type="button" class="btn btn-default text-red btn-sm"  id="btn_pre_delete" onclick=\' ybsDeleteTable("'+row.id+"-"+konfirm+'","<?php echo $link_delete_proses ?>","#table-detail") \'  ><i class="fa fa-trash-o"></i></button></small>';
 															return btn_group;
 														}	
