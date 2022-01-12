@@ -30,9 +30,10 @@
         ?>
         <span class='input-group-text'><i class="fa fa-calendar"></i></span>       
         <input readonly type='text' class='form-control data-sending input-simple-date' placeholder='Pilih tanggal' id='tanggal_pencatatan' value='<?php echo date('Y-m-d')?>'>
-       
+            &nbsp;
             <span class='input-group-button'><button id='btn-apply' type='button' class='btn btn-primary' onclick="load_dashboard(true)"><i class='fe fe-check'></i> Filter</button></span>
-    
+            &nbsp;
+            <span class='input-group-button'><button id='btn-apply' type='button' class='btn btn-primary' onclick="fnExcelReport('dashboard-kondisi')"><i class='fe fe-download'></i> xsl</button></span>
         </div>
 
         </td>
@@ -45,6 +46,7 @@
 </div>
 <div id="dashboard-container" class="col-md-12 col-xl-12">      
 </div>
+<iframe id="txtArea1" style="display:none"></iframe>
 
 <?php echo _js('ybs,datatables,chartjs,datepicker')?>
 
@@ -53,7 +55,7 @@
 
 <script>
 
-let bank_id="";
+let bank_id='';
 
 $(window).on("load", function() {    
     $('#content-body').addClass("fadeIn");    
@@ -71,16 +73,11 @@ $(document).ready(function(){
    //Realtime Update Dashboard
    socket.on('new_update', function(data) {   
         let to_bank = data.to_bank;      
-        if ((to_bank==bank_id) || (bank_id=="")) {   
+        if ((parseInt(to_bank)==parseInt(bank_id)) || (bank_id=="")) {   
             load_dashboard(); 
             show_success_message("Data telah di update");            
         }
     }); 
-
-    $('.toast-message').click(function(){
-        alert(1);
-        $('#toast-container').fadeOut();
-    });
 });
 
 function load_dashboard(clear=false){

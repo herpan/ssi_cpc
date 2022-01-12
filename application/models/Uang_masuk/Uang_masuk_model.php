@@ -589,24 +589,37 @@ class Uang_masuk_model extends CI_Model {
 		return $this->db->query($q)->result();
 	}
 
-	public function get_mutasi(){
+	public function get_mutasi($dari=null,$sampai=null,$bank_id=null){
 
 		$bank='';
 		$sentra='';
 		$sentra2='';
+		$dari1='';
+		$dari2='';
+		$sampai1='';
+		$sampai2='';
 
 		if($this->_user_bank_id!==NULL){			
-			$bank='WHERE app_cabang_cpc.bank_id='.$this->_user_bank_id;
+				$bank=' AND app_cabang_cpc.bank_id='.$this->_user_bank_id;
+		}else{
+			if($bank_id!==null){
+				$bank=' AND app_cabang_cpc.bank_id='.$bank_id;	
+			}
 		}
 
-		if($this->_user_sentra_ids!==NULL){
-			if($bank==''){
-				$sentra='WHERE app_uang_masuk.sentra_kas_id IN('.$this->_user_sentra_ids.')';
-				$sentra2='WHERE app_uang_keluar.sentra_kas_id IN('.$this->_user_sentra_ids.')';
-			}else{
-				$sentra=' AND app_uang_masuk.sentra_kas_id IN('.$this->_user_sentra_ids.')';
-				$sentra2=' AND app_uang_keluar.sentra_kas_id IN('.$this->_user_sentra_ids.')';	
-			}			 			
+		if($dari!==null){
+			$dari1=" AND app_uang_masuk_detail.input_time >='$dari'";
+			$dari2=" AND app_uang_keluar.input_time >='$dari'";
+		}
+
+		if($sampai!==null){
+			$sampai1=" AND app_uang_masuk_detail.input_time <='$sampai'";
+			$sampai2=" AND app_uang_keluar.input_time <='$sampai'";
+		}
+
+		if($this->_user_sentra_ids!==NULL){			
+			$sentra=' AND app_uang_masuk.sentra_kas_id IN('.$this->_user_sentra_ids.')';
+			$sentra2=' AND app_uang_keluar.sentra_kas_id IN('.$this->_user_sentra_ids.')';						 			
 		}
 
 		$q="SELECT
@@ -633,7 +646,10 @@ class Uang_masuk_model extends CI_Model {
 		FROM app_uang_masuk_detail
 		INNER JOIN app_uang_masuk on app_uang_masuk_detail.uang_masuk_id=app_uang_masuk.id
         INNER JOIN app_cabang_cpc on app_uang_masuk.cabang_id=app_cabang_cpc.id
+		WHERE 1
 		".$bank."
+		".$dari1."
+		".$sampai1."
 		".$sentra."
 		UNION
 		SELECT 
@@ -650,7 +666,10 @@ class Uang_masuk_model extends CI_Model {
 		FROM app_uang_keluar_detail
 		INNER JOIN app_uang_keluar on app_uang_keluar_detail.uang_keluar_id=app_uang_keluar.id
         INNER JOIN app_cabang_cpc on app_uang_keluar.cabang_id=app_cabang_cpc.id
-		".$bank."
+		WHERE 1
+		".$bank."		
+		".$dari2."
+		".$sampai2."
 		".$sentra2."
 		GROUP BY 
 		app_uang_keluar.no,
@@ -664,23 +683,29 @@ class Uang_masuk_model extends CI_Model {
 		ORDER BY mutasi.input_time DESC";
 		return $this->db->query($q)->result();
 	}
-	public function get_saldo(){
+	public function get_saldo($sampai=null,$bank_id=null){
 		$bank='';
 		$sentra='';
 		$sentra2='';
+		$sampai1='';
+		$sampai2='';
 
 		if($this->_user_bank_id!==NULL){			
-			$bank='WHERE app_cabang_cpc.bank_id='.$this->_user_bank_id;
+			$bank=' AND app_cabang_cpc.bank_id='.$this->_user_bank_id;
+		}else{
+			if($bank_id!==null){
+				$bank=' AND app_cabang_cpc.bank_id='.$bank_id;	
+			}
 		}
 
-		if($this->_user_sentra_ids!==NULL){
-			if($bank==''){
-				$sentra='WHERE app_uang_masuk.sentra_kas_id IN('.$this->_user_sentra_ids.')';
-				$sentra2='WHERE app_uang_keluar.sentra_kas_id IN('.$this->_user_sentra_ids.')';
-			}else{
-				$sentra=' AND app_uang_masuk.sentra_kas_id IN('.$this->_user_sentra_ids.')';
-				$sentra2=' AND app_uang_keluar.sentra_kas_id IN('.$this->_user_sentra_ids.')';	
-			}			 			
+		if($sampai!==null){
+			$sampai1=" AND app_uang_masuk_detail.input_time <='$sampai'";
+			$sampai2=" AND app_uang_keluar.input_time <='$sampai'";
+		}
+
+		if($this->_user_sentra_ids!==NULL){			
+			$sentra=' AND app_uang_masuk.sentra_kas_id IN('.$this->_user_sentra_ids.')';
+			$sentra2=' AND app_uang_keluar.sentra_kas_id IN('.$this->_user_sentra_ids.')';						 			
 		}
 
 		$q="SELECT SUM(jumlah) AS saldo FROM(SELECT 
@@ -688,7 +713,9 @@ class Uang_masuk_model extends CI_Model {
 		FROM app_uang_masuk_detail
 		INNER JOIN app_uang_masuk on app_uang_masuk_detail.uang_masuk_id=app_uang_masuk.id
         INNER JOIN app_cabang_cpc on app_uang_masuk.cabang_id=app_cabang_cpc.id
+		WHERE 1
 		".$bank."
+		".$sampai1."
 		".$sentra."	
 		UNION
 		SELECT 	
@@ -696,7 +723,9 @@ class Uang_masuk_model extends CI_Model {
 		FROM app_uang_keluar_detail
 		INNER JOIN app_uang_keluar on app_uang_keluar_detail.uang_keluar_id=app_uang_keluar.id
         INNER JOIN app_cabang_cpc on app_uang_keluar.cabang_id=app_cabang_cpc.id
+		WHERE 1
 		".$bank."
+		".$sampai2."
 		".$sentra2."
 		) AS Mutasi";		
 		return $this->db->query($q)->row();

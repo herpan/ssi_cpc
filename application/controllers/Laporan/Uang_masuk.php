@@ -69,17 +69,25 @@ class Uang_masuk extends CI_Controller {
 	public function mutasi(){
 		$row=$this->tmodel->get_mutasi();
 		$saldo=$this->tmodel->get_saldo();
-		//echo json_encode($data);
-
-	
+		$data = array(
+			'title_page_big'		=> 'LAPORAN MUTASI',
+			'title'					=> $this->title,			
+		);			
+		$this->template->load('Laporan/Mutasi',$data);	
+	}
+	public function load_mutasi(){
+		$bank_id=$this->input->post('bank_id')=='' ? NULL : $this->input->post('bank_id');
+		$dari=$this->input->post('dari');
+		$sampai=$this->input->post('sampai')." 23:59:59";
+		$row=$this->tmodel->get_mutasi($dari,$sampai,$bank_id);
+		$saldo=$this->tmodel->get_saldo($sampai,$bank_id);
 		$data = array(
 			'title_page_big'		=> 'LAPORAN MUTASI',
 			'title'					=> $this->title,
 			'mutasi'				=> $row,
 			'saldo'					=> $saldo->saldo,
-		);			
-		$this->template->load('Laporan/Mutasi',$data);
-	
+		);
+		$this->load->view('Laporan/Mutasi_content',$data);		
 	}
 };
 

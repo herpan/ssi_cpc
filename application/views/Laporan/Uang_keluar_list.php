@@ -44,9 +44,13 @@
 
 <?php echo _js('datatables,icheck')?>
 
+<script src=" <?= base_url('node_modules/socket.io/client-dist/socket.io.js') ?>"></script>
+<script src=" <?= base_url('assets/js/ws.js') ?>"></script>
+
 <script>var page_version="1.0.8"</script>
 
 <script>
+let bank_id='<?php echo $this->_user_bank_id ?>';
 var resp_table=true;
 var table_detail;
 $(document).ready(function(){
@@ -56,6 +60,15 @@ $(document).ready(function(){
 	
 	$('#hscroll-table').change(function(){
 		set_scroll_table();
+	});
+
+	//Realtime Update Mutasi
+	socket.on('new_update', function(data) {   
+		let to_bank = data.to_bank;      
+		if ((parseInt(to_bank)==parseInt(bank_id)) || (bank_id=="")) {    
+			set_scroll_table(); 
+			show_success_message("Data telah di update");            
+		}
 	});
 	
 });
