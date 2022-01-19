@@ -9,7 +9,7 @@
 /**
  * Description of SerialGen
  *
- * @author Dhiya
+ * @author Herpan
  */
 class YBS_Controller extends CI_Controller {
 

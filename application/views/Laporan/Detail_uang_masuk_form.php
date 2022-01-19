@@ -297,7 +297,7 @@
             <tr >
 			<th class="nst">No</th>		
 				<th>JENIS_UANG</th>
-				<th>PECAHAN</th>
+				<th>PECAHANNs</th>
 				<th>NAMA_SELISIH</th>
 				<th>JUMLAH</th>
 				<th>USER_INPUT</th>
@@ -807,12 +807,11 @@ table_detail_selisih = $('#table-detail-selisih').dataTable({
 				
 				
 				columnDefs			:	[ 
-																						{"searchable": false,"orderable": false,"targets": 0, "className":"dt-center"} ,
-								
-																						{"searchable": false,"orderable": false,"targets": 1} ,
+										{"searchable": false,"orderable": false,"targets": 0, "className":"dt-center"} ,
 
-																						{"searchable": false,"orderable": false,"targets": 2} ,
-																						{"searchable": false,"orderable": false,"visible": false,"targets": 3} ,
+										{"searchable": false,"orderable": false,"targets": 1} ,
+
+										{"searchable": false,"orderable": false,"targets": 2} ,																					
 							
 										],
 							

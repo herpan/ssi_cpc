@@ -7,7 +7,7 @@ const httpServer = require("https").createServer({
 const port = 8080;
 const io = require("socket.io")(httpServer, {
         cors: { 
-        origin: "https://nitro.ssilink.co.id",
+        origin: "https://103.81.194.212",
             methods: ["GET", "POST"], 
             allowedHeaders: ["xDPEAOEEssANz4gFAAAB"],
             credentials: true 
@@ -15,21 +15,21 @@ const io = require("socket.io")(httpServer, {
     });
 
 io.on('connection', (socket) => {
-    console.log('a user connected '+socket.id);
+    console.log('a user connected ' + socket.id);
     socket.on('disconnect', () => {
         console.log('user disconnected ' + socket.id);
     });
-    socket.on('chat message', (msg) => { 
-        console.log('message: ' + msg); 
+    socket.on('chat message', (msg) => {
+        console.log('message: ' + msg);
         io.emit('chat message', msg);
     });
-    
-    socket.on('new_message', function (data) {
-        io.sockets.emit('new_message', {
-            to_user: data.to_user,            
+
+    socket.on('new_update', function (data) {
+        io.sockets.emit('new_update', {
+            to_bank: data.to_bank,
         });
-    });    
+    });
 
 });
 
-httpServer.listen(8080);
+httpServer.listen(3000);

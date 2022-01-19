@@ -4,7 +4,7 @@
 /*	( CONFIG INI DI UBAH MELALUI MENU SYSTEM )	*/
 /*##############################################*/
 
-$config['author']='Dhiya As Sayyaf';
+$config['author']='Herpan As Sayyaf';
 $config['version']='1.0.8';
 $config['email']='bridgin.system@gmail.com';
 $config['domain']='';

@@ -9,7 +9,7 @@
 /**
  * Description of Authorization
  *
- * @author Dhiya
+ * @author Herpan
  */
 class Authorization extends CI_Model {
     public $table_auth = 'sys_authorized';

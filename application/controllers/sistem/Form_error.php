@@ -9,7 +9,7 @@
 /**
  * Description of Form_General
  *
- * @author Dhiya
+ * @author Herpan
  */
 class Form_error extends CI_Controller {
 

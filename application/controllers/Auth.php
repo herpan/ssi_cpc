@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Description of LoginHome
  *
- * @Author Dhiya
+ * @Author Herpan
  */
 
 class Auth extends YBS_Controller {

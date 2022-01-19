@@ -345,6 +345,8 @@ class Uang_keluar_detail_model extends CI_Model {
 	}
 
 	function delete_multiple($data){
+
+		
 		/* transaction rollback */
 		$this->db->trans_start();
 		
@@ -373,7 +375,7 @@ class Uang_keluar_detail_model extends CI_Model {
 		$this->db->join('app_uang_masuk_detail','app_uang_masuk_detail.id=app_journal_proses.uang_masuk_detail_id','LEFT');
 		$this->db->join('app_uang_masuk','app_uang_masuk.id=app_uang_masuk_detail.uang_masuk_id','LEFT');
 		$this->db->join('app_cabang_cpc','app_cabang_cpc.id=app_uang_masuk.cabang_id','LEFT');
-		$this->db->group_by('app_uang_masuk.id');
+		//$this->db->group_by('app_uang_masuk.id');
 
 		$this->db->where('app_uang_masuk.sentra_kas_id',$sentra_kas_id);
 
@@ -382,7 +384,7 @@ class Uang_keluar_detail_model extends CI_Model {
 		$this->db->select('sum(app_uang_keluar_detail.jumlah) as jumlah');
 		$this->db->join('app_uang_keluar','app_uang_keluar.id=app_uang_keluar_detail.uang_keluar_id','LEFT');
 		$this->db->join('app_cabang_cpc','app_cabang_cpc.id=app_uang_keluar.cabang_id','LEFT');
-		$this->db->group_by('app_uang_keluar.id');
+		//$this->db->group_by('app_uang_keluar.id');
 
 		$this->db->where('app_uang_keluar.sentra_kas_id',$sentra_kas_id);
 

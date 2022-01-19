@@ -1,4 +1,4 @@
-const socket = io("https://nitro.ssilink.co.id:8080", {
+const socket = io("https://103.81.194.212", {
     withCredentials: true, 
     extraHeaders: { "xDPEAOEEssANz4gFAAAB": "UlCKearSRj0DgEfIAAAB" }
 });

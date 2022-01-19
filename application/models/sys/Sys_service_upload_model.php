@@ -9,7 +9,7 @@
 /**
  * Description of Authorization
  *
- * @author Dhiya
+ * @author Herpan
  */
 class Sys_service_upload_model extends CI_Model {
   

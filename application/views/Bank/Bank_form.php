@@ -19,6 +19,30 @@
 							<input type='text' class='form-control data-sending focus-color'  id='bank' name='bank' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->bank ?>' >
 					</div>
 					</div>
+
+					<div class='col-md-12 col-xl-12'>
+					<div class="form-group">
+                        <label class="form-label">Dashboard</label>
+						<select  id="dashboard" name='dashboard' class="form-control data-sending custom-select focus-color">
+						<option>--Pilih Dashboard--</option>
+						<?php 
+							$v=''; 
+							foreach($dashboard_type as $key=>$val){								
+							if ((isset($data)) && $data->dashboard==$val) { 
+								$v='selected="selected"'; 								
+							}
+							else{
+								$v='';	
+							}
+						?>
+							<option value="<?php echo $val?>" <?php echo $v?>><?php echo $val?></option>
+						<?php
+							}
+						?>
+                        </select>
+					</div>
+					</div>
+
 			
 			
 					<div class='col-md-12 col-xl-12'>

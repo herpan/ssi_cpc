@@ -115,7 +115,8 @@ class Uang_keluar_detail extends CI_Controller {
 		$w=['bank_id'=>$uk->bank_id,
 			'jenis_uang_id'=>$val['jenis_uang_id'],
 			'pecahan_id'=>$val['pecahan_id'],
-			'emisi_id'=>$val['emisi_id'],			
+			'emisi_id'=>$val['emisi_id'],
+			'kondisi_id'=>$val['kondisi_id'],			
 		   ];
 
 		$saldo=$this->tmodel->saldo($w,$uk->sentra_kas_id);

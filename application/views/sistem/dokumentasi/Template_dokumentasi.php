@@ -37,11 +37,11 @@
 					<div class="media">
                       <span class="avatar avatar-xxl mr-5" style="background-image: url(<?php echo base_url()?>demo/faces/male/sayyaf.png)"></span>
                       <div class="media-body">
-                        <h4 class="m-0">Dhiya As Sayyaf</h4>
+                        <h4 class="m-0">Herpan As Sayyaf</h4>
                         <p class="text-muted mb-0">ybs-system</p>
                         <ul class="social-links list-inline mb-0 mt-2">
                           <li class="list-inline-item">
-                            <a href="https://id-id.facebook.com/people/Dhiya-As-Sayyaf/100008796433530" title="Facebook" data-toggle="tooltip" target="_blank"><i class="text-blue fa fa-facebook"></i></a>
+                            <a href="https://id-id.facebook.com/people/Herpan-As-Sayyaf/100008796433530" title="Facebook" data-toggle="tooltip" target="_blank"><i class="text-blue fa fa-facebook"></i></a>
                           </li>
                           <li class="list-inline-item">
                             <a href="https://wa.me/6281342046414?text=Assalamualaikum..%20" title="whatsapp" data-toggle="tooltip" target="_blank"><i class="text-green fa fa-whatsapp"></i></a>

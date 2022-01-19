@@ -10,6 +10,7 @@ class Bank extends CI_Controller {
         parent::__construct();
 		$this->load->model('Bank/Bank_model','tmodel');
 		$this->log_key ='log_Bank';
+		$this->load->helper('directory');
 		$this->title = new Bank_config();
    }
 
@@ -56,11 +57,28 @@ class Bank extends CI_Controller {
 	}
 
 	public function create(){
+
+		$d_map = directory_map(APPPATH.'/views/Dashboard/type/',1);
+		
+
+		$dashboard_type = array();
+		$x=0;
+
+		foreach($d_map as $key=>$val){
+			//mencegah index html di tampilkan
+			if($val !=="index.html" ){				
+				$name = str_replace('.php',"",$val);							
+					$dashboard_type[$x] = $name;
+					$x++;	
+			}
+		}
+
 		$data = array(
 			'title_page_big'		=> 'Buat Baru',
 			'title'					=> $this->title,
 			'link_save'				=> site_url().'Bank/Bank/create_action',
-			'link_back'				=> $this->agent->referrer(),			
+			'link_back'				=> $this->agent->referrer(),
+			'dashboard_type'		=> $dashboard_type,		
 		);
 		
 		$this->template->load('Bank/Bank_form',$data);
@@ -150,6 +168,19 @@ class Bank extends CI_Controller {
 		$id = _decode_id($id,$this->log_temp);
 		
 		$row = $this->tmodel->get_by_id($id);
+
+		$d_map = directory_map(APPPATH.'/views/Dashboard/type/',1);
+		$dashboard_type = array();
+		$x=0;
+
+		foreach($d_map as $key=>$val){
+			//mencegah index html di tampilkan
+			if($val !=="index.html" ){				
+				$name = str_replace('.php',"",$val);							
+					$dashboard_type[$x] = $name;
+					$x++;	
+			}
+		}
 		
 		if($row){
 			$data = array(
@@ -159,6 +190,7 @@ class Bank extends CI_Controller {
 				'link_back'				=> $this->agent->referrer(),
 				'data'					=> $row,
 				'id'					=> $id_generate,
+				'dashboard_type'		=> $dashboard_type,
 			);
 			
 			$this->template->load('Bank/Bank_form',$data);

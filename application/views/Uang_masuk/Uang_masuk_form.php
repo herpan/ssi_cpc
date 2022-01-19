@@ -60,7 +60,7 @@
 							<span class='input-group-prepend' id='basic-addon1'>
 							<span class='input-group-text'><i class="fa fa-calendar"></i></span>
 							</span>
-							<input readonly type='text' class='form-control data-sending input-simple-date' placeholder='<?php echo $title->general->desc_required ?>' id='tanggal_penerimaan' value='<?php if(isset($data)) echo $data->tanggal_penerimaan?>'>
+							<input readonly type='text' class='form-control data-sending input-simple-date' placeholder='<?php echo $title->general->desc_required ?>' id='tanggal_penerimaan' value='<?php if(isset($data)) { echo $data->tanggal_penerimaan; }  else { echo date('Y-m-d'); }?>'>
 							</div>
 					</div>
 					</div>

@@ -9,7 +9,7 @@
 /**
  * Description of Form_General
  *
- * @author Dhiya
+ * @author Herpan
  */
 class Dokumentasi_109 extends CI_Controller {
 

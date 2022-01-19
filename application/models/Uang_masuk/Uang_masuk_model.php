@@ -491,6 +491,7 @@ class Uang_masuk_model extends CI_Model {
 		SUM(CASE WHEN app_kondisi.kondisi='RECYCLE BI' then saldo.jumlah ELSE 0 END) as 'RECYCLE_BI',
 		SUM(CASE WHEN app_kondisi.kondisi='DROPSHOT' then saldo.jumlah ELSE 0 END) as 'DROPSHOT',
 		SUM(CASE WHEN app_kondisi.kondisi='ULE' then saldo.jumlah ELSE 0 END) as 'ULE',
+		SUM(CASE WHEN app_kondisi.kondisi='ULE2' then saldo.jumlah ELSE 0 END) as 'ULE2',
 		SUM(CASE WHEN app_kondisi.kondisi='UTLE' then saldo.jumlah ELSE 0 END) as 'UTLE',
 		SUM(CASE WHEN app_kondisi.kondisi='MINOR' then saldo.jumlah ELSE 0 END) as 'MINOR',
 		SUM(CASE WHEN app_kondisi.kondisi='MAYOR' then saldo.jumlah ELSE 0 END) as 'MAYOR',
@@ -545,7 +546,6 @@ class Uang_masuk_model extends CI_Model {
 		LEFT JOIN  app_emisi ON app_emisi.id=saldo.emisi_id
 		LEFT JOIN  app_kondisi ON app_kondisi.id=saldo.kondisi_id
 		GROUP BY
-		bank_id,
 		jenis_uang_id,
 		pecahan_id,
 		emisi_id";		
@@ -709,7 +709,7 @@ class Uang_masuk_model extends CI_Model {
 		}
 
 		$q="SELECT SUM(jumlah) AS saldo FROM(SELECT 
-		CASE WHEN app_uang_masuk_detail.kategori_selisih_id>0 AND app_uang_masuk_detail.kategori_selisih_id<4 THEN 		0-app_uang_masuk_detail.jumlah ELSE app_uang_masuk_detail.jumlah END as jumlah
+		SUM(CASE WHEN app_uang_masuk_detail.kategori_selisih_id>0 AND app_uang_masuk_detail.kategori_selisih_id<4 THEN 0-app_uang_masuk_detail.jumlah ELSE app_uang_masuk_detail.jumlah END) as jumlah
 		FROM app_uang_masuk_detail
 		INNER JOIN app_uang_masuk on app_uang_masuk_detail.uang_masuk_id=app_uang_masuk.id
         INNER JOIN app_cabang_cpc on app_uang_masuk.cabang_id=app_cabang_cpc.id

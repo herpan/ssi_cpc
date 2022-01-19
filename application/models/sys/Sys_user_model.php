@@ -17,7 +17,7 @@ class Sys_user_model extends CI_Model
         parent::__construct();
     }
 
-	public function json(){
+	public function json($where=null){
 		$this->datatables->select('
 			 sys_user.id,
 			 sys_user.nmuser,
@@ -28,6 +28,10 @@ class Sys_user_model extends CI_Model
 			 sys_status.status,
 			 sys_user.picture,
 		');
+
+		if($where!==null){
+			$this->datatables->where($where);
+		}
 		
 		$this->datatables->from('sys_user');
 		$this->datatables->join('sys_level','sys_level.id=sys_user.opt_level','LEFT'); 

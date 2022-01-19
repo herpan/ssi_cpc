@@ -550,7 +550,7 @@ path controller:<code>Application/Controller/mysample/YbsRequest_C.php</code>
 			
 			$o		= new Outputview(); 
 			
-			if($val['form_name']=='dhiya'){
+			if($val['form_name']=='Herpan'){
 				$o->success = 'redirect'; 
 				$o->message = site_url() . 'mysample/YbsRequest_C/load_view_C';
 				
@@ -559,7 +559,7 @@ path controller:<code>Application/Controller/mysample/YbsRequest_C.php</code>
 				
 			}else{
 				$o->success = 'false'; 
-				$o->message = "Isi Nama dengan 'dhiya' agar redirect dijalankan"; 
+				$o->message = "Isi Nama dengan 'Herpan' agar redirect dijalankan"; 
 				echo $o->result(); 
 			}
 		}

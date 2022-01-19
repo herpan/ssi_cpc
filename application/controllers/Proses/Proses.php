@@ -272,7 +272,7 @@ class Proses extends CI_Controller {
 			$o->message	= 'Data berhasil di hapus !';
 		}else{
 			$o->success 	= 'false';
-			$o->message	= 'Opps..Gagal menghapus data !!';
+			$o->message	= 'Opps..Gagal menghapus data, pastikan belum ada pengeluaran uang untuk bank yang di pilih pada hari ini !!';
 		}
 		
 		

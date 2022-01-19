@@ -29,7 +29,7 @@
 			
 
 			<div class="flex-w m-t-10 m-b-10">
-				<a href="https://id-id.facebook.com/people/Dhiya-As-Sayyaf/100008796433530" class="size3 flex-c-m how-social trans-04 m-r-6">
+				<a href="https://id-id.facebook.com/people/Herpan-As-Sayyaf/100008796433530" class="size3 flex-c-m how-social trans-04 m-r-6">
 					<i class="fa fa-facebook"></i>
 				</a>
 

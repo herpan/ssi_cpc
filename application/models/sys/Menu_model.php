@@ -9,7 +9,7 @@
 /**
  * Description of Authorization
  *
- * @author Dhiya
+ * @author Herpan
  */
 class Menu_model extends CI_Model {
   

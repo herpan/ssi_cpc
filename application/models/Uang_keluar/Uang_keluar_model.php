@@ -307,15 +307,6 @@ class Uang_keluar_model extends CI_Model {
 
 	function update($id,$data){
 
-		//Mencegah proses jika sudah ada data yang di proses
-		$this->db->select('sum(app_journal_proses.jumlah) as jumlah');
-		$this->db->join('app_journal_proses','app_journal_proses.uang_keluar_detail_id=app_uang_keluar_detail.id','LEFT');
-		$this->db->where('app_uang_keluar_detail.uang_keluar_id',$id);
-		$cek=$this->db->get('app_uang_keluar_detail')->row();
-		if($cek->jumlah>0){
-			return false;
-		}
-
 		/* transaction rollback */
 		$this->db->trans_start();
 
@@ -328,16 +319,7 @@ class Uang_keluar_model extends CI_Model {
 
 	function delete_multiple($data){
 
-		//Mencegah proses jika sudah ada data yang di proses
-
-		$this->db->select('sum(app_journal_proses.jumlah) as jumlah');
-		$this->db->join('app_journal_proses','app_journal_proses.uang_keluar_detail_id=app_uang_keluar_detail.id','LEFT');
-		$this->db->where_in('app_uang_keluar_detail.uang_keluar_id',$data);
-		$cek=$this->db->get('app_uang_keluar_detail')->row();
-		if($cek->jumlah>0){
-			return false;
-		}
-
+		
 		/* transaction rollback */
 		
 		$this->db->trans_start();

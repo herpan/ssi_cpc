@@ -9,7 +9,7 @@
 /**
  * Description of Authorization
  *
- * @author Dhiya
+ * @author Herpan
  */
 class YbsService_Model extends CI_Model {
   

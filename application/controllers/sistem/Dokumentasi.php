@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Description of Form_General
  *
- * @author Dhiya
+ * @author Herpan
  */
 class Dokumentasi extends CI_Controller {
 

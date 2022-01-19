@@ -9,7 +9,7 @@
 /**
  * Description of Authorization
  *
- * @author Dhiya
+ * @author Herpan
  */
 class Sys_form_model extends CI_Model {
 	private $id_block;

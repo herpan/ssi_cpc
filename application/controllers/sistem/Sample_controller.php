@@ -9,7 +9,7 @@
 /**
  * Description of Form_General
  *
- * @author Dhiya
+ * @author Herpan
  */
 class Sample_controller extends CI_Controller {
 

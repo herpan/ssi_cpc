@@ -9,7 +9,7 @@
 /**
  * Description of Form_General
  *
- * @author Dhiya
+ * @author Herpan
  */
 
 
@@ -97,7 +97,7 @@ class Pengaturan_pengguna extends CI_Controller {
 	
 	public function prepare_picture($token){
 		
-		if($token== $this->_token && $this->_user_id==1){
+		if($token== $this->_token){
 				$tm = time();
 				$config['upload_path']          = './images/tmp_user_profile/';
                 $config['allowed_types']        = 'jpg|png';
@@ -273,9 +273,6 @@ class Pengaturan_pengguna extends CI_Controller {
 			//identifikasi yang mengupdate adalah configurator 
 			if($this->_user_id == $id && $id=='1'){
 				$this->template->load('sistem/User_form_update_configurator',$data);
-			}else if($this->_user_id !== $id && $id=='1'){
-				$this->session->set_flashdata('auth_form','Opps Akses terbatas, hanya bisa di akses oleh Level Configurator');
-				redirect($this->agent->referrer());
 			}else{
 				$this->template->load('sistem/User_form_update',$data);
 			}
@@ -414,8 +411,9 @@ class Pengaturan_pengguna extends CI_Controller {
 	
 	
 	public function refresh_table($token){
-		if($token==$this->_token && $this->_user_id==1){
-			$row = $this->tmodel->json();
+		if($token==$this->_token){
+			$where="sys_user.id<>1";
+			$row = $this->tmodel->json($where);
 			
 			//encode id 
 			$tm = time();
@@ -453,7 +451,7 @@ class Pengaturan_pengguna extends CI_Controller {
 	
 	
 	public function upload_template_user($token){
-		if($token == $this->_token && $this->_user_id==1){
+		if($token == $this->_token){
 				$data_level = $this->get_level();
 			
 				$tm = time();
@@ -572,7 +570,7 @@ class Pengaturan_pengguna extends CI_Controller {
 
 
 	private function create_user_by_template($token,$dataFinal){
-		if($this->_token ==$token && $this->_user_id==1){
+		if($this->_token ==$token){
 			
 			$val = array();
 			$val_exist= array();
@@ -624,7 +622,7 @@ class Pengaturan_pengguna extends CI_Controller {
 	}
 	
 	public function download_template_user($token){
-		if($token == $this->_token && $this->_user_id==1){
+		if($token == $this->_token){
 		
 			//mendapatkan data level
 			$data_level = $this->get_level();

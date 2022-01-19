@@ -147,7 +147,7 @@ class Uang_masuk_detail extends CI_Controller {
 		//Mencegah input selisih lebih dari jumlah belum di proses
 
 		if($val['kategori_selisih_id']!=='0' && $val['kategori_selisih_id']!=='4'){
-			$cek_jumlah=$this->tmodel->cek_input_proses(['jenis_uang_id'=>$val['jenis_uang_id'],'pecahan_id'=>$val['pecahan_id']]);
+			$cek_jumlah=$this->tmodel->cek_input_proses(['uang_masuk_id'=>$val['uang_masuk_id'],'jenis_uang_id'=>$val['jenis_uang_id'],'pecahan_id'=>$val['pecahan_id']]);
 			if(!$cek_jumlah){
 				$val['jumlah']='';
 				$o->message = 'Jenis uang dengan pecahan yang dipilih tidak ada pada daftar uang masuk';

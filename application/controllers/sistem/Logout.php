@@ -10,7 +10,7 @@
 /**
  * Description of LoginHome
  *
- * @author Dhiya
+ * @author Herpan
  */
 class Logout extends CI_Controller {
 
