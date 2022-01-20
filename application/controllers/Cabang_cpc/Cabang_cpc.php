@@ -607,9 +607,153 @@ class Cabang_cpc extends CI_Controller {
 
 	public function  upload_template($token){
 		if ($token == $this->_token) {
-			//Buat template upload
+			$this->load->library("Phpspreadsheet");
+			$dataError = array();
+
+			try {
+				$excel  = new Phpspreadsheet();
+
+				$startRow = 3;
+				$endRow = 2003;
+				$endCol = 5;
+
+				$dataFinal = $excel->read('inputfile', $startRow, $endRow, $endCol);
+
+				$x = 4;
+				foreach ($dataFinal as $key) {
+					if ($key["ID_BANK"] == "") {
+						$dataError[] = "<small>ERROR : ROW (" . $x . ") ADA ID BANK YANG KOSONG, ID BANK tidak boleh kosong.. </small><br>";
+					}
+
+					if ($key["ID_KATEGORI"] == "") {
+						$dataError[] = "<small>ERROR : ROW (" . $x . ") ADA ID KATEGORI YANG KOSONG, ID KATEGORI tidak boleh kosong.. </small><br>";
+					}
+
+					if ($key["ID_SENTRA"] == "") {
+						$dataError[] = "<small>ERROR : ROW (" . $x . ") ADA ID SENTRA YANG KOSONG, ID SENTRA tidak boleh kosong.. </small><br>";
+					}
+
+					if ($key["NAMA_CABANG"] == "") {
+						$dataError[] = "<small>ERROR : ROW (" . $x . ") ADA NAMA CABANG YANG KOSONG, ID SENTRA tidak boleh kosong.. </small><br>";
+					}
+
+					if ($key["ALAMAT"] == "") {
+						$dataError[] = "<small>ERROR : ROW (" . $x . ") ADA ALAMAT YANG KOSONG, ALAMAT tidak boleh kosong.. </small><br>";
+					}
+
+				
+					$field = array();
+					$field['nama_cabang'] = $key["NAMA_CABANG"];
+					$field['bank_id'] = $key["ID_BANK"];
+					$exist = $this->tmodel->if_exist('', $field);
+					if ($exist) {
+						$dataError[] = "<small>ERROR : ROW (" . $x . ") NAMA CABANG : " . $key["NAMA_CABANG"] . "  sudah ada </small><br>";
+					}
+
+
+					$double = $this->check_data_double($dataFinal, $key["NAMA_CABANG"], $x);
+
+
+					if ($double !== "") {
+						$dataError[] = $double;
+					}
+
+					//membatasi pembacaan error ,max 10 error
+					if (count($dataError) > 10) {
+						break;
+					}
+
+
+					$x++;
+				}
+			} catch (Exception $e) {
+				$msgError = $e->getMessage();
+				$msgError = str_replace("Your requested sheet index: -1 is out of bounds. The actual number of sheets is 0.", "Error : Sheet tidak di temukan", $msgError);
+				$dataError[] = "<small>" . $msgError . "</small><br>";
+			}
+
+
+
+
+			if (count($dataError) > 0) {
+
+				$o['success']		= 'false';
+				$o['message'] 		= $dataError;
+				$o['sec_val']		=  $this->security->get_csrf_token_name() . "=" . $this->security->get_csrf_hash() . "&";
+				$o = json_encode($o);
+				echo $o;
+				return;
+			} else {
+
+				$this->create_by_template($this->_token, $dataFinal);
+
+				return;
+			}
 		}else {
 			redirect('Auth');
+		}
+	}
+	private function check_data_double($data_master, $data_check, $row_check)
+	{
+		$x = 4;
+		$data = "";
+		foreach ($data_master as $key) {
+			if ($key["NAMA_CABANG"] == $data_check && $row_check !== $x) {
+				$data = "<small>ERROR : ROW (" . $row_check . ") dan ROW (" . $x . ") Column A (" . $key["NAMA_CABANG"] . ") Data Double</small><br>";
+				break;
+			}
+			$x++;
+		}
+		return $data;
+	}
+	private function create_by_template($token, $dataFinal)
+	{
+		if ($this->_token == $token) {
+
+			$val = array();
+			$val_exist = array();
+			$val_final = array();
+			$x = 4;
+
+			foreach ($dataFinal as $key) {
+				$val["bank_id"]  		= $key["ID_BANK"];
+				$val["kategori_cabang_id"]	=  $key["ID_KATEGORI"];
+				$val["nama_cabang"] 	=(string) $key["NAMA_CABANG"];
+				$val["alamat"]	= (string) $key["ALAMAT"];
+				$val["sentra_kas_id"]	= $key["ID_SENTRA"];
+				$val["user_input"] 	= $this->_user_id;
+				$field = array();
+				$field['nama_cabang'] = $val['nama_cabang'];
+				$field['bank_id'] = $val['bank_id'];
+				$exist = $this->tmodel->if_exist('', $field);
+				if ($exist) {
+					$val_exist[] = "<small>ERROR : ROW (" . $x . ") Nama Cabang " . $key["NAMA_CABANG"] . "  sudah ada </small><br>";
+				} else {
+					$val_final[] = $val;
+				}
+
+				$x++;
+			}
+
+			$o = new Outputview();
+			if (count($val_exist) > 0) {
+				$o->success = 'false';
+				$o->message = $val_exist;
+				echo $o->result();
+				return;
+			} else {
+
+				$split_data = array_chunk($val_final, 100);
+				foreach ($split_data as $val) {
+					$this->tmodel->insert_multiple($val);
+				}
+				$o->success = 'true';
+				$o->message = "<small>data berhasil di simpan..total data " . count($val_final) . " row </small><br>";
+				echo $o->result();
+				return;
+			}
+		} else {
+			redirect("Auth");
 		}
 	}
 

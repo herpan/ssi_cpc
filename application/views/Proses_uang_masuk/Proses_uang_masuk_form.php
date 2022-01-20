@@ -945,6 +945,8 @@ function getEdit(id,uang_masuk_detail_id,emisi_id,kondisi_id,jumlah,pecahan_id,j
 
 	$('#btn-save-proses').html('Update');
 
+	$('#jumlah').focus();
+
 	action_link=action_link_update;
 }
 

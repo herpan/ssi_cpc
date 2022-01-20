@@ -252,7 +252,18 @@ class Proses extends CI_Controller {
 
 
 		$success = $this->tmodel->update($val['id'],$val);
-		echo $o->auto_result($success);
+
+		//create message
+		if($success){
+			$o->success 	= 'true';
+			$o->message	= 'Data berhasil di update !';
+		}else{
+			$o->success 	= 'false';
+			$o->message	= 'Opps..Gagal update, pastikan belum ada pengeluaran uang untuk bank yang di pilih pada hari ini !!';
+		}
+		
+		
+		echo $o->result();
 
 	}
 

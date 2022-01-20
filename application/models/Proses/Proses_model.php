@@ -490,6 +490,45 @@ class Proses_model extends CI_Model {
 
 	function update($id,$data){
 
+		$this->db->select('pecahan_id,
+		emisi_id,
+		kondisi_id,
+		app_uang_masuk.sentra_kas_id,
+		bank_id,
+		CASE WHEN app_journal_proses.update_time IS NULL THEN app_journal_proses.input_time ELSE app_journal_proses.update_time END as input_time',false);		
+		$this->db->join('app_uang_masuk_detail','app_uang_masuk_detail.id=app_journal_proses.uang_masuk_detail_id','INNER');
+		$this->db->join('app_uang_masuk','app_uang_masuk_detail.uang_masuk_id=app_uang_masuk.id','INNER');
+		$this->db->join('app_cabang_cpc','app_cabang_cpc.id=app_uang_masuk.cabang_id','INNER');
+		$this->db->where('app_journal_proses.id',$id);	
+		
+		$to_update=$this->db->get('app_journal_proses')->row_array();
+
+		
+		
+
+		$input_time=$to_update['input_time'];
+		$sentra_kas=$to_update['sentra_kas_id'];
+		unset($to_update['input_time']);
+		unset($to_update['sentra_kas_id']);
+		
+		$this->db->select('pecahan_id,
+		emisi_id,
+		kondisi_id,
+		app_uang_keluar.sentra_kas_id,
+		bank_id,
+		CASE WHEN app_uang_keluar_detail.update_time IS NULL THEN app_uang_keluar_detail.input_time ELSE app_uang_keluar_detail.update_time END as input_time',false);
+		$this->db->join('app_uang_keluar','app_uang_keluar_detail.uang_keluar_id=app_uang_keluar.id','INNER');
+		$this->db->join('app_cabang_cpc','app_cabang_cpc.id=app_uang_keluar.cabang_id','INNER');
+		$this->db->where($to_update);
+		$this->db->where('app_uang_keluar_detail.input_time>=',$input_time);
+		$this->db->where('app_uang_keluar.sentra_kas_id',$sentra_kas);
+		$uang_keluar=$this->db->get('app_uang_keluar_detail')->result_array();
+
+	
+		if(count($uang_keluar)>0){
+			return false;
+		}
+
 		/* transaction rollback */
 		$this->db->trans_start();
 
@@ -532,10 +571,11 @@ class Proses_model extends CI_Model {
 		$this->db->join('app_uang_keluar','app_uang_keluar_detail.uang_keluar_id=app_uang_keluar.id','INNER');
 		$this->db->join('app_cabang_cpc','app_cabang_cpc.id=app_uang_keluar.cabang_id','INNER');
 		$this->db->where($to_delete);
-		$this->db->where('app_uang_keluar_detail.input_time<=',$input_time);
+		$this->db->where('app_uang_keluar_detail.input_time>=',$input_time);
 		$this->db->where('app_uang_keluar.sentra_kas_id',$sentra_kas);
 		$uang_keluar=$this->db->get('app_uang_keluar_detail')->result_array();
 
+	
 		if(count($uang_keluar)>0){
 			return false;
 		}		

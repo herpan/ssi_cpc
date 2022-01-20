@@ -265,7 +265,7 @@ class Uang_keluar extends CI_Controller {
 
 
 		$success = $this->tmodel->update($val['id'],$val);
-		echo $o->auto_result($success);
+		echo $o->auto_result($success,'',$val['id']);
 
 	}
 
