@@ -121,16 +121,16 @@ class Uang_keluar extends CI_Controller {
 		}
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['waktu_kirim'],'#waktu_kirim')){
-			echo $o->result();	
-			return;
-		}
+		// if(!$o->not_empty($val['waktu_kirim'],'#waktu_kirim')){
+		// 	echo $o->result();	
+		// 	return;
+		// }
 
-		//mencegah data kosong
-		if(!$o->not_empty($val['waktu_serah_terima'],'#waktu_serah_terima')){
-			echo $o->result();	
-			return;
-		}
+		// //mencegah data kosong
+		// if(!$o->not_empty($val['waktu_serah_terima'],'#waktu_serah_terima')){
+		// 	echo $o->result();	
+		// 	return;
+		// }
 
 		unset($val['id']);
 		unset($val['bank_id']);
@@ -246,16 +246,16 @@ class Uang_keluar extends CI_Controller {
 		}
 
 		//mencegah data kosong
-		if(!$o->not_empty($val['waktu_kirim'],'#waktu_kirim')){
-			echo $o->result();	
-			return;
-		}
+		// if(!$o->not_empty($val['waktu_kirim'],'#waktu_kirim')){
+		// 	echo $o->result();	
+		// 	return;
+		// }
 
-		//mencegah data kosong
-		if(!$o->not_empty($val['waktu_serah_terima'],'#waktu_serah_terima')){
-			echo $o->result();	
-			return;
-		}
+		// //mencegah data kosong
+		// if(!$o->not_empty($val['waktu_serah_terima'],'#waktu_serah_terima')){
+		// 	echo $o->result();	
+		// 	return;
+		// }
 
 		unset($val['bank_id']);
 

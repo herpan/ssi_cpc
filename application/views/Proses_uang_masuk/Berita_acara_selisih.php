@@ -117,7 +117,7 @@
 <p><strong>NO : <?php echo @$row4->no ?></strong></p>
 <p><strong>PT. SWADHARMA SARANA INFORMATIKA</strong></p>
 <p><strong>Kepada Yth :</strong></p>
-<p><strong></strong></p>
+<p><strong><?php echo $row->b_deskripsi?></strong></p>
 <p><strong>U.P : <?php echo @$row4->up ?></strong></p>
 </div>
 <p style="text-align: center;"><strong><u>BERITA ACARA SELISIH HASIL PROSES</u></strong></p>

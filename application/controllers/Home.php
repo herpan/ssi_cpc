@@ -55,9 +55,70 @@ class Home extends CI_Controller {
             
               if($row->jenis_uang=='KERTAS'){
                 $brute=$row->pecahan*1000;
+                
+                //Campur UTLE
+
+                if($row->UTLE>=($brute*10)){
+                  $mod=$row->UTLE%($brute*10);
+                  $data['CAMPUR_UTLE'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$mod;
+                }
+                else{
+                  $data['CAMPUR_UTLE'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$row->UTLE;
+                }
+
+                //Campur MINOR
+
+                if($row->MINOR>=($brute*10)){
+                  $mod=$row->MINOR%($brute*10);
+                  $data['CAMPUR_MINOR'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$mod;
+                }
+                else{
+                  $data['CAMPUR_MINOR'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$row->MINOR;
+                }
+
+                //Campur MINOR
+
+                if($row->MAYOR>=($brute*10)){
+                  $mod=$row->MAYOR%($brute*10);
+                  $data['CAMPUR_MAYOR'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$mod;
+                }
+                else{
+                  $data['CAMPUR_MAYOR'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$row->MAYOR;
+                }
+
               } 
               else{
                 $brute=$row->pecahan*500;
+                
+                //Campur UTLE
+
+                if($row->UTLE>=$brute){
+                  $mod=$row->UTLE%$brute;
+                  $data['CAMPUR_UTLE'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$mod;
+                }
+                else{
+                  $data['CAMPUR_UTLE'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$row->UTLE;
+                }
+
+                //Campur MINOR
+
+                if($row->MINOR>=$brute){
+                  $mod=$row->MINOR%$brute;
+                  $data['CAMPUR_MINOR'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$mod;
+                }
+                else{
+                  $data['CAMPUR_MINOR'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$row->MINOR;
+                }
+
+                //Campur MINOR
+
+                if($row->MAYOR>=$brute){
+                  $mod=$row->MAYOR%$brute;
+                  $data['CAMPUR_MAYOR'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$mod;
+                }
+                else{
+                  $data['CAMPUR_MAYOR'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$row->MAYOR;
+                }
               } 
 
               
@@ -114,35 +175,7 @@ class Home extends CI_Controller {
                 $data['CAMPUR_ULE2'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$row->ULE2;
               }
 
-              //Campur UTLE
-
-              if($row->UTLE>=$brute){
-                $mod=$row->UTLE%$brute;
-                $data['CAMPUR_UTLE'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$mod;
-              }
-              else{
-                $data['CAMPUR_UTLE'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$row->UTLE;
-              }
-
-              //Campur MINOR
-
-              if($row->MINOR>=$brute){
-                $mod=$row->MINOR%$brute;
-                $data['CAMPUR_MINOR'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$mod;
-              }
-              else{
-                $data['CAMPUR_MINOR'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$row->MINOR;
-              }
-
-              //Campur MINOR
-
-              if($row->MAYOR>=$brute){
-                $mod=$row->MAYOR%$brute;
-                $data['CAMPUR_MAYOR'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$mod;
-              }
-              else{
-                $data['CAMPUR_MAYOR'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]=$row->MAYOR;
-              }
+              
 
                            
               @$sub_total[$row->jenis_uang.'GRESS_BI']+=($row->GRESS_BI - $data['CAMPUR_GRESS_BI'][$row->jenis_uang.$row->pecahan.str_replace(' ','',$row->emisi)]);

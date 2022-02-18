@@ -69,7 +69,7 @@
 					<div class='col-md-6 col-xl-6'>
 					<div class='form-group'>
 							<label class='form-label'><?php echo $title->app_uang_keluar_waktu_kirim ?></label>
-							<input type='text' class='form-control data-sending focus-color timepicker'  id='waktu_kirim' name='waktu_kirim' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->waktu_kirim ?>' >
+							<input type='text' class='form-control data-sending focus-color timepicker'  id='waktu_kirim' name='waktu_kirim' value='<?php if(isset($data)) echo $data->waktu_kirim ?>' >
 					</div>
 					</div>
 			
@@ -77,7 +77,7 @@
 					<div class='col-md-6 col-xl-6'>
 					<div class='form-group'>
 							<label class='form-label'><?php echo $title->app_uang_keluar_waktu_serah_terima ?></label>
-							<input type='text' class='form-control data-sending focus-color timepicker'  id='waktu_serah_terima' name='waktu_serah_terima' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->waktu_serah_terima ?>' >
+							<input type='text' class='form-control data-sending focus-color timepicker'  id='waktu_serah_terima' name='waktu_serah_terima' value='<?php if(isset($data)) echo $data->waktu_serah_terima ?>' >
 					</div>
 					</div>
 					
@@ -85,14 +85,14 @@
 					<div class='col-md-6 col-xl-6'>
 					<div class='form-group'>
 							<label class='form-label'><?php echo $title->app_uang_keluar_diserahkan_oleh ?></label>
-							<input type='text' class='form-control data-sending focus-color'  id='diserahkan_oleh' name='diserahkan_oleh' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->diserahkan_oleh ?>' >
+							<input type='text' class='form-control data-sending focus-color'  id='diserahkan_oleh' name='diserahkan_oleh' value='<?php if(isset($data)) echo $data->diserahkan_oleh ?>' >
 					</div>
 					</div>
 
 					<div class='col-md-6 col-xl-6'>
 					<div class='form-group'>
 							<label class='form-label'><?php echo $title->app_uang_keluar_diterima_oleh ?></label>
-							<input type='text' class='form-control data-sending focus-color'  id='diterima_oleh' name='diterima_oleh' placeholder='<?php echo $title->general->desc_required ?>' value='<?php if(isset($data)) echo $data->diterima_oleh ?>' >
+							<input type='text' class='form-control data-sending focus-color'  id='diterima_oleh' name='diterima_oleh' value='<?php if(isset($data)) echo $data->diterima_oleh ?>' >
 					</div>
 					</div>
 

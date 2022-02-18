@@ -41,18 +41,10 @@ class Uang_selisih extends CI_Controller {
 
 		
 		//mencegah data kosong
-		if(!$o->not_empty($val['no'],'#no')){
-			echo $o->result();	
-			return;
-		}
-
-		//mencegah data double
-		$field=array('no'=>$val['no']);
-		$exist = $this->tmodel->if_exist($val['id'],$field);
-		if(!$o->not_exist($exist,'#no')){
-			echo $o->result();	
-			return;
-		}
+		// if(!$o->not_empty($val['up'],'#up')){
+		// 	echo $o->result();	
+		// 	return;
+		// }
 
 		//mencegah data kosong
 		if(!$o->not_empty($val['mulai_proses'],'#mulai_proses')){
@@ -113,16 +105,19 @@ class Uang_selisih extends CI_Controller {
 			echo $o->result();	
 			return;
 		}
-
+		$kode_sentra=$val['kode_sentra'];
+		unset($val['kode_sentra']);
 		//mencegah data double
 		$field=array('uang_masuk_id'=>$val['uang_masuk_id']);
 		$exist = $this->tmodel->if_exist('',$field);
 		if($exist){
+			
 			$val['user_update']=$this->_user_id;	
 			$val['update_time']=date('Y-m-d H:i:s', now());
 			$success = $this->tmodel->update($val['id'],$val);
 		}
 		else{		
+			$val['no']=$this->create_auto_number($kode_sentra);
 			$val['user_input']= $this->_user_id;
 			unset($val['id']);
 			$success = $this->tmodel->insert($val);	
@@ -162,6 +157,14 @@ class Uang_selisih extends CI_Controller {
 		
 		echo $o->result();
 	
+	}
+	private function create_auto_number($sentra){
+		$year=date('Y', now());
+		$count=$this->tmodel->get_count("no like '%".$sentra."%' and no like '%$year'");
+		$i= $count->jumlah + 1;
+		$j = str_pad($i, 4, '0', STR_PAD_LEFT);
+		$str='SSI/'.$sentra.'/'. $j  .'/'. date('Y', now());
+		return $str;
 	}
 };
 

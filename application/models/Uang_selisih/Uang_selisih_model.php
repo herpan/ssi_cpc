@@ -228,6 +228,19 @@ class Uang_selisih_model extends CI_Model {
 		$this->db->order_by('app_uang_selisih.id', 'ASC');
 		return $this->db->get('app_uang_selisih')->row();
    }
+   
+   public function get_count($wh=null){
+	$afield = array(
+		'count(id) as jumlah',
+	);
+	$this->db->select($afield,false);
+
+	if ($wh!==null) {
+		$this->db->where($wh);
+	}		
+	return $this->db->get('app_uang_selisih')->row();
+
+   }
 
 
 	/* Memastikan data yg dibuat tidak kembar/sama,

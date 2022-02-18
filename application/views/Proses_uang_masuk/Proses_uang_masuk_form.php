@@ -258,12 +258,13 @@
 <div class='row'>	
 					<input hidden class='data-sending' id='id' value='<?php if(isset($data_selisih)) echo $data_selisih->id ?>'>
 	
-					<input hidden class='data-sending' id='uang_masuk_id' name="uang_masuk_id" value='<?php echo $uang_masuk_id?>'>			
+					<input hidden class='data-sending' id='uang_masuk_id' name="uang_masuk_id" value='<?php echo $uang_masuk_id?>'>	
+					<input hidden class='data-sending' id='kode_sentra' name="kode_sentra" value='<?php if(isset($data)) echo $data->kode_sentra ?>'>		
 			
 					<div class='col-md-6 col-xl-6'>
 					<div class='form-group'>
-							<label class='form-label'>NO</label>
-							<input type='text' class='form-control data-sending focus-color'  id='no' name='no' placeholder='wajib di isi..' value='<?php if(isset($data_selisih)) echo $data_selisih->no?>' >
+							<label class='form-label'>UP</label>
+							<input type='text' class='form-control data-sending focus-color'  id='up' name='up' placeholder='wajib di isi..' value='<?php if(isset($data_selisih)) echo $data_selisih->up?>' >
 					</div>
 					</div>
 			
@@ -286,7 +287,7 @@
 			
 					<div class='col-md-6 col-xl-6'>
 					<div class='form-group'>
-							<label class='form-label'>NAMA_OA</label>
+							<label class='form-label'>KASIR 1</label>
 							<input type='text' class='form-control data-sending focus-color'  id='nama_oa' name='nama_oa' placeholder='wajib di isi..' value='<?php if(isset($data_selisih)) echo $data_selisih->nama_oa?>' >
 					</div>
 					</div>
@@ -294,7 +295,7 @@
 			
 					<div class='col-md-6 col-xl-6'>
 					<div class='form-group'>
-							<label class='form-label'>KASIR_TTP</label>
+							<label class='form-label'>KASIR 2</label>
 							<input type='text' class='form-control data-sending focus-color'  id='kasir_ttp' name='kasir_ttp' placeholder='wajib di isi..' value='<?php if(isset($data_selisih)) echo $data_selisih->kasir_ttp?>' >
 					</div>
 					</div>
